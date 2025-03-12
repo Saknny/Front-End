@@ -5,8 +5,10 @@ function Sidbar() {
   return (
     <aside className="sidebar">
       <div className="image">
-        <img className="d-none d-md-block" src="/full-logo.png" alt="logo" />
-        <img className="d-block d-md-none" src="/Logo.png" alt="LOGO" />
+        <NavLink to="/" className={`d-flex justify-content-center`}>
+          <img className="d-none d-md-block" src="/full-logo.png" alt="logo" />
+          <img className="d-block d-md-none" src="/Logo.png" alt="LOGO" />
+        </NavLink>
       </div>
 
       <nav className="links">
@@ -35,7 +37,7 @@ function Sidbar() {
           </li>
           <li>
             <NavLink
-              to="/users"
+              to="/UsersAccounts"
               className={({ isActive }) =>
                 isActive ? "active-li" : "inactive-li"
               }

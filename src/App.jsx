@@ -6,7 +6,7 @@ import Sidebar from "./Components/Sidbar/Sidbar";
 import Requests from "./Pages/Requests/Requests";
 import RequestDetails from "./Components/RequestDetails/RequestDetails"; // Import new details page
 import Settings from "./Components/Settings/Settings";
-import Users from "./Components/Users/Users";
+import UsersAccounts from "./Components/UsersAccounts/UsersAccounts";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.js";
 
@@ -23,7 +23,7 @@ function App() {
               <Route path="/requests" element={<Requests />} />
               <Route path="/requests/:id" element={<RequestDetails />} />
               <Route path="/settings" element={<Settings />} />
-              <Route path="/users" element={<Users />} />
+              <Route path="/UsersAccounts" element={<UsersAccounts />} />
             </Routes>
           </div>
         </div>
