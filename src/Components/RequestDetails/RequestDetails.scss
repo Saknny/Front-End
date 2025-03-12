@@ -1,0 +1,119 @@
+.request-details-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: #f7f8fa;
+}
+
+/* Grid layout */
+.details-grid {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: stretch;
+    background: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Left Section - Image Carousel */
+.carousel-section {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e9ecef;
+
+    .carousel {
+        width: 100%;
+        height: 100%;
+    }
+
+    .carousel-image {
+        width: 100%;
+        height: 100vh;
+        object-fit: cover;
+    }
+}
+
+/* Right Section - Apartment Details */
+.details-section {
+    flex: 1;
+    padding: 50px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    display: block;
+
+    .back-button {
+        align-self: flex-start;
+        color: #007bff;
+        font-size: 16px;
+        margin-bottom: 20px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &:hover {
+            color: #0056b3;
+        }
+    }
+
+    .apartment-title {
+        font-weight: bold;
+        font-size: 26px;
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    .apartment-location {
+        font-size: 16px;
+        color: #666;
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .apartment-price {
+        font-size: 22px;
+        font-weight: bold;
+        color: #007bff;
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .features {
+        display: flex;
+        gap: 25px;
+        margin-bottom: 25px;
+    }
+
+    .status-text {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+
+        .accept-button {
+            background-color: #4caf50 !important;
+            color: white !important;
+        }
+
+        .reject-button {
+            background-color: #f44336 !important;
+            color: white !important;
+        }
+    }
+}
