@@ -4,9 +4,9 @@ import Dashboard from "./Pages/Dashboard/Dashboard";
 import Navbar from "./Components/Navbar/Navbar";
 import Sidebar from "./Components/Sidbar/Sidbar";
 import Requests from "./Pages/Requests/Requests";
-import RequestDetails from "./Components/RequestDetails/RequestDetails"; // Import new details page
+import RequestDetails from "./Components/RequestDetails/RequestDetails";
 import Settings from "./Components/Settings/Settings";
-import UsersAccounts from "./Components/UsersAccounts/UsersAccounts";
+import UsersAccounts from "./Pages/UsersAccounts/UsersAccounts";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.js";
 
