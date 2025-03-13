@@ -8,7 +8,17 @@
     background: #f7f8fa;
 }
 
-/* Grid layout */
+@media (max-width:904px) {
+    .MuiGrid-root {
+        height: auto;
+    }
+
+    .request-details-container {
+        height: auto;
+    }
+}
+
+
 .details-grid {
     width: 100%;
     height: 100%;
@@ -20,7 +30,6 @@
     overflow: hidden;
 }
 
-/* Left Section - Image Carousel */
 .carousel-section {
     flex: 1;
     height: 100%;
@@ -41,7 +50,6 @@
     }
 }
 
-/* Right Section - Apartment Details */
 .details-section {
     flex: 1;
     padding: 50px 40px;
