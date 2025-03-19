@@ -1,11 +1,5 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useContext } from "react";
 import "./App.scss";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import Navbar from "./Components/Navbar/Navbar";
@@ -17,22 +11,20 @@ import UsersAccounts from "./Pages/UsersAccounts/UsersAccounts";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.js";
 import LoginForm from "./Pages/LoginForm/LoginForm";
+import { LoginContext } from "./Context/Login/Login";
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const loginContext = useContext(LoginContext);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-      setIsAuthenticated(true);
-    }
-  }, []);
+  if (!loginContext) {
+    return <div>Loading...</div>;
+  }
 
+  const { isAuthenticated } = loginContext;
   return (
     <Router>
       {!isAuthenticated ? (
-        <LoginForm setIsAuthenticated={setIsAuthenticated} />
+        <LoginForm />
       ) : (
         <div className="app-container">
           <Sidebar />
@@ -45,7 +37,6 @@ function App() {
                 <Route path="/requests/:id" element={<RequestDetails />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/UsersAccounts" element={<UsersAccounts />} />
-                <Route path="*" element={<Navigate to="/" />} />
               </Routes>
             </div>
           </div>

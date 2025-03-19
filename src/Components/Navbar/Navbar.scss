@@ -8,6 +8,7 @@
     padding-right: 20px;
     padding-left: 20px;
     width: 100%;
+    gap: 0.5rem;
 
     .left {
         display: flex;
@@ -95,5 +96,30 @@
             width: 25px;
             cursor: pointer;
         }
+    }
+}
+
+.logout-btn {
+    background-color: #ff4d4d;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+        font-size: 1.2rem;
+        color: white;
+    }
+
+    &:hover {
+        background-color: #d63031;
+    }
+
+    &:active {
+        transform: scale(0.95);
     }
 }

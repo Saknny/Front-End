@@ -3,36 +3,49 @@ import axios from "axios";
 import { FaUser, FaLock } from "react-icons/fa";
 import { motion } from "framer-motion";
 import "./LoginForm.scss";
+import { useContext } from "react";
+import { LoginContext } from "../../Context/Login/Login";
 
-function LoginForm({ setIsAuthenticated }) {
+function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { setIsAuthenticated } = useContext(LoginContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
 
-    try {
-      const response = await axios.post("https://your-api.com/api/login", {
-        email,
-        password,
-      });
+    //   try {
+    //     const response = await axios.post("https://your-api.com/api/login", {
+    //       email,
+    //       password,
+    //     });
 
-      localStorage.setItem("token", response.data.token);
+    //     localStorage.setItem("token", response.data.token);
+    //     setIsAuthenticated(true);
+    //   } catch (err) {
+    //     if (err.response) {
+    //       setError(err.response.data.message || "Invalid email or password");
+    //     } else {
+    //       setError("Failed to connect to server");
+    //     }
+    //   }
+    // };
+    const dummyEmail = "abc@gmail.com";
+    const dummyPassword = "karem123";
+
+    if (email === dummyEmail && password === dummyPassword) {
+      localStorage.setItem("token", "dummy_token_123");
       setIsAuthenticated(true);
-    } catch (err) {
-      if (err.response) {
-        setError(err.response.data.message || "Invalid email or password");
-      } else {
-        setError("Failed to connect to server");
-      }
+    } else {
+      setError("Invalid email or password");
     }
   };
 
   return (
     <div className="login-page d-flex ">
-      <div className="login-image d-sm-none d-lg-flex align-items-center justify-content-center">
+      <div className="login-image d-none d-lg-flex align-items-center justify-content-center">
         <img src="Login.svg" alt="Login Illustration" />
       </div>
       <motion.div
