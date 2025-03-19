@@ -87,6 +87,8 @@
                 flex-wrap: wrap;
                 margin-top: 10px;
 
+
+
                 .legend-item {
                     display: flex;
                     align-items: center;
@@ -103,5 +105,11 @@
                 }
             }
         }
+    }
+}
+
+@media (max-width:767px) {
+    .recharts-cartesian-axis-ticks {
+        display: none;
     }
 }
