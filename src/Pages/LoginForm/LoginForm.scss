@@ -15,12 +15,13 @@ $text-color: #333;
             width: 80%;
             max-width: 500px;
             animation: fadeIn 1s ease-in-out;
+            animation: float 2s ease-in-out infinite alternate;
         }
     }
 
     .login-container {
         flex: 1;
-        background-image: url("../../../public/Back.png");
+        background-image: url("Back.png");
 
         .login-box {
             padding: 2.5rem;
@@ -34,8 +35,7 @@ $text-color: #333;
             }
 
             .logo {
-                width: 120px;
-                margin-bottom: 1rem;
+                width: 170px;
                 animation: fadeIn 1s ease-in-out;
             }
 
@@ -144,5 +144,15 @@ $text-color: #333;
 
     100% {
         transform: translateX(0);
+    }
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-20px);
     }
 }

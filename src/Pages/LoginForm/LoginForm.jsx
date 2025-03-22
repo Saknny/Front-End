@@ -46,7 +46,7 @@ function LoginForm() {
   return (
     <div className="login-page d-flex ">
       <div className="login-image d-none d-lg-flex align-items-center justify-content-center">
-        <img src="Login.svg" alt="Login Illustration" />
+        <img src="Login5.svg" alt="Login Illustration" />
       </div>
       <motion.div
         className="login-container d-flex align-items-center justify-content-center"
