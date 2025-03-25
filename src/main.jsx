@@ -5,7 +5,9 @@ import { LoginAdmin } from "./Context/Login/Login";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <LoginAdmin>
-    <App />
-  </LoginAdmin>
+  <React.StrictMode>
+    <LoginAdmin>
+      <App />
+    </LoginAdmin>
+  </React.StrictMode>
 );

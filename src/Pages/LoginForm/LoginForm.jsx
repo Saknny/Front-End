@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import "./LoginForm.scss";
 import { useContext } from "react";
 import { LoginContext } from "../../Context/Login/Login";
-
+import React from "react";
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

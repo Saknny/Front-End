@@ -1,4 +1,5 @@
 import "./Navbar.scss";
+import React from "react";
 import { useContext } from "react";
 import { LoginContext } from "../../Context/Login/Login";
 function Navbar() {

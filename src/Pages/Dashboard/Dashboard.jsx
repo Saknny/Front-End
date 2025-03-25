@@ -13,7 +13,6 @@ import {
   Cell,
 } from "recharts";
 import "./Dashboard.scss";
-
 function Dashboard() {
   // 📌 Number of bookings per month (students who rented a room)
   const bookingData = [
