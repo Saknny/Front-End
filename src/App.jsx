@@ -13,6 +13,7 @@ import "bootstrap/dist/js/bootstrap.bundle.js";
 import LoginForm from "./Pages/LoginForm/LoginForm";
 import { LoginContext } from "./Context/Login/Login";
 import React from "react";
+import { ToastContainer } from "react-toastify";
 function App() {
   const loginContext = useContext(LoginContext);
 
@@ -42,6 +43,7 @@ function App() {
           </div>
         </div>
       )}
+      <ToastContainer />
     </Router>
   );
 }

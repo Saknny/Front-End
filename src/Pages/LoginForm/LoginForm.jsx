@@ -6,6 +6,7 @@ import "./LoginForm.scss";
 import { useContext } from "react";
 import { LoginContext } from "../../Context/Login/Login";
 import React from "react";
+import { toast } from "react-toastify";
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,30 +17,22 @@ function LoginForm() {
     e.preventDefault();
     setError("");
 
-    //   try {
-    //     const response = await axios.post("https://your-api.com/api/login", {
-    //       email,
-    //       password,
-    //     });
-
-    //     localStorage.setItem("token", response.data.token);
-    //     setIsAuthenticated(true);
-    //   } catch (err) {
-    //     if (err.response) {
-    //       setError(err.response.data.message || "Invalid email or password");
-    //     } else {
-    //       setError("Failed to connect to server");
-    //     }
-    //   }
-    // };
-    const dummyEmail = "abc@gmail.com";
-    const dummyPassword = "karem123";
-
-    if (email === dummyEmail && password === dummyPassword) {
-      localStorage.setItem("token", "dummy_token_123");
+    try {
+      const response = await axios.post("/api/auth/login", {
+        email,
+        password,
+      });
+      localStorage.setItem("token", response.data.data.token);
       setIsAuthenticated(true);
-    } else {
-      setError("Invalid email or password");
+      toast.success("Login Successful");
+    } catch (err) {
+      if (err.response) {
+        setError(err.response.data.message || "Invalid email or password");
+        toast.error("Invalid email or password");
+      } else {
+        setError("Failed to connect to server");
+        toast.error("Failed to connect to server");
+      }
     }
   };
 
@@ -62,7 +55,7 @@ function LoginForm() {
         >
           <img src="full-logo.png" alt="Saknny Logo" className="logo" />
           <h2>Login</h2>
-          {error && <p className="error-message">{error}</p>}
+
           <form onSubmit={handleLogin} className="d-flex flex-column">
             <div className="input-group d-flex flex-column text-start">
               <label>Email</label>
@@ -88,6 +81,7 @@ function LoginForm() {
                 />
               </div>
             </div>
+            {error && <p className="error-message">{error}</p>}
             <motion.button
               type="submit"
               className="login-button"
