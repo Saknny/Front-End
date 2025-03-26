@@ -2,12 +2,14 @@ import "./Navbar.scss";
 import React from "react";
 import { useContext } from "react";
 import { LoginContext } from "../../Context/Login/Login";
+import { toast } from "react-toastify";
 function Navbar() {
   const { setIsAuthenticated } = useContext(LoginContext);
 
   function logOut() {
     localStorage.removeItem("token");
     setIsAuthenticated(false);
+    toast.success("Logged out successfully");
   }
   return (
     <nav className="navbar ps-4 pe-4 justify-content-end ">

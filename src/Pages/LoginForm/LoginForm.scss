@@ -56,6 +56,7 @@ $text-color: #333;
             form {
                 gap: 1rem;
 
+
                 .input-group {
 
                     label {
@@ -107,6 +108,10 @@ $text-color: #333;
                         background: #0c4c51;
                     }
                 }
+            }
+
+            .forgot-password {
+                color: #14737b;
             }
         }
     }

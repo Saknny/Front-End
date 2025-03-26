@@ -7,11 +7,13 @@ import { useContext } from "react";
 import { LoginContext } from "../../Context/Login/Login";
 import React from "react";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const { setIsAuthenticated } = useContext(LoginContext);
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -23,6 +25,7 @@ function LoginForm() {
         password,
       });
       localStorage.setItem("token", response.data.data.token);
+      navigate("/");
       setIsAuthenticated(true);
       toast.success("Login Successful");
     } catch (err) {
@@ -90,6 +93,13 @@ function LoginForm() {
             >
               Login
             </motion.button>
+            <a
+              type="button"
+              className="forgot-password"
+              onClick={() => navigate("/forgot-password")}
+            >
+              Forgot Password?
+            </a>
           </form>
         </motion.div>
       </motion.div>
