@@ -21,14 +21,14 @@ import React from "react";
 import { ToastContainer } from "react-toastify";
 import ForgotPassword from "./Components/Forgot-reset-password/ForgotPassword";
 import ResetPassword from "./Components/Forgot-reset-password/ResetPassword";
+import Loading from "./Components/Loading/Loading";
+
 function App() {
-  const loginContext = useContext(LoginContext);
+  const { isAuthenticated } = useContext(LoginContext);
 
-  if (!loginContext) {
-    return <div>Loading...</div>;
+  if (isAuthenticated === null) {
+    return <Loading />;
   }
-
-  const { isAuthenticated } = loginContext;
 
   return (
     <Router>
@@ -36,37 +36,36 @@ function App() {
         <Route path="/login" element={<LoginForm />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+
         {!isAuthenticated ? (
           <Route path="*" element={<Navigate to="/login" replace />} />
         ) : (
-          <>
-            <Route
-              path="*"
-              element={
-                <div className="app-container">
-                  <Sidebar />
-                  <div className="main-content">
-                    <Navbar />
-                    <div className="content">
-                      <Routes>
-                        <Route path="/" element={<Dashboard />} />
-                        <Route path="/requests" element={<Requests />} />
-                        <Route
-                          path="/requests/:id"
-                          element={<RequestDetails />}
-                        />
-                        <Route path="/settings" element={<Settings />} />
-                        <Route
-                          path="/UsersAccounts"
-                          element={<UsersAccounts />}
-                        />
-                      </Routes>
-                    </div>
+          <Route
+            path="*"
+            element={
+              <div className="app-container">
+                <Sidebar />
+                <div className="main-content">
+                  <Navbar />
+                  <div className="content">
+                    <Routes>
+                      <Route path="/" element={<Dashboard />} />
+                      <Route path="/requests" element={<Requests />} />
+                      <Route
+                        path="/requests/:id"
+                        element={<RequestDetails />}
+                      />
+                      <Route path="/settings" element={<Settings />} />
+                      <Route
+                        path="/UsersAccounts"
+                        element={<UsersAccounts />}
+                      />
+                    </Routes>
                   </div>
                 </div>
-              }
-            />
-          </>
+              </div>
+            }
+          />
         )}
       </Routes>
       <ToastContainer />

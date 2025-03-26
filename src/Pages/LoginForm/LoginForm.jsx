@@ -8,11 +8,13 @@ import { LoginContext } from "../../Context/Login/Login";
 import React from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Loading from "../../Components/Loading/Loading";
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const { setIsAuthenticated } = useContext(LoginContext);
+  const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -25,7 +27,9 @@ function LoginForm() {
         password,
       });
       localStorage.setItem("token", response.data.data.token);
-      navigate("/");
+      localStorage.setItem("email", email);
+      setLoggedIn(true);
+      setTimeout(() => navigate("/"), 2000);
       setIsAuthenticated(true);
       toast.success("Login Successful");
     } catch (err) {
@@ -38,7 +42,7 @@ function LoginForm() {
       }
     }
   };
-
+  if (loggedIn) return <Loading />;
   return (
     <div className="login-page d-flex ">
       <div className="login-image d-none d-lg-flex align-items-center justify-content-center">
