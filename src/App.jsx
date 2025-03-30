@@ -22,8 +22,8 @@ import { ToastContainer } from "react-toastify";
 import ForgotPassword from "./Components/Forgot-reset-password/ForgotPassword";
 import ResetPassword from "./Components/Forgot-reset-password/ResetPassword";
 import Loading from "./Components/Loading/Loading";
-
 function App() {
+  const { darkMode } = useContext(LoginContext);
   const { isAuthenticated } = useContext(LoginContext);
 
   if (isAuthenticated === null) {
@@ -47,7 +47,7 @@ function App() {
                 <Sidebar />
                 <div className="main-content">
                   <Navbar />
-                  <div className="content">
+                  <div className={`content ${darkMode == "dr" ? "dr" : ""}`}>
                     <Routes>
                       <Route path="/" element={<Dashboard />} />
                       <Route path="/requests" element={<Requests />} />

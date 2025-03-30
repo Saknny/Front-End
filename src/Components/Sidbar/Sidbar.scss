@@ -84,3 +84,17 @@
         }
     }
 }
+
+.dark {
+    background-color: black;
+    position: relative;
+
+    .links ul li i {
+        color: #fff;
+    }
+
+    .links ul li span {
+        color: #fff;
+    }
+
+}

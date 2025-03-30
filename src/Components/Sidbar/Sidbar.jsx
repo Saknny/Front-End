@@ -1,9 +1,12 @@
 import { NavLink } from "react-router-dom";
 import "./Sidbar.scss";
 import React from "react";
+import { useContext } from "react";
+import { LoginContext } from "../../Context/Login/Login";
 function Sidbar() {
+  const { darkMode } = useContext(LoginContext);
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${darkMode == "dr" ? "dark" : ""}`}>
       <div className="image">
         <NavLink to="/" className={`d-flex justify-content-center`}>
           <img className="d-none d-md-block" src="/full-logo.png" alt="logo" />

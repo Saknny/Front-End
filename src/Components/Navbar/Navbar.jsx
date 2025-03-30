@@ -1,10 +1,12 @@
 import "./Navbar.scss";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { LoginContext } from "../../Context/Login/Login";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { Sun, Moon } from "lucide-react";
 function Navbar() {
-  const { setIsAuthenticated } = useContext(LoginContext);
+  const { setIsAuthenticated, toggleDarkMode, darkMode } =
+    useContext(LoginContext);
   const userEmail = localStorage.getItem("email");
   const navigate = useNavigate();
   function logOut() {
@@ -12,9 +14,31 @@ function Navbar() {
     setIsAuthenticated(false);
     toast.success("Logged out successfully");
   }
+  const { language, toggleLanguage } = useContext(LoginContext);
 
   return (
-    <nav className="navbar ps-4 pe-4 justify-content-end">
+    <nav
+      className={`navbar ps-4 pe-4 justify-content-end ${
+        darkMode == "dr" ? "dark" : ""
+      }`}
+    >
+      <button
+        className={`theme-toggle ${darkMode == "dr" ? "dr" : ""}`}
+        onClick={toggleDarkMode}
+      >
+        <Sun className="icon sun-icon" size={16} />
+        <div className="toggle-circle">
+          <Moon className="icon moon-icon" size={16} />
+        </div>
+      </button>
+
+      <button
+        className={`language-toggle ${language}`}
+        onClick={toggleLanguage}
+      >
+        <span className="toggle-circle">{language}</span>
+      </button>
+
       <div className="right dropdown">
         <img
           src="https://randomuser.me/api/portraits/men/1.jpg"

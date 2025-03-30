@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   LineChart,
   Line,
@@ -13,41 +13,11 @@ import {
   Cell,
 } from "recharts";
 import "./Dashboard.scss";
+import data from "../../Data/Dashboard";
+import { LoginContext } from "../../Context/Login/Login";
 function Dashboard() {
-  // 📌 Number of bookings per month (students who rented a room)
-  const bookingData = [
-    { month: "Jan", bookings: 50 },
-    { month: "Feb", bookings: 75 },
-    { month: "Mar", bookings: 90 },
-    { month: "Apr", bookings: 110 },
-    { month: "May", bookings: 130 },
-    { month: "Jun", bookings: 150 },
-    { month: "Jul", bookings: 200 },
-  ];
-
-  // 📌 Devices used to access the platform (Students & Providers)
-  const deviceUsage = [
-    { name: "Mobile", value: 60, color: "#8884d8" },
-    { name: "Laptop", value: 30, color: "#82ca9d" },
-    { name: "Tablet", value: 10, color: "#FFBB28" },
-  ];
-
-  // 📌 Number of bookings by location in Damietta
-  const locationBookings = [
-    { name: "New Damietta", value: 40, color: "#000" },
-    { name: "Ras El Bar", value: 30, color: "#36a2eb" },
-    { name: "Kafr Saad", value: 15, color: "#4bc0c0" },
-    { name: "Faraskour", value: 15, color: "#ffcd56" },
-  ];
-
-  // 📌 Traffic sources (Where do users come from?)
-  const trafficSources = [
-    { name: "Google", value: 50, color: "#4285F4" },
-    { name: "Facebook", value: 30, color: "#1877F2" },
-    { name: "Instagram", value: 15, color: "#C13584" },
-    { name: "Direct Recommendations", value: 5, color: "#FF8042" },
-  ];
-
+  const { language, darkMode } = useContext(LoginContext);
+  console.log(darkMode);
   const CustomTooltip = ({ active, payload, total }) => {
     if (active && payload && payload.length) {
       const percent = ((payload[0].value / total) * 100).toFixed(1);
@@ -71,28 +41,28 @@ function Dashboard() {
   };
 
   return (
-    <div className="dashboard">
+    <div className={`dashboard ${darkMode}`}>
       <div className="stats">
         <div className="stat-card">
-          <h4>Total Bookings</h4>
+          <h4>{language == "EN" ? "Total Bookings" : "إجمالي الحجوزات"}</h4>
           <p>
             1500 <span className="increase">+12.5%</span>
           </p>
         </div>
         <div className="stat-card">
-          <h4>Active Students</h4>
+          <h4>{language == "EN" ? "Active Students" : "الطلاب النشطون"}</h4>
           <p>
             230 <span className="increase">+8.3%</span>
           </p>
         </div>
         <div className="stat-card">
-          <h4>Available Rooms</h4>
+          <h4>{language == "EN" ? "Available Rooms" : "الغرف المتاحة"}</h4>
           <p>
             85 <span className="decrease">-5.2%</span>
           </p>
         </div>
         <div className="stat-card">
-          <h4>New Listings</h4>
+          <h4> {language == "EN" ? "New Listings" : "الحجوزات الجديدة"}</h4>
           <p>
             12 <span className="increase">+3.8%</span>
           </p>
@@ -104,7 +74,7 @@ function Dashboard() {
         <div className="chart-card">
           <h4>Monthly Bookings</h4>
           <ResponsiveContainer width="100%" height={200}>
-            <LineChart data={bookingData}>
+            <LineChart data={data[language].bookingData}>
               <XAxis dataKey="month" />
               <YAxis />
               <Tooltip />
@@ -122,19 +92,19 @@ function Dashboard() {
         <div className="chart-card">
           <h4>Device Usage</h4>
           <ResponsiveContainer width="100%" height={200}>
-            <BarChart data={deviceUsage}>
+            <BarChart data={data[language].deviceUsage}>
               <XAxis dataKey="name" />
               <YAxis />
               <Tooltip />
               <Bar dataKey="value">
-                {deviceUsage.map((entry, index) => (
+                {data[language].deviceUsage.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
               </Bar>
             </BarChart>
           </ResponsiveContainer>
           <div className="legend">
-            {deviceUsage.map((entry, index) => (
+            {data[language].deviceUsage.map((entry, index) => (
               <div key={index} className="legend-item">
                 <span style={{ backgroundColor: entry.color }}></span>{" "}
                 {entry.name}
@@ -151,15 +121,19 @@ function Dashboard() {
               <Tooltip
                 content={
                   <CustomTooltip
-                    total={locationBookings.reduce(
+                    total={data[language].locationBookings.reduce(
                       (sum, entry) => sum + entry.value,
                       0
                     )}
                   />
                 }
               />
-              <Pie data={locationBookings} dataKey="value" outerRadius={80}>
-                {locationBookings.map((entry, index) => (
+              <Pie
+                data={data[language].locationBookings}
+                dataKey="value"
+                outerRadius={80}
+              >
+                {data[language].locationBookings.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
               </Pie>
@@ -167,7 +141,7 @@ function Dashboard() {
           </ResponsiveContainer>
 
           <div className="legend">
-            {locationBookings.map((entry, index) => (
+            {data[language].locationBookings.map((entry, index) => (
               <div key={index} className="legend-item">
                 <span style={{ backgroundColor: entry.color }}></span>{" "}
                 {entry.name}
@@ -184,15 +158,19 @@ function Dashboard() {
               <Tooltip
                 content={
                   <CustomTooltip
-                    total={trafficSources.reduce(
+                    total={data[language].trafficSources.reduce(
                       (sum, entry) => sum + entry.value,
                       0
                     )}
                   />
                 }
               />
-              <Pie data={trafficSources} dataKey="value" outerRadius={80}>
-                {trafficSources.map((entry, index) => (
+              <Pie
+                data={data[language].trafficSources}
+                dataKey="value"
+                outerRadius={80}
+              >
+                {data[language].trafficSources.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
               </Pie>
@@ -200,7 +178,7 @@ function Dashboard() {
           </ResponsiveContainer>
 
           <div className="legend">
-            {trafficSources.map((entry, index) => (
+            {data[language].trafficSources.map((entry, index) => (
               <div key={index} className="legend-item">
                 <span style={{ backgroundColor: entry.color }}></span>{" "}
                 {entry.name}

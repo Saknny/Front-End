@@ -1,11 +1,24 @@
-import { createContext, useState, useEffect } from "react";
-import React from "react";
+import React, { createContext, useState, useEffect } from "react";
 import Loading from "../../Components/Loading/Loading";
 
 export const LoginContext = createContext();
 
 export const LoginAdmin = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
+  const [language, setLanguage] = useState(
+    localStorage.getItem("language") || "EN"
+  );
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem("darkMode") || "dr"
+  );
+
+  useEffect(() => {
+    localStorage.setItem("language", language);
+  }, [language]);
+
+  useEffect(() => {
+    localStorage.setItem("darkMode", darkMode);
+  }, [darkMode]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -16,12 +29,29 @@ export const LoginAdmin = ({ children }) => {
     return () => clearTimeout(timer);
   }, []);
 
+  const toggleLanguage = () => {
+    setLanguage((prev) => (prev === "EN" ? "AR" : "EN"));
+  };
+
+  const toggleDarkMode = () => {
+    setDarkMode((prev) => (prev === "dr" ? "wh" : "dr"));
+  };
+
   if (isAuthenticated === null) {
     return <Loading />;
   }
 
   return (
-    <LoginContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+    <LoginContext.Provider
+      value={{
+        isAuthenticated,
+        setIsAuthenticated,
+        language,
+        toggleLanguage,
+        darkMode,
+        toggleDarkMode,
+      }}
+    >
       {children}
     </LoginContext.Provider>
   );

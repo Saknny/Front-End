@@ -1,7 +1,6 @@
 .navbar {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    align-items: normal;
     height: 60px;
     background: #fff;
     box-shadow: 3px 1px 10px rgba(0, 0, 0, 0.1);
@@ -9,6 +8,13 @@
     padding-left: 20px;
     width: 100%;
     gap: 0.5rem;
+
+
+}
+
+.dark {
+    background-color: #000000;
+    box-shadow: 4px 1px 2px #b8aeae;
 }
 
 .right {
@@ -53,5 +59,88 @@
 
     &:active {
         transform: scale(0.95);
+    }
+}
+
+.language-toggle {
+    width: 55px;
+    height: 30px;
+    background: #eaf6f9;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    position: relative;
+    transition: background 0.3s ease-in-out;
+
+    .toggle-circle {
+        width: 23px;
+        height: 23px;
+        background: #168a92;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    &.AR {
+        .toggle-circle {
+            transform: translateX(25px);
+            background-color: #fdcb54;
+        }
+    }
+}
+
+.theme-toggle {
+    width: 56px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    background-color: #2d3748;
+    border-radius: 9999px;
+    padding: 4px;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+
+    .toggle-circle {
+        width: 24px;
+        height: 24px;
+        background-color: #3b82f6;
+        border-radius: 50%;
+        transition: transform 0.3s ease-in-out;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .icon {
+        position: absolute;
+        width: 16px;
+        height: 16px;
+    }
+
+    .sun-icon {
+        left: 8px;
+        color: #facc15;
+    }
+
+    .moon-icon {
+        right: 8px;
+        color: #ffffff;
+    }
+
+    &.dr {
+        background-color: #d1d5db;
+
+        .toggle-circle {
+            background-color: #facc15;
+            transform: translateX(12px);
+        }
     }
 }

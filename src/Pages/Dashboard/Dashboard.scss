@@ -1,27 +1,54 @@
-.dashboard {
+:root {
+    --bg-light: #f8f9fa;
+    --bg-dark: #121212;
+    --card-bg-light: white;
+    --card-bg-dark: #1e1e1e;
+    --text-light: #333;
+    --text-dark: #e0e0e0;
+    --subtext-light: #666;
+    --subtext-dark: #b0b0b0;
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-dark: rgba(255, 255, 255, 0.1);
+    --increase-color: #4caf50;
+    --decrease-color: #e53935;
+}
+
+.wh,
+.dr {
     padding: 20px;
-    background: #f8f9fa;
     height: calc(100vh - 60px);
     display: flex;
     flex-direction: column;
     padding-bottom: 50px;
+    height: auto;
+
+    &.wh {
+        background: var(--bg-light);
+        color: var(--text-light);
+    }
+
+    &.dr {
+        background: var(--bg-dark);
+        color: var(--text-dark);
+    }
 
     .stats {
         display: flex;
         gap: 15px;
         margin-bottom: 20px;
+        flex-direction: row;
 
         .stat-card {
-            background: white;
+            background: var(--card-bg-light);
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 10px var(--shadow-light);
             flex: 1;
             text-align: center;
 
             h4 {
                 font-size: 16px;
-                color: #666;
+                color: var(--subtext-light);
             }
 
             p {
@@ -31,12 +58,12 @@
             }
 
             .increase {
-                color: green;
+                color: var(--increase-color);
                 font-size: 14px;
             }
 
             .decrease {
-                color: red;
+                color: var(--decrease-color);
                 font-size: 14px;
             }
         }
@@ -50,15 +77,38 @@
         flex-grow: 1;
 
         .chart-card {
-            background: white;
+            background: var(--card-bg-light);
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 10px var(--shadow-light);
+            position: relative;
 
             h4 {
                 font-size: 16px;
-                color: #333;
+                color: var(--text-light);
                 margin-bottom: 10px;
+            }
+
+            .legend {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                margin-top: 10px;
+
+                .legend-item {
+                    display: flex;
+                    align-items: center;
+                    margin-right: 15px;
+                    font-size: 14px;
+
+                    span {
+                        width: 12px;
+                        height: 12px;
+                        display: inline-block;
+                        border-radius: 50%;
+                        margin-right: 5px;
+                    }
+                }
             }
         }
     }
@@ -74,41 +124,31 @@
     }
 }
 
-.dashboard {
-    height: auto;
+.dr {
+    .stats .stat-card {
+        background: var(--card-bg-dark);
+        box-shadow: 0 2px 10px var(--shadow-dark);
 
-    .charts {
-        .chart-card {
-            position: relative;
+        h4 {
+            color: var(--subtext-dark);
+        }
 
-            .legend {
-                display: flex;
-                justify-content: center;
-                flex-wrap: wrap;
-                margin-top: 10px;
+        p {
+            color: #fff;
+        }
+    }
 
+    .charts .chart-card {
+        background: var(--card-bg-dark);
+        box-shadow: 0 2px 10px var(--shadow-dark);
 
-
-                .legend-item {
-                    display: flex;
-                    align-items: center;
-                    margin-right: 15px;
-                    font-size: 14px;
-                }
-
-                span {
-                    width: 12px;
-                    height: 12px;
-                    display: inline-block;
-                    border-radius: 50%;
-                    margin-right: 5px;
-                }
-            }
+        h4 {
+            color: var(--text-dark);
         }
     }
 }
 
-@media (max-width:767px) {
+@media (max-width: 767px) {
     .recharts-cartesian-axis-ticks {
         display: none;
     }
