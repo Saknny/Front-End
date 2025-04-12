@@ -3,6 +3,84 @@
     text-align: center;
     background-color: #f7f8fc;
 
+    .css-1m9128y {
+        display: flex;
+        justify-content: center;
+        gap: 3px;
+
+        .MuiButtonBase-root.MuiIconButton-root {
+            color: rgba(0, 0, 0, 0);
+        }
+    }
+
+    &.dr {
+        background-color: #1c1919;
+
+        .page-title {
+            color: #fff;
+        }
+
+        .apartment-card {
+            background: #2c2c2c;
+            box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.05);
+
+            .carousel-image {
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+            }
+
+            .apartment-title {
+                color: white;
+            }
+
+            .apartment-description {
+                color: white;
+            }
+
+            .apartment-price {
+                color: #85c1ff;
+            }
+
+            .status-text {
+                &.pending {
+                    background-color: #334a62;
+                    color: #99c9ff;
+                }
+
+                &.accepted {
+                    background-color: #345843;
+                    color: #b8ffcc;
+                }
+
+                &.rejected {
+                    background-color: #5c2d2d;
+                    color: #f4a7a7;
+                }
+            }
+
+            .button-group {
+                button {
+                    color: #eee;
+                }
+
+                .accept-button {
+                    background-color: #4caf50 !important;
+
+                    &:hover {
+                        background-color: #70d18b !important;
+                    }
+                }
+
+                .reject-button {
+                    background-color: #d9534f !important;
+
+                    &:hover {
+                        background-color: #f19997 !important;
+                    }
+                }
+            }
+        }
+    }
 
     h4 {
         font-weight: bold;
@@ -11,7 +89,6 @@
         color: #4a4a4a;
     }
 }
-
 
 
 .apartment-card {

@@ -17,7 +17,6 @@ import data from "../../Data/Dashboard";
 import { LoginContext } from "../../Context/Login/Login";
 function Dashboard() {
   const { language, darkMode } = useContext(LoginContext);
-  console.log(darkMode);
   const CustomTooltip = ({ active, payload, total }) => {
     if (active && payload && payload.length) {
       const percent = ((payload[0].value / total) * 100).toFixed(1);

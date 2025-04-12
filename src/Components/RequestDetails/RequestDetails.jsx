@@ -1,146 +1,190 @@
-import React, { useState } from "react";
+// ✅ Finalized RequestDetails.jsx with translation file support
+import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Box, Typography, Button, Grid } from "@mui/material";
-import Carousel from "react-material-ui-carousel";
-import BedIcon from "@mui/icons-material/Bed";
-import HotelIcon from "@mui/icons-material/Hotel";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import axios from "axios";
+import { toast } from "react-toastify";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
+import ApartmentSection from "./ApartmentSection";
+import RoomSection from "./RoomSection";
+import BedSection from "./BedSection";
 import "./RequestDetails.scss";
-
-// Mock data (same as Requests page)
-const apartmentsData = [
-  {
-    id: 1,
-    title: "Luxury Apartment in New Damietta",
-    location: "New Damietta, Egypt",
-    description:
-      "Spacious 3-bedroom apartment with a sea view and modern design.",
-    price: "$1200/month",
-    rooms: 3,
-    beds: 4,
-    images: ["/apartment2.jpeg", "/apartment.jpeg", "/apartment2.jpeg"],
-    status: "pending",
-  },
-  {
-    id: 2,
-    title: "Cozy Studio in Ras El Bar",
-    location: "Ras El Bar, Egypt",
-    description:
-      "Modern and stylish studio apartment, close to the beach with amazing views.",
-    price: "$850/month",
-    rooms: 1,
-    beds: 1,
-    images: ["/apartment2.jpeg", "/apartment.jpeg", "/apartment2.jpeg"],
-    status: "pending",
-  },
-];
+import { LoginContext } from "../../Context/Login/Login";
+import Loading from "../Loading/Loading";
+import { t } from "./translate/requestDetails";
 
 const RequestDetails = () => {
+  const { language, darkMode } = useContext(LoginContext);
   const { id } = useParams();
   const navigate = useNavigate();
-  const [request, setRequest] = useState(
-    apartmentsData.find((apt) => apt.id === parseInt(id))
-  );
+  const [request, setRequest] = useState(null);
 
-  if (!request) {
-    return (
-      <Typography variant="h6" align="center">
-        Request not found.
-      </Typography>
-    );
-  }
+  useEffect(() => {
+    axios.get(`/api/admin/request/${id}`).then((res) => {
+      const data = res.data.data;
+      data.items.forEach((item) => {
+        item.shouldApprove = false;
+        item.images?.forEach((img) => (img.shouldApprove = false));
+      });
+      setRequest(data);
+    });
+  }, [id]);
 
-  const handleStatusChange = (newStatus) => {
-    setRequest((prev) => ({ ...prev, status: newStatus }));
+  const refresh = () => {
+    axios
+      .get(`/api/admin/request/${id}`)
+      .then((res) => setRequest(res.data.data));
   };
 
+  const toggleImageApproval = (image) => {
+    image.shouldApprove = !image.shouldApprove;
+    setRequest({ ...request });
+  };
+
+  const toggleItemApproval = (itemId) => {
+    const updatedItems = request.items.map((item) =>
+      item.id === itemId
+        ? { ...item, shouldApprove: !item.shouldApprove }
+        : item
+    );
+    setRequest({ ...request, items: updatedItems });
+  };
+
+  const canApprove = () => {
+    let hasApprovedApartment = false;
+    let hasApprovedItem = false;
+    let hasApprovedImage = false;
+
+    request.items.forEach((item) => {
+      if (item.shouldApprove) {
+        hasApprovedItem = true;
+        if (item.entityType === "APARTMENT") {
+          hasApprovedApartment = true;
+        }
+      }
+      item.images?.forEach((img) => {
+        if (img.shouldApprove) hasApprovedImage = true;
+      });
+    });
+
+    return hasApprovedItem && hasApprovedApartment && hasApprovedImage;
+  };
+
+  const approveRequest = async (status) => {
+    try {
+      const approvedImages = [];
+      const approvedItems = [];
+
+      request.items.forEach((item) => {
+        if (item.shouldApprove) approvedItems.push(item.id);
+        item.images?.forEach((img) => {
+          if (img.shouldApprove) approvedImages.push(img.id);
+        });
+      });
+
+      await Promise.all(
+        approvedImages.map((imgId) =>
+          axios.patch(`/api/admin/${imgId}/image-approval`, {
+            status: "APPROVED",
+          })
+        )
+      );
+
+      await Promise.all(
+        approvedItems.map((itemId) =>
+          axios.patch(`/api/admin/item-approval`, {
+            id: itemId,
+            status: "APPROVED",
+          })
+        )
+      );
+
+      await axios.patch(`/api/admin/request-approval`, {
+        id: request.id,
+        status,
+      });
+      console.log("✅ Approved Images:", approvedImages);
+      console.log("✅ Approved Items:", approvedItems);
+      console.log("✅ Final Request ID:", request.id);
+      console.log("✅ Final Request Status:", status);
+
+      toast.success(t.success[language]);
+      navigate("/requests");
+      refresh();
+    } catch (err) {
+      console.error("Error approving request:", err);
+      toast.error(t.error[language]);
+    }
+  };
+
+  if (!request)
+    return (
+      <div className="text-center mt-4">
+        <Loading />
+      </div>
+    );
+
+  const apartment = request.items.find((i) => i.entityType === "APARTMENT");
+  const rooms = request.items.filter((i) => i.entityType === "ROOM");
+  const beds = request.items.filter((i) => i.entityType === "BED");
+
   return (
-    <Box className="request-details-container">
-      <Grid container className="details-grid">
-        {/* Left: Images */}
-        <Grid item xs={12} md={6} className="carousel-section">
-          <Carousel className="carousel">
-            {request.images.map((image, index) => (
-              <img
-                key={index}
-                src={image}
-                alt={`Apartment ${index + 1}`}
-                className="carousel-image"
-              />
-            ))}
-          </Carousel>
-        </Grid>
+    <div className={`container py-4 request-details-container ${darkMode}`}>
+      <button
+        className="btn btn-outline-secondary mb-4 w-25"
+        onClick={() => navigate(-1)}
+      >
+        <ArrowBackIcon className="me-2" /> {t.back[language]}
+      </button>
 
-        {/* Right: Apartment Details */}
-        <Grid item xs={12} md={6} className="details-section">
-          <Button
-            startIcon={<ArrowBackIcon />}
-            className="back-button"
-            onClick={() => navigate(-1)}
+      <h3 className="mb-4 text-primary">🏢 {t.apartmentDetails[language]}</h3>
+
+      <ApartmentSection
+        apartment={apartment}
+        onToggle={toggleItemApproval}
+        onImageToggle={toggleImageApproval}
+        t={t}
+        language={language}
+      />
+
+      <h4 className="mt-4">🛏️ {t.rooms[language]}</h4>
+      <RoomSection
+        rooms={rooms}
+        onToggle={toggleItemApproval}
+        onImageToggle={toggleImageApproval}
+        t={t}
+        language={language}
+      />
+
+      <h4 className="mt-5">🛏️ {t.beds[language]}</h4>
+      <BedSection
+        beds={beds}
+        onToggle={toggleItemApproval}
+        onImageToggle={toggleImageApproval}
+        t={t}
+        language={language}
+      />
+
+      {request.status === "PENDING" && (
+        <div className="mt-4 d-flex gap-3 justify-content-center">
+          <button
+            className="btn btn-success px-4"
+            onClick={() => approveRequest("APPROVED")}
+            disabled={!canApprove()}
+            title={!canApprove() ? t.validation[language] : ""}
           >
-            Back
-          </Button>
-
-          <Typography variant="h4" className="apartment-title">
-            {request.title}
-          </Typography>
-
-          <Typography variant="body1" className="apartment-location">
-            <LocationOnIcon className="icon" /> {request.location}
-          </Typography>
-
-          <Typography variant="h6" className="apartment-price">
-            <MonetizationOnIcon className="icon" /> {request.price}
-          </Typography>
-
-          <Box className="features">
-            <Typography variant="body1" className="feature-item">
-              <HotelIcon className="icon" /> {request.rooms} Rooms
-            </Typography>
-            <Typography variant="body1" className="feature-item">
-              <BedIcon className="icon" /> {request.beds} Beds
-            </Typography>
-          </Box>
-
-          <Typography
-            variant="body1"
-            className={`status-text ${request.status}`}
+            <CheckCircleIcon className="me-2" /> {t.approveRequest[language]}
+          </button>
+          <button
+            className="btn btn-danger px-4"
+            onClick={() => approveRequest("REJECTED")}
           >
-            {request.status === "pending"
-              ? "Pending Approval"
-              : request.status === "accepted"
-              ? "Accepted ✅"
-              : "Rejected ❌"}
-          </Typography>
-
-          {/* Accept & Reject Buttons */}
-          {request.status === "pending" && (
-            <Box className="button-group">
-              <Button
-                variant="contained"
-                className="accept-button"
-                startIcon={<CheckCircleIcon />}
-                onClick={() => handleStatusChange("accepted")}
-              >
-                Accept
-              </Button>
-              <Button
-                variant="contained"
-                className="reject-button"
-                startIcon={<CancelIcon />}
-                onClick={() => handleStatusChange("rejected")}
-              >
-                Reject
-              </Button>
-            </Box>
-          )}
-        </Grid>
-      </Grid>
-    </Box>
+            <CancelIcon className="me-2" /> {t.rejectRequest[language]}
+          </button>
+        </div>
+      )}
+    </div>
   );
 };
 
