@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import Carousel from "react-material-ui-carousel";
 import ImageGallery from "./ImageGallery";
 import { LoginContext } from "../../Context/Login/Login";
-import { t } from "./translate/requestDetails";
+import { t } from "../../translate/requestDetails";
 import PropTypes from "prop-types";
 
 function ApartmentSection({ apartment, onToggle, onImageToggle }) {

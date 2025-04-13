@@ -9,6 +9,7 @@ import React from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../Components/Loading/Loading";
+import api from "../../utils/axiosInstance";
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,14 +23,23 @@ function LoginForm() {
     setError("");
 
     try {
-      const response = await axios.post("/api/auth/login", {
+      const response = await api.post("/auth/login", {
         email,
         password,
       });
+      console.log(response.data?.data.user?.role);
       localStorage.setItem("token", response.data.data.token);
       localStorage.setItem("email", email);
       setLoggedIn(true);
-      setTimeout(() => navigate("/"), 2000);
+      setTimeout(() => {
+        if (response.data?.data.user?.role === "ADMIN") {
+          navigate("/admin/dashboard");
+        } else if (response.data?.data.user?.role === "STUDENT") {
+          navigate("/");
+        } else {
+          toast.error("Invalid role");
+        }
+      }, 2000);
       setIsAuthenticated(true);
       toast.success("Login Successful");
     } catch (err) {

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import HotelIcon from "@mui/icons-material/Hotel";
 import ImageGallery from "./ImageGallery";
 import { LoginContext } from "../../Context/Login/Login";
-import { t } from "./translate/requestDetails";
+import { t } from "../../translate/requestDetails";
 
 const RoomSection = ({ rooms, onToggle, onImageToggle }) => {
   const { language } = useContext(LoginContext);

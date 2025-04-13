@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import axios from "axios";
 import React from "react";
+import api from "../../utils/axiosInstance";
 function Settings() {
   useEffect(() => {
-    axios;
-    axios
-      .get("/api/admin/pending-requests")
+    api
+      .get("/admin/pending-requests")
       .then((res) => {
         console.log(res);
       })

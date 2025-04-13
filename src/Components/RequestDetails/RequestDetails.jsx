@@ -12,8 +12,8 @@ import BedSection from "./BedSection";
 import "./RequestDetails.scss";
 import { LoginContext } from "../../Context/Login/Login";
 import Loading from "../Loading/Loading";
-import { t } from "./translate/requestDetails";
-
+import { t } from "../../translate/requestDetails";
+import api from "../../utils/axiosInstance";
 const RequestDetails = () => {
   const { language, darkMode } = useContext(LoginContext);
   const { id } = useParams();
@@ -21,7 +21,7 @@ const RequestDetails = () => {
   const [request, setRequest] = useState(null);
 
   useEffect(() => {
-    axios.get(`/api/admin/request/${id}`).then((res) => {
+    api.get(`/admin/request/${id}`).then((res) => {
       const data = res.data.data;
       data.items.forEach((item) => {
         item.shouldApprove = false;
@@ -32,9 +32,7 @@ const RequestDetails = () => {
   }, [id]);
 
   const refresh = () => {
-    axios
-      .get(`/api/admin/request/${id}`)
-      .then((res) => setRequest(res.data.data));
+    api.get(`/admin/request/${id}`).then((res) => setRequest(res.data.data));
   };
 
   const toggleImageApproval = (image) => {
@@ -85,7 +83,7 @@ const RequestDetails = () => {
 
       await Promise.all(
         approvedImages.map((imgId) =>
-          axios.patch(`/api/admin/${imgId}/image-approval`, {
+          api.patch(`/admin/${imgId}/image-approval`, {
             status: "APPROVED",
           })
         )
@@ -93,14 +91,14 @@ const RequestDetails = () => {
 
       await Promise.all(
         approvedItems.map((itemId) =>
-          axios.patch(`/api/admin/item-approval`, {
+          api.patch(`/admin/item-approval`, {
             id: itemId,
             status: "APPROVED",
           })
         )
       );
 
-      await axios.patch(`/api/admin/request-approval`, {
+      await api.patch(`/admin/request-approval`, {
         id: request.id,
         status,
       });

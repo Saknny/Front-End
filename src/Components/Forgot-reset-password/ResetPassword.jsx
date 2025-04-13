@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import "./ResetPassword.scss";
-
+import api from "../../utils/axiosInstance";
 function ResetPassword() {
   const [otp, setOtp] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -25,7 +25,7 @@ function ResetPassword() {
 
     setLoading(true);
     try {
-      const response = await axios.post("/api/otp/verify", {
+      const response = await api.post("/otp/verify", {
         email,
         otp,
         useCase: "RESET_PASSWORD",
@@ -74,7 +74,7 @@ function ResetPassword() {
 
     setLoading(true);
     try {
-      await axios.patch("/api/auth/reset-password", {
+      await api.patch("/auth/reset-password", {
         userId: userId,
         password: newPassword,
         otp,

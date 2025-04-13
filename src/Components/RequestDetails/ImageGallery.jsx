@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { LoginContext } from "../../Context/Login/Login";
-import { t } from "./translate/requestDetails";
+import { t } from "../../translate/requestDetails";
 
 function ImageGallery({ images = [], onToggle }) {
   const { language } = useContext(LoginContext);

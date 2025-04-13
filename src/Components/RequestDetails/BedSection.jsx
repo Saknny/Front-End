@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import BedIcon from "@mui/icons-material/Bed";
 import ImageGallery from "./ImageGallery";
 import { LoginContext } from "../../Context/Login/Login";
-import { t } from "./translate/requestDetails";
+import { t } from "../../translate/requestDetails";
 
 function BedSection({ beds, onToggle, onImageToggle }) {
   const { language } = useContext(LoginContext);

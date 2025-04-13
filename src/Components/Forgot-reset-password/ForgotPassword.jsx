@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import "./ForgotPassword.scss";
-
+import api from "../../utils/axiosInstance";
 function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
@@ -14,10 +14,13 @@ function ForgotPassword() {
       toast.error("Please enter your email");
       return;
     }
-
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
     setLoading(true);
     try {
-      const response = await axios.post("/api/auth/forget-password", { email });
+      const response = await api.post("/auth/forget-password", { email });
       if (response.status === 200) {
         toast.success("OTP has been sent to your email");
         navigate("/reset-password");

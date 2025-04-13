@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import "./Requests.scss";
 import { LoginContext } from "../../Context/Login/Login";
 import { t } from "./translations";
-
+import api from "../../utils/axiosInstance";
 const ITEMS_PER_PAGE = 6;
 
 function Requests() {
@@ -25,15 +25,15 @@ function Requests() {
   const { language, darkMode } = useContext(LoginContext);
 
   useEffect(() => {
-    axios
-      .get("/api/admin/pending-requests")
+    api
+      .get("/admin/pending-requests")
       .then((res) => setRequests(res.data.data))
       .catch((err) => console.error("Error fetching requests:", err));
   }, []);
 
   const handleStatusChange = async (requestId, newStatus) => {
     try {
-      await axios.patch(`/api/admin/request-approval`, {
+      await api.patch(`/admin/request-approval`, {
         requestId,
         status: newStatus,
       });
