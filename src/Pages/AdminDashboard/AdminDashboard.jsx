@@ -12,10 +12,10 @@ import {
   Pie,
   Cell,
 } from "recharts";
-import "./Dashboard.scss";
+import "./AdminDashboard.scss";
 import data from "../../Data/Dashboard";
 import { LoginContext } from "../../Context/Login/Login";
-function Dashboard() {
+function AdminDashboard() {
   const { language, darkMode } = useContext(LoginContext);
   const CustomTooltip = ({ active, payload, total }) => {
     if (active && payload && payload.length) {
@@ -40,7 +40,7 @@ function Dashboard() {
   };
 
   return (
-    <div className={`dashboard ${darkMode}`}>
+    <div className={`AdminDashboard ${darkMode}`}>
       <div className="stats">
         <div className="stat-card">
           <h4>{language == "EN" ? "Total Bookings" : "إجمالي الحجوزات"}</h4>
@@ -190,4 +190,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default AdminDashboard;

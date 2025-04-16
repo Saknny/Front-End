@@ -5,6 +5,9 @@ export const LoginContext = createContext();
 
 export const LoginAdmin = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
+  const [userRole, setUserRole] = useState(
+    localStorage.getItem("role") || "STUDENT"
+  );
   const [language, setLanguage] = useState(
     localStorage.getItem("language") || "EN"
   );
@@ -50,6 +53,8 @@ export const LoginAdmin = ({ children }) => {
         toggleLanguage,
         darkMode,
         toggleDarkMode,
+        userRole,
+        setUserRole,
       }}
     >
       {children}

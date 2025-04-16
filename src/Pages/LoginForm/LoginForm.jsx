@@ -14,7 +14,7 @@ function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { setIsAuthenticated } = useContext(LoginContext);
+  const { setIsAuthenticated, setUserRole } = useContext(LoginContext);
   const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
 
@@ -30,13 +30,18 @@ function LoginForm() {
       console.log(response.data?.data.user?.role);
       localStorage.setItem("token", response.data.data.token);
       localStorage.setItem("email", email);
+      localStorage.setItem("role", response.data?.data.user?.role);
+      setUserRole(response.data?.data.user?.role);
+
       setLoggedIn(true);
       setTimeout(() => {
-        if (response.data?.data.user?.role === "ADMIN") {
-          navigate("/admin/dashboard");
-        } else if (response.data?.data.user?.role === "STUDENT") {
+        if (
+          response.data?.data.user?.role === "admin" ||
+          response.data?.data.user?.role === "PROVIDER"
+        ) {
           navigate("/");
         } else {
+          navigate("*");
           toast.error("Invalid role");
         }
       }, 2000);

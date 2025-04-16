@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import { useContext } from "react";
 import "./App.scss";
-import Dashboard from "./Pages/Dashboard/Dashboard";
+import AdminDashboard from "./Pages/AdminDashboard/AdminDashboard";
 import Navbar from "./Components/Navbar/Navbar";
 import Sidebar from "./Components/Sidbar/Sidbar";
 import Requests from "./Pages/Requests/Requests";
@@ -22,9 +22,10 @@ import { ToastContainer } from "react-toastify";
 import ForgotPassword from "./Components/Forgot-reset-password/ForgotPassword";
 import ResetPassword from "./Components/Forgot-reset-password/ResetPassword";
 import Loading from "./Components/Loading/Loading";
+import ProviderDashboard from "./Pages/ProviderDashboard/ProviderDashboard";
+import InvalidRole from "./Pages/InvalidRole/InvalidRole";
 function App() {
-  const { darkMode } = useContext(LoginContext);
-  const { isAuthenticated } = useContext(LoginContext);
+  const { isAuthenticated, darkMode, userRole } = useContext(LoginContext);
 
   if (isAuthenticated === null) {
     return <Loading />;
@@ -33,13 +34,15 @@ function App() {
   return (
     <Router>
       <Routes>
+        {/* Public Routes */}
         <Route path="/login" element={<LoginForm />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
 
+        {/* Protected Routes */}
         {!isAuthenticated ? (
           <Route path="*" element={<Navigate to="/login" replace />} />
-        ) : (
+        ) : userRole === "ADMIN" ? (
           <Route
             path="*"
             element={
@@ -47,9 +50,9 @@ function App() {
                 <Sidebar />
                 <div className="main-content">
                   <Navbar />
-                  <div className={`content ${darkMode == "dr" ? "dr" : ""}`}>
+                  <div className={`content ${darkMode === "dr" ? "dr" : ""}`}>
                     <Routes>
-                      <Route path="/" element={<Dashboard />} />
+                      <Route path="/" element={<AdminDashboard />} />
                       <Route path="/requests" element={<Requests />} />
                       <Route
                         path="/requests/:id"
@@ -66,6 +69,27 @@ function App() {
               </div>
             }
           />
+        ) : userRole === "PROVIDER" ? (
+          <Route
+            path="*"
+            element={
+              <div className="app-container">
+                <Sidebar />
+                <div className="main-content">
+                  <Navbar />
+                  <div className={`content ${darkMode === "dr" ? "dr" : ""}`}>
+                    <Routes>
+                      <Route path="/" element={<ProviderDashboard />} />
+                      <Route path="/requests" element={<Requests />} />
+                      {/* راوتات إضافية للبروفايدر */}
+                    </Routes>
+                  </div>
+                </div>
+              </div>
+            }
+          />
+        ) : (
+          <Route path="*" element={<InvalidRole />} />
         )}
       </Routes>
       <ToastContainer />

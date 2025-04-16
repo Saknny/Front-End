@@ -1,0 +1,38 @@
+.invalid-role-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+
+    .content {
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+
+        h2 {
+            color: #e74c3c;
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-bottom: 25px;
+            color: #555;
+        }
+
+        button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #c0392b;
+            }
+        }
+    }
+}
