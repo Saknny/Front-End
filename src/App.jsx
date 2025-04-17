@@ -1,3 +1,4 @@
+import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -6,26 +7,20 @@ import {
 } from "react-router-dom";
 import { useContext } from "react";
 import "./App.scss";
-import AdminDashboard from "./Pages/AdminDashboard/AdminDashboard";
-import Navbar from "./Components/Navbar/Navbar";
-import Sidebar from "./Components/Sidbar/Sidbar";
-import Requests from "./Pages/Requests/Requests";
-import RequestDetails from "./Components/RequestDetails/RequestDetails";
-import Settings from "./Components/Settings/Settings";
-import UsersAccounts from "./Pages/UsersAccounts/UsersAccounts";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.js";
 import LoginForm from "./Pages/LoginForm/LoginForm";
-import { LoginContext } from "./Context/Login/Login";
-import React from "react";
-import { ToastContainer } from "react-toastify";
 import ForgotPassword from "./Components/Forgot-reset-password/ForgotPassword";
 import ResetPassword from "./Components/Forgot-reset-password/ResetPassword";
 import Loading from "./Components/Loading/Loading";
-import ProviderDashboard from "./Pages/ProviderDashboard/ProviderDashboard";
 import InvalidRole from "./Pages/InvalidRole/InvalidRole";
+import { LoginContext } from "./Context/Login/Login";
+import { ToastContainer } from "react-toastify";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.js";
+import AdminLayout from "./Layouts/AdminLayout";
+import ProviderLayout from "./Layouts/ProviderLayout";
+
 function App() {
-  const { isAuthenticated, darkMode, userRole } = useContext(LoginContext);
+  const { isAuthenticated, userRole } = useContext(LoginContext);
 
   if (isAuthenticated === null) {
     return <Loading />;
@@ -43,51 +38,9 @@ function App() {
         {!isAuthenticated ? (
           <Route path="*" element={<Navigate to="/login" replace />} />
         ) : userRole === "ADMIN" ? (
-          <Route
-            path="*"
-            element={
-              <div className="app-container">
-                <Sidebar />
-                <div className="main-content">
-                  <Navbar />
-                  <div className={`content ${darkMode === "dr" ? "dr" : ""}`}>
-                    <Routes>
-                      <Route path="/" element={<AdminDashboard />} />
-                      <Route path="/requests" element={<Requests />} />
-                      <Route
-                        path="/requests/:id"
-                        element={<RequestDetails />}
-                      />
-                      <Route path="/settings" element={<Settings />} />
-                      <Route
-                        path="/UsersAccounts"
-                        element={<UsersAccounts />}
-                      />
-                    </Routes>
-                  </div>
-                </div>
-              </div>
-            }
-          />
+          <Route path="*" element={<AdminLayout />} />
         ) : userRole === "PROVIDER" ? (
-          <Route
-            path="*"
-            element={
-              <div className="app-container">
-                <Sidebar />
-                <div className="main-content">
-                  <Navbar />
-                  <div className={`content ${darkMode === "dr" ? "dr" : ""}`}>
-                    <Routes>
-                      <Route path="/" element={<ProviderDashboard />} />
-                      <Route path="/requests" element={<Requests />} />
-                      {/* راوتات إضافية للبروفايدر */}
-                    </Routes>
-                  </div>
-                </div>
-              </div>
-            }
-          />
+          <Route path="*" element={<ProviderLayout />} />
         ) : (
           <Route path="*" element={<InvalidRole />} />
         )}

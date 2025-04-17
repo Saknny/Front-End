@@ -36,17 +36,17 @@ function LoginForm() {
       setLoggedIn(true);
       setTimeout(() => {
         if (
-          response.data?.data.user?.role === "admin" ||
+          response.data?.data.user?.role === "ADMIN" ||
           response.data?.data.user?.role === "PROVIDER"
         ) {
+          toast.success("Login Successful");
           navigate("/");
         } else {
-          navigate("*");
           toast.error("Invalid role");
+          navigate("*");
         }
       }, 2000);
       setIsAuthenticated(true);
-      toast.success("Login Successful");
     } catch (err) {
       if (err.response) {
         setError(err.response.data.message || "Invalid email or password");

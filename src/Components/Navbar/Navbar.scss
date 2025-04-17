@@ -1,6 +1,6 @@
 .navbar {
     display: flex;
-    align-items: normal;
+    align-items: center;
     height: 60px;
     background: #fff;
     box-shadow: 3px 1px 10px rgba(0, 0, 0, 0.1);
@@ -13,7 +13,7 @@
 }
 
 .dark {
-    background-color: #000000;
+    background-color: var(--bg-dark);
     box-shadow: 4px 1px 2px #b8aeae;
 }
 
@@ -133,12 +133,15 @@
 
     .moon-icon {
         right: 8px;
-        color: #ffffff;
+        color: var(--card-bg-light);
+    }
+
+    &.dr.dr {
+        background-color: #dee1e4;
+        padding: 4px;
     }
 
     &.dr {
-        background-color: #d1d5db;
-
         .toggle-circle {
             background-color: #facc15;
             transform: translateX(12px);
