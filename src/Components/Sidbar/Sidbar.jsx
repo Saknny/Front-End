@@ -3,8 +3,10 @@ import "./Sidbar.scss";
 import React from "react";
 import { useContext } from "react";
 import { LoginContext } from "../../Context/Login/Login";
+
 function Sidbar() {
   const { darkMode } = useContext(LoginContext);
+
   return (
     <aside className={`sidebar ${darkMode == "dr" ? "dark" : ""}`}>
       <div className="image">
@@ -59,6 +61,46 @@ function Sidbar() {
               <i className="bx bxs-cog"></i>
               <span>Settings</span>
             </NavLink>
+          </li>
+
+          <li className="nav-item dropdown ">
+            <NavLink
+              className=" dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i className="bx bxs-user-check"></i>
+              <span>Complete Profile</span>
+            </NavLink>
+            <ul className="dropdown-menu">
+              <li>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive
+                      ? "active-li dropdown-item"
+                      : "inactive-li dropdown-item"
+                  }
+                  to="/complete-profile/user"
+                >
+                  <i className="bx bxs-user-pin"></i>
+                  User
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive
+                      ? "active-li dropdown-item"
+                      : "inactive-li dropdown-item"
+                  }
+                  to="/complete-profile/provider"
+                >
+                  <i className="bx bxs-user-voice"></i>
+                  Provider
+                </NavLink>
+              </li>
+            </ul>
           </li>
         </ul>
       </nav>

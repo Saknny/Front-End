@@ -10,7 +10,9 @@ function Navbar() {
   const userEmail = localStorage.getItem("email");
   const navigate = useNavigate();
   function logOut() {
-    localStorage.clear();
+    localStorage.removeItem("token");
+    localStorage.removeItem("email");
+    localStorage.removeItem("role");
     setIsAuthenticated(false);
     toast.success("Logged out successfully");
   }

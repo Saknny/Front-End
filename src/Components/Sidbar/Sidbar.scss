@@ -83,6 +83,37 @@
 
         }
     }
+
+    .dropdown-menu {
+        background-color: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+
+        li {
+            padding: 10px;
+            cursor: pointer;
+
+            .dropdown-item {
+
+
+                &:hover {
+                    background-color: #2a7376;
+                    color: #fff;
+                    border-radius: 30px;
+                }
+
+            }
+
+
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .dropdown-toggle::after {
+        display: none !important;
+    }
+
 }
 
 .dark {
