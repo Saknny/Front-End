@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
+import BedIcon from "@mui/icons-material/Bed"; // Added import for BedIcon
+import HotelIcon from "@mui/icons-material/Hotel"; // Added import for HotelIcon
 import ApartmentSection from "./ApartmentSection";
 import RoomSection from "./RoomSection";
 import BedSection from "./BedSection";
@@ -146,7 +148,17 @@ const RequestDetails = () => {
         language={language}
       />
 
-      <h4 className="mt-4">🛏️ {t.rooms[language]}</h4>
+      <h4 className="mt-4">
+        {/* <HotelIcon className="me-1" /> {t.rooms[language]} */}
+        <div className="home-icon d-flex align-items-center ">
+          <img
+            className="w-100 me-2 "
+            src="../../../public/room_icon.png"
+            alt=""
+          />
+          {t.rooms[language]}
+        </div>
+      </h4>
       <RoomSection
         rooms={rooms}
         onToggle={toggleItemApproval}
@@ -155,7 +167,9 @@ const RequestDetails = () => {
         language={language}
       />
 
-      <h4 className="mt-5">🛏️ {t.beds[language]}</h4>
+      <h4 className="mt-5">
+        <HotelIcon className="me-1" /> {t.beds[language]}
+      </h4>
       <BedSection
         beds={beds}
         onToggle={toggleItemApproval}

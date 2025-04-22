@@ -109,13 +109,13 @@
 
     .CarouselItem {
         width: 100%;
+        height: 100vh;
     }
 
     .carousel-image {
-        width: 100%;
-        height: 100%;
-        max-height: 70vh;
-        object-fit: cover;
+        width: inherit;
+        height: inherit;
+        object-fit: fill;
         border-radius: 8px;
 
         @media (max-width: 904px) {
@@ -172,14 +172,19 @@
 
     img {
         max-height: 250px;
-        object-fit: cover;
+        object-fit: fill;
     }
 
     .card-body {
         padding: 1rem;
 
+        h6 {
+            font-size: 17px;
+        }
+
         .btn {
             font-size: 0.875rem;
+            height: 40px;
         }
     }
 }
@@ -209,4 +214,10 @@ button {
     .details-section {
         padding: 1rem;
     }
+}
+
+.home-icon {
+    width: 25px;
+    height: 25px;
+
 }

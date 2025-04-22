@@ -18,13 +18,19 @@ const RoomSection = ({ rooms, onToggle, onImageToggle }) => {
             }`}
           >
             <div className="card-body">
-              <h6 className="text-secondary">
-                <HotelIcon className="me-1" />{" "}
+              <h6 className="text-secondary pt-3 pb-3 d-flex align-items-center">
+                {/* <HotelIcon className="me-1" />{" "} */}
+                <div className="home-icon d-flex align-items-center me-2 ">
+                  <img
+                    className="w-100 me-1 "
+                    src="../../../public/room_icon.png"
+                    alt=""
+                  />
+                </div>
                 {language === "EN"
                   ? room.data?.descriptionEn
                   : room.data?.descriptionAr}
               </h6>
-
               <div className="row g-3">
                 {[
                   "bedCount",

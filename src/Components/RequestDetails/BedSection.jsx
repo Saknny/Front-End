@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import BedIcon from "@mui/icons-material/Bed";
+import HotelIcon from "@mui/icons-material/Hotel"; // Added import for HotelIcon
 import ImageGallery from "./ImageGallery";
 import { LoginContext } from "../../Context/Login/Login";
 import { t } from "../../translate/requestDetails";
@@ -18,16 +19,12 @@ function BedSection({ beds, onToggle, onImageToggle }) {
             }`}
           >
             <div className="card-body">
-              {language === "EN" ? (
-                <h6>
-                  <BedIcon className="me-1 text-muted" />{" "}
-                  {bed.data?.descriptionEn}
-                </h6>
-              ) : (
-                <h6 className="text-muted small fst-italic">
-                  {bed.data?.descriptionAr}
-                </h6>
-              )}
+              <h6 className="text-secondary   pt-3 pb-3">
+                <HotelIcon className="me-1" />
+                {language === "EN"
+                  ? bed.data?.descriptionEn
+                  : bed.data?.descriptionAr}
+              </h6>
 
               <div className="row g-3">
                 <div className="col-3">
