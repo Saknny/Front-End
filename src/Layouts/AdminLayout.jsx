@@ -9,6 +9,8 @@ import Settings from "../Components/Settings/Settings";
 import UsersAccounts from "../Pages/UsersAccounts/UsersAccounts";
 import { LoginContext } from "../Context/Login/Login";
 import "./Layout.scss"; // Import your CSS file for styling
+import AdminIncompleteUsers from "../Pages/Complete Profile/User/AdminIncompleteUsers";
+import AdminIncompleteProvider from "../Pages/Complete Profile/Provider/AdminIncompleteProvider";
 function AdminLayout() {
   const { darkMode } = useContext(LoginContext);
 
@@ -24,6 +26,14 @@ function AdminLayout() {
             <Route path="/requests/:id" element={<RequestDetails />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/UsersAccounts" element={<UsersAccounts />} />
+            <Route
+              path="/complete-profile/user"
+              element={<AdminIncompleteUsers />}
+            />
+            <Route
+              path="/complete-profile/provider"
+              element={<AdminIncompleteProvider />}
+            />
           </Routes>
         </div>
       </div>
