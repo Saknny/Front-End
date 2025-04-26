@@ -43,7 +43,7 @@ const RoomSection = ({ rooms, onToggle, onImageToggle }) => {
                   "wardrobe",
                   "availableFor",
                 ].map((key, index) => (
-                  <div className="col-4" key={index}>
+                  <div className="col-md-4 col-sm-6" key={index}>
                     <div className="p-2 border rounded h-100">
                       <span className="small d-block">
                         {t[key]?.[language] || key}

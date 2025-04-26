@@ -27,7 +27,7 @@ function BedSection({ beds, onToggle, onImageToggle }) {
               </h6>
 
               <div className="row g-3">
-                <div className="col-3">
+                <div className="col-md-4 col-sm-6">
                   <div className="p-2 border rounded h-100">
                     <span className="small d-block">{t.price[language]}</span>
                     <span className="fw-semibold">{bed.data?.price} EGP</span>
