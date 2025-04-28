@@ -1,14 +1,22 @@
+:root {
+    --admin-incomplete-users-color: #eee;
+}
+
 .admin-users {
 
     &.dr {
         h2 {
-            color: #eee; // لون مبهج في الدارك مود
+            color: var(--admin-incomplete-users-color); // لون مبهج في الدارك مود
         }
 
         .form-control {
             background-color: #1e1e2f;
-            color: #eee;
+            color: var(--admin-incomplete-users-color);
             border: 1px solid #444;
+
+            &::placeholder {
+                color: var(--admin-incomplete-users-color);
+            }
         }
 
         .list-group-item {
@@ -20,15 +28,15 @@
             }
 
             .user-facebook {
-                color: #eee;
+                color: var(--admin-incomplete-users-color);
             }
 
             .user-name {
-                color: #ddd;
+                color: var(--admin-incomplete-users-color);
             }
 
             i {
-                color: #bbb;
+                color: var(--admin-incomplete-users-color);
             }
         }
 
@@ -58,12 +66,12 @@
     }
 
     .list-group-item {
-        background-color: #fff;
+        background-color: var(--admin-incomplete-users-color);
         border-left: 5px solid #f8c04e;
         transition: all 0.2s ease-in-out;
 
         &:hover {
-            background-color: #f8f9fa;
+            background-color: var(--admin-incomplete-users-color);
             transform: translateX(4px);
         }
 

@@ -106,7 +106,10 @@ const CompleteProfileDetails = () => {
         {item.imagesData.map(
           (img) =>
             img.url && (
-              <div key={img.id} className="col-sm-6 col-12 col-lg-4  mb-4">
+              <div
+                key={img.id}
+                className="col-sm-6 col-12 col-md-6 col-lg-4  mb-4"
+              >
                 <div
                   key={img.id}
                   className="col-md-6  w-100 mb-4 d-flex flex-column align-items-center"
@@ -128,7 +131,7 @@ const CompleteProfileDetails = () => {
           <div className="card shadow-sm p-3 profile-data-card">
             <h5 className="text-primary mb-3">User Information</h5>
             <div className="row g-3">
-              <div className="col-12 col-lg-4">
+              <div className="col-12 col-md-6 col-lg-4">
                 <div className="p-3 border rounded h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
                     <strong>First Name:</strong>{" "}
@@ -137,16 +140,16 @@ const CompleteProfileDetails = () => {
                 </div>
               </div>
 
-              <div className="col-12 col-lg-4 ">
-                <div className="p-3 border rounded h-100 d-flex flex-column align-items-start">
+              <div className="col-12 col-md-6 col-lg-4  ">
+                <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
                     <strong>Last Name:</strong> {item.data.lastName || "gobran"}
                   </span>
                 </div>
               </div>
 
-              <div className="col-12 col-lg-4">
-                <div className="p-3 border rounded h-100 d-flex flex-column align-items-start">
+              <div className="col-12 col-md-6 col-lg-4">
+                <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
                     <strong>Facebook:</strong>{" "}
                     <a
@@ -160,32 +163,32 @@ const CompleteProfileDetails = () => {
                 </div>
               </div>
 
-              <div className="col-12 col-lg-4">
-                <div className="p-3 border rounded h-100 d-flex flex-column align-items-start">
+              <div className="col-12 col-md-6 col-lg-4">
+                <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
                     <strong>Phone:</strong> {item.data.phone || "No Phone"}
                   </span>
                 </div>
               </div>
 
-              <div className="col-12 col-lg-4">
-                <div className="p-3 border rounded h-100 d-flex flex-column align-items-start">
+              <div className="col-12 col-md-6 col-lg-4">
+                <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
                     <strong>Major:</strong> {item.data.major || "No Major"}
                   </span>
                 </div>
               </div>
 
-              <div className="col-12 col-lg-4">
-                <div className="p-3 border rounded h-100 d-flex flex-column align-items-start">
+              <div className="col-12 col-md-6 col-lg-4">
+                <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
                     <strong>Smoking:</strong> {item.data.smoking ? "Yes" : "No"}
                   </span>
                 </div>
               </div>
 
-              <div className="col-12 col-lg-4">
-                <div className="p-3 border rounded h-100 d-flex flex-column align-items-start">
+              <div className="col-12 col-md-6 col-lg-4">
+                <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
                     <strong>Social Person:</strong>{" "}
                     {item.data.socialPerson ? "Yes" : "No"}
@@ -193,8 +196,8 @@ const CompleteProfileDetails = () => {
                 </div>
               </div>
 
-              <div className="col-12 col-lg-4">
-                <div className="p-3 border rounded h-100 d-flex flex-column align-items-start">
+              <div className="col-12 col-md-6 col-lg-4">
+                <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
                     <strong>LinkedIn:</strong>{" "}
                     <a
@@ -208,8 +211,8 @@ const CompleteProfileDetails = () => {
                 </div>
               </div>
 
-              <div className="col-12 col-lg-4">
-                <div className="p-3 border rounded h-100 d-flex flex-column align-items-start">
+              <div className="col-12 col-md-6 col-lg-4">
+                <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
                     <strong>Instagram:</strong>{" "}
                     <a
@@ -223,8 +226,8 @@ const CompleteProfileDetails = () => {
                 </div>
               </div>
 
-              <div className="col-12 col-lg-4">
-                <div className="p-3 border rounded h-100 d-flex flex-column align-items-start">
+              <div className="col-12 col-md-6 col-lg-4">
+                <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
                     <strong>University:</strong>{" "}
                     {item.data.university || "No University"}
@@ -232,16 +235,16 @@ const CompleteProfileDetails = () => {
                 </div>
               </div>
 
-              <div className="col-12 col-lg-4">
-                <div className="p-3 border rounded h-100 d-flex flex-column align-items-start">
+              <div className="col-12 col-md-6 col-lg-4">
+                <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
                     <strong>Level:</strong> {item.data.level || "No Level"}
                   </span>
                 </div>
               </div>
 
-              <div className="col-12 col-lg-4">
-                <div className="p-3 border rounded h-100 d-flex flex-column align-items-start">
+              <div className="col-12 col-md-6 col-lg-4">
+                <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
                     <strong>Hobbies:</strong>{" "}
                     {item.data.hobbies && item.data.hobbies.length > 0 ? (

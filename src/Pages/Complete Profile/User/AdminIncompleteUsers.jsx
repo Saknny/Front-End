@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./AdminIncompleteUsers.scss";
 import api from "../../../utils/axiosInstance";
-import Loading from "../../../components/Loading/Loading";
+import Loading from "../../../Components/Loading/Loading";
 import { LoginContext } from "../../../Context/Login/Login";
 import { useContext } from "react";
 const AdminIncompleteUsers = () => {
