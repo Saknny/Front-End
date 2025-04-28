@@ -106,7 +106,7 @@ const CompleteProfileDetails = () => {
         {item.imagesData.map(
           (img) =>
             img.url && (
-              <div key={img.id} className="col-sm-6 col-md-4  mb-4">
+              <div key={img.id} className="col-sm-6 col-12 col-lg-4  mb-4">
                 <div
                   key={img.id}
                   className="col-md-6  w-100 mb-4 d-flex flex-column align-items-center"
@@ -128,7 +128,7 @@ const CompleteProfileDetails = () => {
           <div className="card shadow-sm p-3 profile-data-card">
             <h5 className="text-primary mb-3">User Information</h5>
             <div className="row g-3">
-              <div className="col-md-3">
+              <div className="col-12 col-lg-4">
                 <div className="p-3 border rounded h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
                     <strong>First Name:</strong>{" "}
@@ -137,7 +137,7 @@ const CompleteProfileDetails = () => {
                 </div>
               </div>
 
-              <div className="col-md-3">
+              <div className="col-12 col-lg-4 ">
                 <div className="p-3 border rounded h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
                     <strong>Last Name:</strong> {item.data.lastName || "gobran"}
@@ -145,7 +145,7 @@ const CompleteProfileDetails = () => {
                 </div>
               </div>
 
-              <div className="col-md-3">
+              <div className="col-12 col-lg-4">
                 <div className="p-3 border rounded h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
                     <strong>Facebook:</strong>{" "}
@@ -160,7 +160,7 @@ const CompleteProfileDetails = () => {
                 </div>
               </div>
 
-              <div className="col-md-3">
+              <div className="col-12 col-lg-4">
                 <div className="p-3 border rounded h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
                     <strong>Phone:</strong> {item.data.phone || "No Phone"}
@@ -168,7 +168,7 @@ const CompleteProfileDetails = () => {
                 </div>
               </div>
 
-              <div className="col-md-3">
+              <div className="col-12 col-lg-4">
                 <div className="p-3 border rounded h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
                     <strong>Major:</strong> {item.data.major || "No Major"}
@@ -176,7 +176,7 @@ const CompleteProfileDetails = () => {
                 </div>
               </div>
 
-              <div className="col-md-3">
+              <div className="col-12 col-lg-4">
                 <div className="p-3 border rounded h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
                     <strong>Smoking:</strong> {item.data.smoking ? "Yes" : "No"}
@@ -184,7 +184,7 @@ const CompleteProfileDetails = () => {
                 </div>
               </div>
 
-              <div className="col-md-3">
+              <div className="col-12 col-lg-4">
                 <div className="p-3 border rounded h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
                     <strong>Social Person:</strong>{" "}
@@ -193,7 +193,7 @@ const CompleteProfileDetails = () => {
                 </div>
               </div>
 
-              <div className="col-md-3">
+              <div className="col-12 col-lg-4">
                 <div className="p-3 border rounded h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
                     <strong>LinkedIn:</strong>{" "}
@@ -208,7 +208,7 @@ const CompleteProfileDetails = () => {
                 </div>
               </div>
 
-              <div className="col-md-3">
+              <div className="col-12 col-lg-4">
                 <div className="p-3 border rounded h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
                     <strong>Instagram:</strong>{" "}
@@ -223,7 +223,7 @@ const CompleteProfileDetails = () => {
                 </div>
               </div>
 
-              <div className="col-md-3">
+              <div className="col-12 col-lg-4">
                 <div className="p-3 border rounded h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
                     <strong>University:</strong>{" "}
@@ -232,7 +232,7 @@ const CompleteProfileDetails = () => {
                 </div>
               </div>
 
-              <div className="col-md-3">
+              <div className="col-12 col-lg-4">
                 <div className="p-3 border rounded h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
                     <strong>Level:</strong> {item.data.level || "No Level"}
@@ -240,7 +240,7 @@ const CompleteProfileDetails = () => {
                 </div>
               </div>
 
-              <div className="col-md-3">
+              <div className="col-12 col-lg-4">
                 <div className="p-3 border rounded h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
                     <strong>Hobbies:</strong>{" "}
