@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./AdminIncompleteUsers.scss";
 import api from "../../../utils/axiosInstance";
-import { useNavigate } from "react-router-dom";
+import Loading from "../../../components/Loading/Loading";
 const AdminIncompleteUsers = () => {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const navigate = useNavigate();
+  const [loading, setloading] = useState(true);
   const usersPerPage = 9;
 
   useEffect(() => {
@@ -29,6 +29,7 @@ const AdminIncompleteUsers = () => {
         );
 
         setUsers(extractedUsers);
+        setloading(false);
       } catch (error) {
         console.error("Error fetching requests:", error);
       }
@@ -42,6 +43,10 @@ const AdminIncompleteUsers = () => {
       .toLowerCase()
       .includes(searchTerm.toLowerCase())
   );
+
+  if (loading) {
+    <Loading />;
+  }
 
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
