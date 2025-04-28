@@ -3,11 +3,14 @@ import { Link } from "react-router-dom";
 import "./AdminIncompleteUsers.scss";
 import api from "../../../utils/axiosInstance";
 import Loading from "../../../components/Loading/Loading";
+import { LoginContext } from "../../../Context/Login/Login";
+import { useContext } from "react";
 const AdminIncompleteUsers = () => {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setloading] = useState(true);
+  const { darkMode } = useContext(LoginContext);
   const usersPerPage = 9;
 
   useEffect(() => {
@@ -54,7 +57,7 @@ const AdminIncompleteUsers = () => {
   const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
 
   return (
-    <div className="admin-users container py-4">
+    <div className={`admin-users container py-4  ${darkMode}`}>
       <h2 className="mb-4">Users with Incomplete Profiles</h2>
 
       <div className="mb-3">
