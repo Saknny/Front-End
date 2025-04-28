@@ -1,20 +1,46 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./AdminIncompleteUsers.scss";
-import data from "../../../Data/complete_profile";
-
+import api from "../../../utils/axiosInstance";
+import { useNavigate } from "react-router-dom";
 const AdminIncompleteUsers = () => {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const navigate = useNavigate();
   const usersPerPage = 9;
 
   useEffect(() => {
-    setUsers(data);
-  }, []);
+    const fetchUsers = async () => {
+      try {
+        const res = await api.get("/admin/pending-profile-requests");
+        const fetchedRequests = res.data.data;
+
+        const extractedUsers = fetchedRequests.flatMap((request) =>
+          (request.items || []).map((item) => {
+            const data = item.data || {};
+            return {
+              id: request.id,
+              firstName: data.firstName || "karem",
+              lastName: data.lastName || "gobran",
+              facebook: data.facebook || "No Facebook",
+            };
+          })
+        );
+
+        setUsers(extractedUsers);
+      } catch (error) {
+        console.error("Error fetching requests:", error);
+      }
+    };
+
+    fetchUsers();
+  }, [users]);
 
   const filteredUsers = users.filter((user) =>
-    user.fullName.toLowerCase().includes(searchTerm.toLowerCase())
+    `${user.firstName} ${user.lastName}`
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase())
   );
 
   const indexOfLastUser = currentPage * usersPerPage;
@@ -42,11 +68,16 @@ const AdminIncompleteUsers = () => {
       <div className="list-group">
         {currentUsers.map((user) => (
           <Link
-            to={`/admin/complete-profile/${user.id}`}
+            to={`/complete-profile/user/${user.id}`}
             className="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-            key={user.id}
+            key={`${user.id}`}
           >
-            <span className="user-name">{user.fullName}</span>
+            <div>
+              <span className="user-name">
+                {user.firstName} {user.lastName}
+              </span>
+              <div className="user-facebook">{user.facebook}</div>
+            </div>
             <i className="bx bx-chevron-right"></i>
           </Link>
         ))}

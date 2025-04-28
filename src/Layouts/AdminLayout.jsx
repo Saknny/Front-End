@@ -11,6 +11,7 @@ import { LoginContext } from "../Context/Login/Login";
 import "./Layout.scss"; // Import your CSS file for styling
 import AdminIncompleteUsers from "../Pages/Complete Profile/User/AdminIncompleteUsers";
 import AdminIncompleteProvider from "../Pages/Complete Profile/Provider/AdminIncompleteProvider";
+import CompleteProfileDetails from "../Components/CompleteProfileDetails/CompleteProfileDetails";
 function AdminLayout() {
   const { darkMode } = useContext(LoginContext);
 
@@ -29,6 +30,10 @@ function AdminLayout() {
             <Route
               path="/complete-profile/user"
               element={<AdminIncompleteUsers />}
+            />
+            <Route
+              path="/complete-profile/user/:id"
+              element={<CompleteProfileDetails />}
             />
             <Route
               path="/complete-profile/provider"
