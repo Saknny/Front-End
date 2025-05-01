@@ -24,6 +24,7 @@ import { toast } from "react-toastify";
 import api from "../../utils/axiosInstance"; // Adjust the import path as necessary
 import { useContext } from "react";
 import { LoginContext } from "../../Context/Login/Login";
+import Loading from "../../Components/Loading/Loading";
 
 const headCells = [
   { id: "name", numeric: false, disablePadding: true, label: "Name" },
@@ -52,7 +53,7 @@ function UsersAccounts() {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [searchQuery, setSearchQuery] = React.useState("");
   const { darkMode } = useContext(LoginContext);
-
+  const [loading, setLoading] = React.useState(true);
   const fetchUsers = async () => {
     try {
       const response = await api.get("/users");
@@ -72,6 +73,7 @@ function UsersAccounts() {
           gender: item.student?.gender || "",
         }));
       setUsers(usersData);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching users:", error);
     }
@@ -117,7 +119,9 @@ function UsersAccounts() {
       return a[orderBy] > b[orderBy] ? -1 : 1;
     })
     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
-
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <Box
       className={`users-accounts ${darkMode === "dr" ? "dark" : ""}`}

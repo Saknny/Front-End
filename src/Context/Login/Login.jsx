@@ -12,7 +12,7 @@ export const LoginAdmin = ({ children }) => {
     localStorage.getItem("language") || "EN"
   );
   const [darkMode, setDarkMode] = useState(
-    localStorage.getItem("darkMode") || "dr"
+    localStorage.getItem("darkMode") || "wh"
   );
 
   useEffect(() => {
