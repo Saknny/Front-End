@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./AdminIncompleteUsers.scss";
 import api from "../../../utils/axiosInstance";
 import Loading from "../../../Components/Loading/Loading";
 import { LoginContext } from "../../../Context/Login/Login";
-import { useContext } from "react";
 const AdminIncompleteUsers = () => {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -35,11 +34,12 @@ const AdminIncompleteUsers = () => {
         setloading(false);
       } catch (error) {
         console.error("Error fetching requests:", error);
+        setloading(false);
       }
     };
 
     fetchUsers();
-  }, [users]);
+  }, []);
 
   const filteredUsers = users.filter((user) =>
     `${user.firstName} ${user.lastName}`
@@ -48,9 +48,8 @@ const AdminIncompleteUsers = () => {
   );
 
   if (loading) {
-    <Loading />;
+    return <Loading />;
   }
-
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);

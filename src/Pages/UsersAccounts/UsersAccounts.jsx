@@ -1,6 +1,5 @@
 import "./UsersAccounts.scss";
 import * as React from "react";
-import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
@@ -19,15 +18,12 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { visuallyHidden } from "@mui/utils";
-import EditIcon from "@mui/icons-material/Edit";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import initialUsers from "../../Data/initialUsers";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
+import api from "../../utils/axiosInstance"; // Adjust the import path as necessary
+import { useContext } from "react";
+import { LoginContext } from "../../Context/Login/Login";
 
 const headCells = [
   { id: "name", numeric: false, disablePadding: true, label: "Name" },
@@ -54,15 +50,46 @@ function UsersAccounts() {
   const [orderBy, setOrderBy] = React.useState("name");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [editUser, setEditUser] = React.useState(null);
   const [searchQuery, setSearchQuery] = React.useState("");
+  const { darkMode } = useContext(LoginContext);
 
-  const deleteUser = (id) => {
-    setUsers(users.filter((user) => user.id !== id));
+  const fetchUsers = async () => {
+    try {
+      const response = await api.get("/users");
+      const usersData = response.data.data
+        .filter((item) => item.role === "STUDENT" || item.role === "PROVIDER")
+        .map((item) => ({
+          id: item.id,
+          name: `${item.student?.firstName || ""} ${
+            item.student?.lastName || ""
+          }`,
+          email: item.email,
+          age: null,
+          city: null,
+          university: item.student?.university || "",
+          faculty: item.student?.major || "",
+          year: item.student?.level || "",
+          gender: item.student?.gender || "",
+        }));
+      setUsers(usersData);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
   };
+
   useEffect(() => {
-    setUsers(initialUsers);
+    fetchUsers();
   }, []);
+
+  const deleteUser = async (id) => {
+    try {
+      await api.delete(`/users/${id}`);
+      setUsers((prev) => prev.filter((user) => user.id !== id));
+      toast.success("User deleted successfully");
+    } catch (error) {
+      console.error("Failed to delete user", error);
+    }
+  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -79,14 +106,6 @@ function UsersAccounts() {
     setPage(0);
   };
 
-  const handleEdit = (user) => {
-    setEditUser(user);
-  };
-
-  const handleSave = () => {
-    setUsers(users.map((u) => (u.id === editUser.id ? editUser : u)));
-    setEditUser(null);
-  };
   const filteredUsers = users
     .filter((user) =>
       user.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -100,15 +119,13 @@ function UsersAccounts() {
     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
   return (
-    <Box sx={{ width: "100%", padding: 2 }}>
-      <Paper
-        sx={{
-          backgroundColor: alpha("#f5f5f5", 1),
-          padding: 2,
-        }}
-      >
+    <Box
+      className={`users-accounts ${darkMode === "dr" ? "dark" : ""}`}
+      sx={{ width: "100%" }}
+    >
+      <Paper sx={{ backgroundColor: alpha("#f5f5f5", 1), padding: 2 }}>
         <Toolbar>
-          <Typography variant="h6" sx={{ flex: "1 1 100%" }}>
+          <Typography variant="h4" sx={{ flex: "1 1 100%" }}>
             User Accounts
           </Typography>
           <TextField
@@ -118,7 +135,6 @@ function UsersAccounts() {
             onChange={(e) => setSearchQuery(e.target.value)}
             sx={{ mb: 2, width: "100%" }}
           />
-
           {selected.length > 0 && (
             <Tooltip title="Delete">
               <IconButton
@@ -154,13 +170,13 @@ function UsersAccounts() {
                       onClick={(event) => handleRequestSort(event, headCell.id)}
                     >
                       {headCell.label}
-                      {orderBy === headCell.id ? (
+                      {orderBy === headCell.id && (
                         <Box component="span" sx={visuallyHidden}>
                           {order === "desc"
                             ? "sorted descending"
                             : "sorted ascending"}
                         </Box>
-                      ) : null}
+                      )}
                     </TableSortLabel>
                   </TableCell>
                 ))}
@@ -190,11 +206,6 @@ function UsersAccounts() {
                   <TableCell>{user.faculty}</TableCell>
                   <TableCell>{user.year}</TableCell>
                   <TableCell>{user.gender}</TableCell>
-                  <TableCell>
-                    <IconButton onClick={() => handleEdit(user)}>
-                      <EditIcon />
-                    </IconButton>
-                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -210,44 +221,8 @@ function UsersAccounts() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      {editUser && (
-        <Dialog open={true} onClose={() => setEditUser(null)}>
-          <DialogTitle>Edit User</DialogTitle>
-          <DialogContent>
-            {headCells.slice(0, -1).map((field) => (
-              <TextField
-                key={field.id}
-                fullWidth
-                margin="dense"
-                label={field.label}
-                value={editUser[field.id]}
-                onChange={(e) =>
-                  setEditUser({ ...editUser, [field.id]: e.target.value })
-                }
-              />
-            ))}
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setEditUser(null)}>Cancel</Button>
-            <Button onClick={handleSave}>Save</Button>
-          </DialogActions>
-        </Dialog>
-      )}
     </Box>
   );
 }
-
-UsersAccounts.propTypes = {
-  users: PropTypes.array,
-  selected: PropTypes.array,
-  order: PropTypes.string,
-  orderBy: PropTypes.string,
-  page: PropTypes.number,
-  rowsPerPage: PropTypes.number,
-  deleteUser: PropTypes.func,
-  handleRequestSort: PropTypes.func,
-  handleChangePage: PropTypes.func,
-  handleChangeRowsPerPage: PropTypes.func,
-};
 
 export default UsersAccounts;

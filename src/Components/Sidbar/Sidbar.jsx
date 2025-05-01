@@ -53,6 +53,17 @@ function Sidbar() {
           </li>
           <li>
             <NavLink
+              to="/complete-profile/user"
+              className={({ isActive }) =>
+                isActive ? "active-li" : "inactive-li"
+              }
+            >
+              <i className="bx bx-user"></i>
+              <span>Complete Profile</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
               to="/settings"
               className={({ isActive }) =>
                 isActive ? "active-li" : "inactive-li"
@@ -63,7 +74,7 @@ function Sidbar() {
             </NavLink>
           </li>
 
-          <li className="nav-item dropdown ">
+          {/* <li className="nav-item dropdown ">
             <NavLink
               className=" dropdown-toggle"
               type="button"
@@ -101,7 +112,7 @@ function Sidbar() {
                 </NavLink>
               </li>
             </ul>
-          </li>
+          </li> */}
         </ul>
       </nav>
     </aside>
