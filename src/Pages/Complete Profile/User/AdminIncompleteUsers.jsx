@@ -15,17 +15,20 @@ const AdminIncompleteUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await api.get("/admin/pending-profile-requests");
-        const fetchedRequests = res.data.data;
+        const res = await api.get("/admin/pending-requests");
+        const fetchedRequests = res.data.data.filter(
+          (item) =>
+            item.type === "PROFILE_UPDATE" || item.type === "PROFILE_COMPLETE"
+        );
 
         const extractedUsers = fetchedRequests.flatMap((request) =>
           (request.items || []).map((item) => {
             const data = item.data || {};
             return {
               id: request.id,
-              firstName: data.firstName || "karem",
-              lastName: data.lastName || "gobran",
-              facebook: data.facebook || "No Facebook",
+              firstName: data.firstName || "no name ",
+              lastName: data.lastName || "no name",
+              request_type: request.type,
             };
           })
         );
@@ -83,7 +86,7 @@ const AdminIncompleteUsers = () => {
               <span className="user-name">
                 {user.firstName} {user.lastName}
               </span>
-              <div className="user-facebook">{user.facebook}</div>
+              <div className="user-facebook">{user.request_type}</div>
             </div>
             <i className="bx bx-chevron-right"></i>
           </Link>

@@ -135,7 +135,7 @@ const CompleteProfileDetails = () => {
                 <div className="p-3 border rounded h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
                     <strong>First Name:</strong>{" "}
-                    {item.data.firstName || "karem"}
+                    {item.data.firstName || "no name"}
                   </span>
                 </div>
               </div>
@@ -143,7 +143,8 @@ const CompleteProfileDetails = () => {
               <div className="col-12 col-md-6 col-lg-4  ">
                 <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
-                    <strong>Last Name:</strong> {item.data.lastName || "gobran"}
+                    <strong>Last Name:</strong>{" "}
+                    {item.data.lastName || "no name"}
                   </span>
                 </div>
               </div>
