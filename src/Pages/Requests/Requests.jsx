@@ -10,25 +10,36 @@ import {
   Chip,
 } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Requests.scss";
 import { LoginContext } from "../../Context/Login/Login";
 import { t } from "./translations";
 import api from "../../utils/axiosInstance";
+import Loading from "../../Components/Loading/Loading";
 const ITEMS_PER_PAGE = 6;
 
 function Requests() {
   const [page, setPage] = useState(1);
   const [requests, setRequests] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { language, darkMode } = useContext(LoginContext);
 
   useEffect(() => {
-    api
-      .get("/admin/pending-requests")
-      .then((res) => setRequests(res.data.data))
-      .catch((err) => console.error("Error fetching requests:", err));
+    async function fetchRequests() {
+      try {
+        const res = await api.get("/admin/pending-requests");
+        const fetchedRequests = res.data.data.filter(
+          (item) =>
+            item.type === "CREATE_APARTMENT" || item.type === "UPDATE_APARTMENT"
+        );
+        setRequests(fetchedRequests);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching requests:", error);
+      }
+    }
+    fetchRequests();
   }, []);
 
   const handleStatusChange = async (requestId, newStatus) => {
@@ -53,6 +64,10 @@ function Requests() {
     startIndex + ITEMS_PER_PAGE
   );
 
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <Box className={`requests-container px-4 pt-4 ${darkMode} `}>
       <Typography variant="h4" gutterBottom className="page-title">
@@ -62,7 +77,10 @@ function Requests() {
       <Grid container spacing={4}>
         {displayedRequests.map((request) => {
           const apartmentItem = request.items.find(
-            (item) => item.entityType === "APARTMENT"
+            (item) =>
+              item.entityType === "APARTMENT" ||
+              item.entityType === "ROOM" ||
+              item.entityType === "BED"
           );
 
           return (

@@ -21,11 +21,7 @@ const RoomSection = ({ rooms, onToggle, onImageToggle }) => {
               <h6 className="text-secondary pt-3 pb-3 d-flex align-items-center">
                 {/* <HotelIcon className="me-1" />{" "} */}
                 <div className="home-icon d-flex align-items-center me-2 ">
-                  <img
-                    className="w-100 me-1 "
-                    src="../../../public/room_icon.png"
-                    alt=""
-                  />
+                  <img className="w-100 me-1 " src="/room_icon.png" alt="" />
                 </div>
                 {language === "EN"
                   ? room.data?.descriptionEn

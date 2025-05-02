@@ -139,44 +139,45 @@ const RequestDetails = () => {
       </button>
 
       <h3 className="mb-4 text-primary">🏢 {t.apartmentDetails[language]}</h3>
-
-      <ApartmentSection
-        apartment={apartment}
-        onToggle={toggleItemApproval}
-        onImageToggle={toggleImageApproval}
-        t={t}
-        language={language}
-      />
+      {apartment && (
+        <ApartmentSection
+          apartment={apartment}
+          onToggle={toggleItemApproval}
+          onImageToggle={toggleImageApproval}
+          t={t}
+          language={language}
+        />
+      )}
 
       <h4 className="mt-4">
         {/* <HotelIcon className="me-1" /> {t.rooms[language]} */}
         <div className="home-icon d-flex align-items-center ">
-          <img
-            className="w-100 me-2 "
-            src="../../../public/room_icon.png"
-            alt=""
-          />
+          <img className="w-100 me-2 " src="/room_icon.png" alt="" />
           {t.rooms[language]}
         </div>
       </h4>
-      <RoomSection
-        rooms={rooms}
-        onToggle={toggleItemApproval}
-        onImageToggle={toggleImageApproval}
-        t={t}
-        language={language}
-      />
+      {rooms && (
+        <RoomSection
+          rooms={rooms}
+          onToggle={toggleItemApproval}
+          onImageToggle={toggleImageApproval}
+          t={t}
+          language={language}
+        />
+      )}
 
       <h4 className="mt-5">
         <HotelIcon className="me-1" /> {t.beds[language]}
       </h4>
-      <BedSection
-        beds={beds}
-        onToggle={toggleItemApproval}
-        onImageToggle={toggleImageApproval}
-        t={t}
-        language={language}
-      />
+      {beds && (
+        <BedSection
+          beds={beds}
+          onToggle={toggleItemApproval}
+          onImageToggle={toggleImageApproval}
+          t={t}
+          language={language}
+        />
+      )}
 
       {request.status === "PENDING" && (
         <div className="mt-4 d-flex gap-3 justify-content-center">
