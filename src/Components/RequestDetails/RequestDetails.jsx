@@ -52,23 +52,41 @@ const RequestDetails = () => {
   };
 
   const canApprove = () => {
-    let hasApprovedApartment = false;
     let hasApprovedItem = false;
     let hasApprovedImage = false;
+
+    let approvedApartment = false;
+    let approvedRoom = false;
+    let approvedBed = false;
 
     request.items.forEach((item) => {
       if (item.shouldApprove) {
         hasApprovedItem = true;
-        if (item.entityType === "APARTMENT") {
-          hasApprovedApartment = true;
+
+        const hasApprovedImages = item.images?.some((img) => img.shouldApprove);
+        if (hasApprovedImages) {
+          if (item.entityType === "APARTMENT") {
+            approvedApartment = true;
+          } else if (item.entityType === "ROOM") {
+            approvedRoom = true;
+          } else if (item.entityType === "BED") {
+            approvedBed = true;
+          }
         }
       }
+
       item.images?.forEach((img) => {
         if (img.shouldApprove) hasApprovedImage = true;
       });
     });
 
-    return hasApprovedItem && hasApprovedApartment && hasApprovedImage;
+    // نختار النوع اللي اتوافق عليه حسب الأولوية
+    const hasValidApproval =
+      approvedApartment ||
+      (!approvedApartment && approvedRoom) ||
+      (!approvedApartment && !approvedRoom && approvedBed);
+
+    return hasApprovedItem && hasApprovedImage && hasValidApproval;
   };
 
   const approveRequest = async (status) => {
