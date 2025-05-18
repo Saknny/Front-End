@@ -41,17 +41,17 @@ function ProviderDashboard() {
 
   const apartmentTypes = [
     {
-      name: language === "EN" ? "Studio" : "ستوديو",
+      name: language === "EN" ? "Apartments" : "شقق",
       value: 15,
       color: "#8884d8",
     },
     {
-      name: language === "EN" ? "1 Bedroom" : "غرفة",
+      name: language === "EN" ? "ٌRoom" : "غرفة",
       value: 20,
       color: "#82ca9d",
     },
     {
-      name: language === "EN" ? "2 Bedroom" : "غرفتين",
+      name: language === "EN" ? " Bedroom" : "سرير",
       value: 10,
       color: "#ffc658",
     },
@@ -59,15 +59,15 @@ function ProviderDashboard() {
 
   const unitRadar = [
     {
-      type: language === "EN" ? "Studio" : "ستوديو",
+      type: language === "EN" ? "Apartments" : "شقق",
       count: 15,
     },
     {
-      type: language === "EN" ? "1 Bedroom" : "غرفة",
+      type: language === "EN" ? "ٌRoom" : "غرفة",
       count: 20,
     },
     {
-      type: language === "EN" ? "2 Bedroom" : "غرفتين",
+      type: language === "EN" ? "Bedroom" : "سرير",
       count: 10,
     },
   ];
