@@ -171,7 +171,7 @@ export default function ReservationRequests() {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell className="fw-bold">Apartment</TableCell>
+                  <TableCell className="fw-bold">Property</TableCell>
                   <TableCell className="fw-bold">Student</TableCell>
                   <TableCell className="fw-bold">Price</TableCell>
                   <TableCell className="fw-bold">Status</TableCell>
@@ -195,9 +195,18 @@ export default function ReservationRequests() {
                               src={item.apartmentImage}
                               variant="rounded"
                             />
-                            <Typography fontWeight="medium">
-                              {item.apartmentTitle}
-                            </Typography>
+                            <Box display="flex" flexDirection="column">
+                              <Typography
+                                fontWeight="bold"
+                                color="textPrimary"
+                                fontSize={14}
+                              >
+                                Bed
+                              </Typography>
+                              <Typography color="textSecondary" fontSize={13}>
+                                {item.apartmentTitle}
+                              </Typography>
+                            </Box>
                           </Box>
                         </TableCell>
                         <TableCell>
