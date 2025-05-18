@@ -23,6 +23,7 @@ import "./ReservationRequests.scss";
 
 const DEFAULT_AVATAR = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
 
+// دالة خارجية لجلب أول صورة bed
 const getApartmentImage = async (apartmentId) => {
   if (!apartmentId) return DEFAULT_AVATAR;
 
@@ -158,6 +159,12 @@ export default function ReservationRequests() {
         {loading ? (
           <Box display="flex" justifyContent="center" py={5}>
             <CircularProgress />
+          </Box>
+        ) : filteredRequests.length === 0 ? (
+          <Box textAlign="center" py={5}>
+            <Typography color="textSecondary" fontSize={18}>
+              No requests found.
+            </Typography>
           </Box>
         ) : (
           <>
