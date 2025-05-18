@@ -1,0 +1,70 @@
+.dr {
+    background-color: black;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.reservation-requests {
+    transition: background-color 0.3s ease;
+
+    &.dr {
+        background-color: #121212;
+
+        .category,
+        .table-pagination {
+            color: #fff;
+        }
+
+        .MuiPaper-root {
+            background-color: #1e1e1e !important;
+            color: #ffffff;
+            box-shadow: none;
+
+            .MuiTableCell-root {
+                color: #e0e0e0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            }
+
+            .MuiChip-root {
+                color: #fff;
+
+                &.MuiChip-colorSuccess {
+                    background-color: #2e7d32;
+                }
+
+                &.MuiChip-colorWarning {
+                    background-color: #ed6c02;
+                }
+
+                &.MuiChip-colorDefault {
+                    background-color: #616161;
+                }
+            }
+
+            .MuiButton-containedPrimary {
+                background-color: #1976d2;
+
+                &:hover {
+                    background-color: #115293;
+                }
+            }
+        }
+
+        .MuiTextField-root {
+
+            input,
+            .MuiSelect-select {
+                background-color: #2a2a2a;
+                color: #fff;
+            }
+
+            fieldset {
+                border-color: rgba(255, 255, 255, 0.23);
+            }
+
+            label {
+                color: rgba(255, 255, 255, 0.7);
+            }
+        }
+    }
+}
