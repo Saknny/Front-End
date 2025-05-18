@@ -1,13 +1,16 @@
 // src/utils/axiosInstance.js
 import axios from "axios";
 
-const token = localStorage.getItem("token");
-
 const axiosInstance = axios.create({
-  baseURL: "/api", // thanks to vite proxy
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
+  baseURL: "/api",
+});
+// Set the Authorization header for all requests
+axiosInstance.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
 });
 
 export default axiosInstance;
