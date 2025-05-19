@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { LoginContext } from "../../Context/Login/Login";
 
 function Sidbar() {
-  const { darkMode } = useContext(LoginContext);
+  const { darkMode, userRole } = useContext(LoginContext);
 
   return (
     <aside className={`sidebar ${darkMode == "dr" ? "dark" : ""}`}>
@@ -18,101 +18,92 @@ function Sidbar() {
 
       <nav className="links">
         <ul>
-          <li>
-            <NavLink
-              to="/"
-              className={({ isActive }) =>
-                isActive ? "active-li" : "inactive-li"
-              }
-            >
-              <i className="bx bxs-dashboard"></i>
-              <span>Dashboard</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/requests"
-              className={({ isActive }) =>
-                isActive ? "active-li" : "inactive-li"
-              }
-            >
-              <i className="bx bx-git-pull-request"></i>
-              <span>Requests</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/UsersAccounts"
-              className={({ isActive }) =>
-                isActive ? "active-li" : "inactive-li"
-              }
-            >
-              <i className="bx bxs-user-account"></i>
-              <span>Users Accounts</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/complete-profile/user"
-              className={({ isActive }) =>
-                isActive ? "active-li" : "inactive-li"
-              }
-            >
-              <i className="bx bx-user"></i>
-              <span>Complete Profile</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/settings"
-              className={({ isActive }) =>
-                isActive ? "active-li" : "inactive-li"
-              }
-            >
-              <i className="bx bxs-cog"></i>
-              <span>Settings</span>
-            </NavLink>
-          </li>
-
-          {/* <li className="nav-item dropdown ">
-            <NavLink
-              className=" dropdown-toggle"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <i className="bx bxs-user-check"></i>
-              <span>Complete Profile</span>
-            </NavLink>
-            <ul className="dropdown-menu">
+          {userRole === "ADMIN" && (
+            <>
+              {" "}
               <li>
                 <NavLink
+                  to="/"
                   className={({ isActive }) =>
-                    isActive
-                      ? "active-li dropdown-item"
-                      : "inactive-li dropdown-item"
+                    isActive ? "active-li" : "inactive-li"
                   }
+                >
+                  <i className="bx bxs-dashboard"></i>
+                  <span>Dashboard</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/requests"
+                  className={({ isActive }) =>
+                    isActive ? "active-li" : "inactive-li"
+                  }
+                >
+                  <i className="bx bx-git-pull-request"></i>
+                  <span>Requests</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/UsersAccounts"
+                  className={({ isActive }) =>
+                    isActive ? "active-li" : "inactive-li"
+                  }
+                >
+                  <i className="bx bxs-user-account"></i>
+                  <span>Users Accounts</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
                   to="/complete-profile/user"
+                  className={({ isActive }) =>
+                    isActive ? "active-li" : "inactive-li"
+                  }
                 >
-                  <i className="bx bxs-user-pin"></i>
-                  User
+                  <i className="bx bx-user"></i>
+                  <span>Complete Profile</span>
                 </NavLink>
               </li>
               <li>
                 <NavLink
+                  to="/settings"
                   className={({ isActive }) =>
-                    isActive
-                      ? "active-li dropdown-item"
-                      : "inactive-li dropdown-item"
+                    isActive ? "active-li" : "inactive-li"
                   }
-                  to="/complete-profile/provider"
                 >
-                  <i className="bx bxs-user-voice"></i>
-                  Provider
+                  <i className="bx bxs-cog"></i>
+                  <span>Settings</span>
                 </NavLink>
               </li>
-            </ul>
-          </li> */}
+            </>
+          )}
+          {userRole === "PROVIDER" && (
+            <>
+              <li>
+                <NavLink
+                  to="/"
+                  className={({ isActive }) =>
+                    isActive ? "active-li" : "inactive-li"
+                  }
+                >
+                  <i className="bx bxs-dashboard"></i>
+                  <span>Dashboard</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/requests"
+                  className={({ isActive }) =>
+                    isActive ? "active-li" : "inactive-li"
+                  }
+                >
+                  <i className="bx bx-git-pull-request"></i>
+                  <span>Requests</span>
+                </NavLink>
+              </li>
+            </>
+          )}
         </ul>
       </nav>
     </aside>
