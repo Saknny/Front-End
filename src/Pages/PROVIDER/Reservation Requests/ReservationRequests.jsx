@@ -196,13 +196,14 @@ export default function ReservationRequests() {
                             />
                             <Box display="flex" flexDirection="column">
                               <Typography
+                              className="Bed"
                                 fontWeight="bold"
                                 color="textPrimary"
                                 fontSize={14}
                               >
                                 Bed
                               </Typography>
-                              <Typography color="textSecondary" fontSize={13}>
+                              <Typography color="textSecondary" fontSize={13} className="apartmentTitle">
                                 {item.apartmentTitle}
                               </Typography>
                             </Box>

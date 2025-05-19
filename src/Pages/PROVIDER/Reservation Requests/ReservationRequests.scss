@@ -8,6 +8,12 @@
     transition: background-color 0.3s ease;
 
     &.dr {
+
+        .apartmentTitle,
+        .Bed {
+            color: #fff;
+        }
+
         background-color: #121212;
 
         .category,
