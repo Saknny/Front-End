@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./AdminIncompleteUsers.scss";
-import api from "../../../utils/axiosInstance";
-import Loading2 from "../../../Components/Loading2/Loading2";
-import { LoginContext } from "../../../Context/Login/Login";
+import api from "../../../../utils/axiosInstance";
+import Loading2 from "../../../../Components/Loading2/Loading2";
+import { LoginContext } from "../../../../Context/Login/Login";
 const AdminIncompleteUsers = () => {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");

@@ -18,7 +18,7 @@ import {
   Radar,
 } from "recharts";
 import "./ProviderDashboard.scss";
-import { LoginContext } from "../../Context/Login/Login";
+import { LoginContext } from "../../../Context/Login/Login";
 
 function ProviderDashboard() {
   const { language, darkMode } = useContext(LoginContext);

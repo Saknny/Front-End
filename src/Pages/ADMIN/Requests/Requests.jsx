@@ -12,10 +12,10 @@ import {
 import Carousel from "react-material-ui-carousel";
 import { useNavigate } from "react-router-dom";
 import "./Requests.scss";
-import { LoginContext } from "../../Context/Login/Login";
+import { LoginContext } from "../../../Context/Login/Login";
 import { t } from "./translations";
-import api from "../../utils/axiosInstance";
-import Loading2 from "../../Components/Loading2/Loading2";
+import api from "../../../utils/axiosInstance";
+import Loading2 from "../../../Components/Loading2/Loading2";
 const ITEMS_PER_PAGE = 6;
 
 function Requests() {

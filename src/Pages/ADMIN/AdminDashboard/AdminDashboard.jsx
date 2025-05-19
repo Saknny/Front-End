@@ -13,8 +13,8 @@ import {
   Cell,
 } from "recharts";
 import "./AdminDashboard.scss";
-import data from "../../Data/Dashboard";
-import { LoginContext } from "../../Context/Login/Login";
+import data from "../../../Data/Dashboard";
+import { LoginContext } from "../../../Context/Login/Login";
 function AdminDashboard() {
   const { language, darkMode } = useContext(LoginContext);
   const CustomTooltip = ({ active, payload, total }) => {
