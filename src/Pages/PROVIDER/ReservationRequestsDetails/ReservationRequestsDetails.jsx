@@ -11,7 +11,9 @@ import ActionButtons from "../../../Components/Provider/ActionButtons";
 import RoomPopup from "../../../Components/Provider/RoomPopup";
 import { LoginContext } from "../../../Context/Login/Login";
 import { useContext } from "react";
-import "./ReservationRequestsDetails.scss"; // Assuming you have a CSS file for styles
+import "./ReservationRequestsDetails.scss";
+import Loading2 from "../../../Components/Loading2/Loading2";
+import { toast } from "react-toastify";
 const ReservationRequestsDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -52,14 +54,23 @@ const ReservationRequestsDetails = () => {
   }, [id]);
 
   const handleStatus = async (status) => {
-    await api.post("/admin/request-approval", {
-      id: requestData.id,
-      status,
-    });
-    alert(`Request ${status}`);
+    try {
+      await api.post("/admin/request-approval", {
+        id: requestData.id,
+        status,
+      });
+
+      toast.success(`Request ${status.toUpperCase()} successfully!`);
+    } catch (err) {
+      toast.error(
+        err?.response?.data?.message ||
+          "Something went wrong, please try again."
+      );
+      console.error(err);
+    }
   };
 
-  if (!requestData) return <p className="text-center mt-5">Loading...</p>;
+  if (!requestData) return <Loading2 />;
 
   return (
     <div className={`container py-4 ${darkMode == "dr" ? "dark-mode" : ""}`}>
