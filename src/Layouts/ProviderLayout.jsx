@@ -6,7 +6,8 @@ import ProviderDashboard from "../Pages/ProviderDashboard/ProviderDashboard";
 import ReservationRequests from "../Pages/PROVIDER/Reservation Requests/ReservationRequests";
 import { LoginContext } from "../Context/Login/Login";
 import "./Layout.scss"; // Import your CSS file for styling
-import Settings from "../Components/Settings/Settings";
+import ReservationRequestsDetails from "../Pages/PROVIDER/ReservationRequestsDetails/ReservationRequestsDetails";
+// import Settings from "../Components/Settings/Settings";
 function ProviderLayout() {
   const { darkMode } = useContext(LoginContext);
 
@@ -19,7 +20,10 @@ function ProviderLayout() {
           <Routes>
             <Route path="/" element={<ProviderDashboard />} />
             <Route path="/requests" element={<ReservationRequests />} />
-            <Route path="/settings" element={<Settings />} />
+            <Route
+              path="/requests/:id"
+              element={<ReservationRequestsDetails />}
+            />
 
             {/* Add more provider-specific routes here */}
           </Routes>

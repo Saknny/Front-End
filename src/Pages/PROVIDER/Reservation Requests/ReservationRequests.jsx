@@ -20,7 +20,7 @@ import { alpha } from "@mui/material/styles";
 import api from "../../../utils/axiosInstance";
 import { LoginContext } from "../../../Context/Login/Login";
 import "./ReservationRequests.scss";
-
+import { useNavigate } from "react-router-dom";
 const DEFAULT_AVATAR = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
 
 // دالة خارجية لجلب أول صورة bed
@@ -53,7 +53,7 @@ export default function ReservationRequests() {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const { darkMode } = useContext(LoginContext);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchRequests = async () => {
       try {
@@ -62,7 +62,6 @@ export default function ReservationRequests() {
         if (!res.data.success) return;
 
         const requestsData = res.data.data;
-
         const formatted = await Promise.all(
           requestsData.map(async (item) => {
             const apartmentId = item.bed?.room?.apartment?.id || "";
@@ -242,9 +241,7 @@ export default function ReservationRequests() {
                             variant="contained"
                             size="small"
                             color="primary"
-                            onClick={() =>
-                              alert(`Navigate to request: ${item.id}`)
-                            }
+                            onClick={() => navigate(`/requests/${item.id}`)}
                           >
                             View
                           </Button>
