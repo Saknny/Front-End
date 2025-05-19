@@ -198,7 +198,7 @@ const RequestDetails = () => {
       )}
 
       {request.status === "PENDING" && (
-        <div className="mt-4 d-flex gap-3 justify-content-center">
+        <div className="mt-4 d-flex gap-3 justify-content-center pb-4">
           <button
             className="btn btn-success px-4"
             onClick={() => approveRequest("APPROVED")}
