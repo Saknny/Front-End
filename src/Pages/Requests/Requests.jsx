@@ -15,7 +15,7 @@ import "./Requests.scss";
 import { LoginContext } from "../../Context/Login/Login";
 import { t } from "./translations";
 import api from "../../utils/axiosInstance";
-import Loading from "../../Components/Loading/Loading";
+import Loading2 from "../../Components/Loading2/Loading2";
 const ITEMS_PER_PAGE = 6;
 
 function Requests() {
@@ -65,7 +65,7 @@ function Requests() {
   );
 
   if (loading) {
-    return <Loading />;
+    return <Loading2 />;
   }
 
   return (

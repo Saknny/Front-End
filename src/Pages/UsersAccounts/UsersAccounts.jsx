@@ -21,10 +21,10 @@ import { visuallyHidden } from "@mui/utils";
 import TextField from "@mui/material/TextField";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import api from "../../utils/axiosInstance"; // Adjust the import path as necessary
+import api from "../../utils/axiosInstance";
 import { useContext } from "react";
 import { LoginContext } from "../../Context/Login/Login";
-import Loading from "../../Components/Loading/Loading";
+import Loading2 from "../../Components/Loading2/Loading2";
 
 const headCells = [
   { id: "name", numeric: false, disablePadding: true, label: "Name" },
@@ -120,7 +120,7 @@ function UsersAccounts() {
     })
     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
   if (loading) {
-    return <Loading />;
+    return <Loading2 />;
   }
   return (
     <Box

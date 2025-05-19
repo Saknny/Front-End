@@ -14,7 +14,6 @@ import {
   MenuItem,
   Paper,
   TablePagination,
-  CircularProgress,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import api from "../../../utils/axiosInstance";
@@ -22,8 +21,8 @@ import { LoginContext } from "../../../Context/Login/Login";
 import "./ReservationRequests.scss";
 import { useNavigate } from "react-router-dom";
 const DEFAULT_AVATAR = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+import Loading2 from "../../../Components/Loading2/Loading2";
 
-// دالة خارجية لجلب أول صورة bed
 const getApartmentImage = async (apartmentId) => {
   if (!apartmentId) return DEFAULT_AVATAR;
 
@@ -156,9 +155,7 @@ export default function ReservationRequests() {
         }}
       >
         {loading ? (
-          <Box display="flex" justifyContent="center" py={5}>
-            <CircularProgress />
-          </Box>
+          <Loading2 />
         ) : filteredRequests.length === 0 ? (
           <Box textAlign="center" py={5}>
             <Typography color="textSecondary" fontSize={18}>
@@ -196,14 +193,18 @@ export default function ReservationRequests() {
                             />
                             <Box display="flex" flexDirection="column">
                               <Typography
-                              className="Bed"
+                                className="Bed"
                                 fontWeight="bold"
                                 color="textPrimary"
                                 fontSize={14}
                               >
                                 Bed
                               </Typography>
-                              <Typography color="textSecondary" fontSize={13} className="apartmentTitle">
+                              <Typography
+                                color="textSecondary"
+                                fontSize={13}
+                                className="apartmentTitle"
+                              >
                                 {item.apartmentTitle}
                               </Typography>
                             </Box>

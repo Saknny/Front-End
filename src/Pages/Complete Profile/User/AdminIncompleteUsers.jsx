@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./AdminIncompleteUsers.scss";
 import api from "../../../utils/axiosInstance";
-import Loading from "../../../Components/Loading/Loading";
+import Loading2 from "../../../Components/Loading2/Loading2";
 import { LoginContext } from "../../../Context/Login/Login";
 const AdminIncompleteUsers = () => {
   const [users, setUsers] = useState([]);
@@ -51,7 +51,7 @@ const AdminIncompleteUsers = () => {
   );
 
   if (loading) {
-    return <Loading />;
+    return <Loading2 />;
   }
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;

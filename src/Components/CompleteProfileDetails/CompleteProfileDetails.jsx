@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import api from "../../utils/axiosInstance";
 import "./CompleteProfileDetails.scss";
 import { toast } from "react-toastify";
-import Loading from "../Loading/Loading";
+import Loading2 from "../../Components/Loading2/Loading2";
 import { LoginContext } from "../../Context/Login/Login";
 import { useContext } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -55,7 +55,7 @@ const CompleteProfileDetails = () => {
     fetchRequest();
   }, [id]);
 
-  if (loading) return <Loading />;
+  if (loading) return <Loading2 />;
   if (!requestData)
     return <div className="text-center my-5">No Data Found</div>;
 

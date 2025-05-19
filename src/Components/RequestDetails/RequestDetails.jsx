@@ -13,7 +13,7 @@ import RoomSection from "./RoomSection";
 import BedSection from "./BedSection";
 import "./RequestDetails.scss";
 import { LoginContext } from "../../Context/Login/Login";
-import Loading from "../Loading/Loading";
+import Loading2 from "../../Components/Loading2/Loading2";
 import { t } from "../../translate/requestDetails";
 import api from "../../utils/axiosInstance";
 const RequestDetails = () => {
@@ -139,7 +139,7 @@ const RequestDetails = () => {
   if (!request)
     return (
       <div className="text-center mt-4">
-        <Loading />
+        <Loading2 />
       </div>
     );
 
