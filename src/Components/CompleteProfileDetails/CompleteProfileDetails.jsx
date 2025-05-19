@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import Loading from "../Loading/Loading";
 import { LoginContext } from "../../Context/Login/Login";
 import { useContext } from "react";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 const CompleteProfileDetails = () => {
   const [requestData, setRequestData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -92,15 +93,14 @@ const CompleteProfileDetails = () => {
 
   return (
     <div className={`complete-profile-details container py-4 ${darkMode}`}>
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2>Request Details</h2>
-        <button
-          className="btn btn-outline-primary"
-          onClick={() => navigate("/complete-profile/user")}
-        >
-          🔙 Back to Users
-        </button>
-      </div>
+      <button
+        className="btn btn-outline-secondary mb-4 w-25"
+        onClick={() => navigate(-1)}
+      >
+        <ArrowBackIcon className="me-2" /> Back
+      </button>
+
+      <h3 className="mb-4 text-primary">🏢 Request Details</h3>
 
       <div className="row">
         {item.imagesData.map(
