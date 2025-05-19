@@ -1,133 +1,17 @@
-.reservation-container {
-    max-width: 1000px;
-    margin: auto;
-    padding-bottom: 50px;
+.dark-mode {
+    background-color: #0d1117;
+    color: #c9d1d9;
+    font-size: 1rem;
+    line-height: 1.5;
 
-    .section {
-        margin-top: 40px;
-    }
-
-    .carousel {
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-
-        .carousel-inner {
-            border-radius: 10px;
-
-            img {
-                max-height: 400px;
-
-                width: 100%;
-            }
-        }
-
-        .carousel-control-prev-icon,
-        .carousel-control-next-icon {
-            background-color: rgba(0, 0, 0, 0.4);
-            border-radius: 50%;
-        }
-    }
-
-    .avatar-placeholder {
-        width: 100%;
-        height: 400px;
-        border-radius: 10px;
-        border: 1px solid #ddd;
-        background-color: #f0f0f0;
-        background-image: url("https://cdn-icons-png.flaticon.com/512/149/149071.png");
-        background-size: 100px;
-        background-repeat: no-repeat;
-        background-position: center;
-    }
-
-    .btn {
-        padding: 10px 24px;
-        font-size: 16px;
-        font-weight: 600;
-        border-radius: 8px;
-        transition: all 0.3s ease;
-
-        &.btn-success {
-            background-color: #28a745;
-            border-color: #28a745;
-
-            &:hover {
-                background-color: #218838;
-            }
-        }
-
-        &.btn-danger {
-            background-color: #dc3545;
-            border-color: #dc3545;
-
-            &:hover {
-                background-color: #c82333;
-            }
-        }
-
-        &.btn-outline-secondary {
-            border-radius: 8px;
-            font-weight: 500;
-        }
-    }
-
-    .p-2.border.rounded {
-        background-color: #f9f9f9;
-        transition: 0.3s;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-
-        &:hover {
-            background-color: #f1f1f1;
-        }
-
-        .small {
-            color: #777;
-        }
-
-        .fw-semibold {
-            color: #333;
-            font-weight: 600;
-        }
-    }
-
-    h4 {
-        font-weight: 600;
-        border-left: 4px solid #0d6efd;
-        padding-left: 10px;
-    }
-
-    a {
-        color: #0d6efd;
-        font-weight: 500;
-
-        &:hover {
-            text-decoration: underline;
-        }
-    }
-}
-
-.hover-shadow {
-    transition: 0.3s ease;
-
-    &:hover {
-        box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
-        transform: scale(1.015);
-    }
-}
-
-.apartment-info {
-    .info-card {
-        transition: all 0.2s ease-in-out;
-
-        &:hover {
-            background-color: #f1f3f5;
-        }
-    }
-
-    ul {
-        li {
-            font-size: 0.95rem;
-        }
+    .card,
+    .border,
+    .rounded,
+    .p-2,
+    .p-3,
+    .modal-content {
+        background-color: #161b22 !important;
+        border-color: #30363d !important;
+        color: #c9d1d9;
     }
 }

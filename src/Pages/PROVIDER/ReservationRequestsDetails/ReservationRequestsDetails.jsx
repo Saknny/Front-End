@@ -9,13 +9,14 @@ import ApartmentPopup from "../../../Components/Provider/ApartmentPopup";
 import StudentInfoSection from "../../../Components/Provider/StudentInfoSection";
 import ActionButtons from "../../../Components/Provider/ActionButtons";
 import RoomPopup from "../../../Components/Provider/RoomPopup";
-import "./ReservationRequestsDetails.scss";
-
+import { LoginContext } from "../../../Context/Login/Login";
+import { useContext } from "react";
+import "./ReservationRequestsDetails.scss"; // Assuming you have a CSS file for styles
 const ReservationRequestsDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [showRoomModal, setShowRoomModal] = useState(false);
-
+  const { darkMode } = useContext(LoginContext);
   const [requestData, setRequestData] = useState(null);
   const [bedImages, setBedImages] = useState([]);
   const [apartmentImages, setApartmentImages] = useState([]);
@@ -61,7 +62,7 @@ const ReservationRequestsDetails = () => {
   if (!requestData) return <p className="text-center mt-5">Loading...</p>;
 
   return (
-    <div className="container py-4">
+    <div className={`container py-4 ${darkMode == "dr" ? "dark-mode" : ""}`}>
       <button
         className="btn btn-outline-secondary mb-4 w-25"
         onClick={() => navigate(-1)}

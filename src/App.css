@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap");
+
 * {
   margin: 0;
   padding: 0;
@@ -48,6 +49,7 @@ ul {
   display: flex;
   min-height: 100vh;
 }
+
 .app-container .sidebar {
   width: 250px;
   background: #fff;
@@ -59,21 +61,27 @@ ul {
   flex-shrink: 0;
   min-height: 100vh;
 }
+
 @media (max-width: 767px) {
   .app-container .sidebar {
     width: 60px;
   }
 }
+
 .app-container .main-content {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
+
 .app-container .navbar {
   height: 60px;
 }
+
 .app-container .content {
   flex-grow: 1;
   padding: 20px;
-}/*# sourceMappingURL=App.css.map */
+}
+
+/*# sourceMappingURL=App.css.map */
