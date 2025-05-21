@@ -380,4 +380,24 @@ export const t = {
     EN: "Settings",
     AR: "الإعدادات",
   },
+  apartmentRequests: {
+    EN: "Apartment Requests",
+    AR: "طلبات الشقق",
+  },
+  noDescription: {
+    EN: "No description",
+    AR: "لا يوجد وصف",
+  },
+  pending: {
+    EN: "Pending",
+    AR: "قيد الانتظار",
+  },
+  accepted: {
+    EN: "Accepted",
+    AR: "تم القبول",
+  },
+  rejected: {
+    EN: "Rejected",
+    AR: "مرفوض",
+  },
 };
