@@ -86,7 +86,7 @@ const AdminIncompleteUsers = () => {
               <span className="user-name">
                 {user.firstName} {user.lastName}
               </span>
-              <div className="user-facebook">{user.request_type}</div>
+              <div className="request-type">{user.request_type}</div>
             </div>
             <i className="bx bx-chevron-right"></i>
           </Link>
