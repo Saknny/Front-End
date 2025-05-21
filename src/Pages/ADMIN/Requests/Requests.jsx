@@ -34,9 +34,10 @@ function Requests() {
             item.type === "CREATE_APARTMENT" || item.type === "UPDATE_APARTMENT"
         );
         setRequests(fetchedRequests);
-        setLoading(false);
       } catch (error) {
         console.error("Error fetching requests:", error);
+      } finally {
+        setLoading(false);
       }
     }
     fetchRequests();
@@ -55,8 +56,6 @@ function Requests() {
       );
     } catch (error) {
       console.error("Error updating status:", error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -65,10 +64,6 @@ function Requests() {
     startIndex,
     startIndex + ITEMS_PER_PAGE
   );
-
-  if (loading) {
-    return <Loading2 />;
-  }
 
   return (
     <Box className={`requests-container px-4 pt-4 ${darkMode} `}>
@@ -81,7 +76,7 @@ function Requests() {
       ) : requests.length === 0 ? (
         <Box textAlign="center" py={5}>
           <Typography color="textSecondary" fontSize={18}>
-            {t.noRequests?.[language] || "No requests found."}
+            {t.noRequests?.[language]}
           </Typography>
         </Box>
       ) : (

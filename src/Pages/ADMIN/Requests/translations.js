@@ -27,4 +27,8 @@ export const t = {
     EN: "Rejected",
     AR: "مرفوض",
   },
+  noRequests: {
+    EN: "No requests found.",
+    AR: "لا توجد طلبات",
+  },
 };
