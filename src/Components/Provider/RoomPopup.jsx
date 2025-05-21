@@ -1,16 +1,21 @@
-// 📁 components/RoomPopup.js
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import { LoginContext } from "../../Context/Login/Login";
+import { t } from "../../translate/requestDetails";
 
 const avatarFallback = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
 
 const RoomPopup = ({ show, onClose, roomData, roomImages }) => {
+  const { language } = useContext(LoginContext);
+
   return (
     <Modal show={show} onHide={onClose} size="lg" centered>
       <Modal.Header closeButton>
-        <Modal.Title>🛌 Room Details</Modal.Title>
+        <Modal.Title>
+          🛌 {t.roomDetailsTitle?.[language] || "Room Details"}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {/* Room Images Carousel */}
@@ -38,7 +43,7 @@ const RoomPopup = ({ show, onClose, roomData, roomImages }) => {
               <div className="carousel-item active">
                 <img
                   src={avatarFallback}
-                  alt="Default Room"
+                  alt={t.defaultRoom?.[language] || "Default Room"}
                   className="d-block w-100 rounded border"
                   style={{ maxHeight: "400px" }}
                 />
@@ -53,8 +58,10 @@ const RoomPopup = ({ show, onClose, roomData, roomImages }) => {
                 data-bs-target="#roomImagesCarousel"
                 data-bs-slide="prev"
               >
-                <span className="carousel-control-prev-icon"></span>
-                <span className="visually-hidden">Previous</span>
+                <span className="carousel-control-prev-icon" />
+                <span className="visually-hidden">
+                  {t.previous?.[language] || "Previous"}
+                </span>
               </button>
               <button
                 className="carousel-control-next"
@@ -62,8 +69,10 @@ const RoomPopup = ({ show, onClose, roomData, roomImages }) => {
                 data-bs-target="#roomImagesCarousel"
                 data-bs-slide="next"
               >
-                <span className="carousel-control-next-icon"></span>
-                <span className="visually-hidden">Next</span>
+                <span className="carousel-control-next-icon" />
+                <span className="visually-hidden">
+                  {t.next?.[language] || "Next"}
+                </span>
               </button>
             </>
           )}
@@ -71,17 +80,24 @@ const RoomPopup = ({ show, onClose, roomData, roomImages }) => {
 
         {/* Room Info */}
         <div className="room-info bg-light rounded p-3 shadow-sm">
-          <h5 className="text-primary fw-bold mb-2">Room Information</h5>
-          <p className="text-muted">{roomData.descriptionEn}</p>
+          <h5 className="text-primary fw-bold mb-2">
+            {t.roomInformation?.[language] || "Room Information"}
+          </h5>
+          <p className="text-muted">
+            {language === "AR"
+              ? roomData.descriptionAr
+              : roomData.descriptionEn}
+          </p>
 
           <div className="row g-3">
             {["status", "availableFor", "bedCount"].map((key, index) => (
               <div className="col-md-4" key={index}>
                 <div className="info-card p-2 border rounded bg-white h-100">
                   <span className="text-muted small d-block">
-                    {key
-                      .replace(/([A-Z])/g, " $1")
-                      .replace(/^./, (str) => str.toUpperCase())}
+                    {t[key]?.[language] ||
+                      key
+                        .replace(/([A-Z])/g, " $1")
+                        .replace(/^./, (str) => str.toUpperCase())}
                   </span>
                   <span className="fw-semibold">{roomData[key]}</span>
                 </div>
@@ -91,12 +107,14 @@ const RoomPopup = ({ show, onClose, roomData, roomImages }) => {
 
           <hr className="my-4" />
 
-          <h6 className="fw-bold">Facilities:</h6>
+          <h6 className="fw-bold">
+            {t.facilities?.[language] || "Facilities"}:
+          </h6>
           <ul className="row list-unstyled ps-3">
             {[
               "hasAirConditioner",
               "wardrobe",
-              "Desk",
+              "desk",
               "nightStand",
               "ceilingFan",
               "curtains",
@@ -105,10 +123,7 @@ const RoomPopup = ({ show, onClose, roomData, roomImages }) => {
               .filter((key) => roomData[key])
               .map((key, i) => (
                 <li className="col-4 mb-1" key={i}>
-                  ✅{" "}
-                  {key
-                    .replace(/([A-Z])/g, " $1")
-                    .replace(/^./, (str) => str.toUpperCase())}
+                  ✅ {t[key]?.[language] || key}
                 </li>
               ))}
           </ul>
@@ -116,12 +131,13 @@ const RoomPopup = ({ show, onClose, roomData, roomImages }) => {
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onClose}>
-          Close
+          {t.close?.[language] || "Close"}
         </Button>
       </Modal.Footer>
     </Modal>
   );
 };
+
 RoomPopup.propTypes = {
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,

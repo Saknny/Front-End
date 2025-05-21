@@ -1,10 +1,14 @@
 // 📁 components/BedImageCarousel.js
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
+import { LoginContext } from "../../Context/Login/Login";
+import { t } from "../../translate/requestDetails";
 
 const avatarFallback = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
 
 const BedImageCarousel = ({ images }) => {
+  const { language } = useContext(LoginContext);
+
   return images.length > 0 ? (
     <div
       id="bedImagesCarousel"
@@ -38,7 +42,9 @@ const BedImageCarousel = ({ images }) => {
               className="carousel-control-prev-icon"
               aria-hidden="true"
             ></span>
-            <span className="visually-hidden">Previous</span>
+            <span className="visually-hidden">
+              {t.previous?.[language] || "Previous"}
+            </span>
           </button>
           <button
             className="carousel-control-next"
@@ -50,7 +56,9 @@ const BedImageCarousel = ({ images }) => {
               className="carousel-control-next-icon"
               aria-hidden="true"
             ></span>
-            <span className="visually-hidden">Next</span>
+            <span className="visually-hidden">
+              {t.next?.[language] || "Next"}
+            </span>
           </button>
         </>
       )}
@@ -58,12 +66,13 @@ const BedImageCarousel = ({ images }) => {
   ) : (
     <img
       src={avatarFallback}
-      alt="Default Bed"
+      alt={t.defaultBed?.[language] || "Default Bed"}
       className="d-block w-100 rounded border"
       style={{ maxHeight: "400px" }}
     />
   );
 };
+
 BedImageCarousel.propTypes = {
   images: PropTypes.arrayOf(
     PropTypes.shape({

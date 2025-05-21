@@ -1,16 +1,16 @@
 import { NavLink } from "react-router-dom";
 import "./Sidbar.scss";
-import React from "react";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { LoginContext } from "../../Context/Login/Login";
+import { t } from "../../translate/requestDetails"; // لو حطيتها في ملف منفصل
 
 function Sidbar() {
-  const { darkMode, userRole } = useContext(LoginContext);
+  const { darkMode, userRole, language } = useContext(LoginContext);
 
   return (
-    <aside className={`sidebar ${darkMode == "dr" ? "dark" : ""}`}>
+    <aside className={`sidebar ${darkMode === "dr" ? "dark" : ""}`}>
       <div className="image">
-        <NavLink to="/" className={`d-flex justify-content-center`}>
+        <NavLink to="/" className="d-flex justify-content-center">
           <img className="d-none d-md-block" src="/full-logo.png" alt="logo" />
           <img className="d-block d-md-none" src="/Logo.png" alt="LOGO" />
         </NavLink>
@@ -20,7 +20,6 @@ function Sidbar() {
         <ul>
           {userRole === "ADMIN" && (
             <>
-              {" "}
               <li>
                 <NavLink
                   to="/"
@@ -29,7 +28,7 @@ function Sidbar() {
                   }
                 >
                   <i className="bx bxs-dashboard"></i>
-                  <span>Dashboard</span>
+                  <span>{t.dashboard[language]}</span>
                 </NavLink>
               </li>
               <li>
@@ -40,7 +39,7 @@ function Sidbar() {
                   }
                 >
                   <i className="bx bx-git-pull-request"></i>
-                  <span>Requests</span>
+                  <span>{t.requests[language]}</span>
                 </NavLink>
               </li>
               <li>
@@ -51,7 +50,7 @@ function Sidbar() {
                   }
                 >
                   <i className="bx bxs-user-account"></i>
-                  <span>Users Accounts</span>
+                  <span>{t.usersAccounts[language]}</span>
                 </NavLink>
               </li>
               <li>
@@ -62,7 +61,7 @@ function Sidbar() {
                   }
                 >
                   <i className="bx bx-user"></i>
-                  <span>Complete Profile</span>
+                  <span>{t.completeProfile[language]}</span>
                 </NavLink>
               </li>
               <li>
@@ -73,11 +72,12 @@ function Sidbar() {
                   }
                 >
                   <i className="bx bxs-cog"></i>
-                  <span>Settings</span>
+                  <span>{t.settings[language]}</span>
                 </NavLink>
               </li>
             </>
           )}
+
           {userRole === "PROVIDER" && (
             <>
               <li>
@@ -88,7 +88,7 @@ function Sidbar() {
                   }
                 >
                   <i className="bx bxs-dashboard"></i>
-                  <span>Dashboard</span>
+                  <span>{t.dashboard[language]}</span>
                 </NavLink>
               </li>
               <li>
@@ -99,7 +99,7 @@ function Sidbar() {
                   }
                 >
                   <i className="bx bx-git-pull-request"></i>
-                  <span>Requests</span>
+                  <span>{t.requests[language]}</span>
                 </NavLink>
               </li>
             </>

@@ -215,4 +215,169 @@ export const t = {
     EN: "Rejected",
     AR: "مرفوضة",
   },
+  searchPlaceholder: {
+    EN: "Search by title...",
+    AR: "البحث بعنوان العقار",
+  },
+  all: {
+    EN: "All",
+    AR: "الكل",
+  },
+  view: {
+    EN: "View",
+    AR: "عرض",
+  },
+  property: {
+    EN: "Property",
+    AR: "العقار",
+  },
+  student: {
+    EN: "Student",
+    AR: "الطالب",
+  },
+  createdAt: {
+    EN: "Created At",
+    AR: "تاريخ الإنشاء",
+  },
+  action: {
+    EN: "Action",
+    AR: "الإجراء",
+  },
+  noRequests: {
+    EN: "No requests found.",
+    AR: "لا توجد طلبات",
+  },
+  bed: {
+    EN: "Bed",
+    AR: "سرير",
+  },
+  clickToViewDetails: {
+    EN: "Click to view details",
+    AR: "اضغط لعرض التفاصيل",
+  },
+  accept: {
+    EN: "Accept",
+    AR: "قبول",
+  },
+  reject: {
+    EN: "Reject",
+    AR: "رفض",
+  },
+  apartmentDetailsTitle: {
+    EN: "Apartment Details",
+    AR: "تفاصيل الشقة",
+  },
+  facilities: {
+    EN: "Facilities",
+    AR: "المرافق",
+  },
+  close: {
+    EN: "Close",
+    AR: "إغلاق",
+  },
+  locationEnum: {
+    EN: "Location",
+    AR: "الموقع",
+  },
+  bookingStatus: {
+    EN: "Booking Status",
+    AR: "حالة الحجز",
+  },
+  iron: {
+    EN: "Iron",
+    AR: "مكواة",
+  },
+  previous: {
+    EN: "Previous",
+    AR: "السابق",
+  },
+  next: {
+    EN: "Next",
+    AR: "التالي",
+  },
+  defaultBed: {
+    EN: "Default Bed",
+    AR: "صورة افتراضية للسرير",
+  },
+  descriptionLabel: {
+    EN: "Description ",
+    AR: "الوصف",
+  },
+  updatedAt: {
+    EN: "Updated At",
+    AR: "تم التحديث في",
+  },
+  roomDetailsTitle: {
+    EN: "Room Details",
+    AR: "تفاصيل الغرفة",
+  },
+  roomInformation: {
+    EN: "Room Information",
+    AR: "معلومات الغرفة",
+  },
+  defaultRoom: {
+    EN: "Default Room",
+    AR: "صورة افتراضية للغرفة",
+  },
+  studentInfoTitle: {
+    EN: "Student Information",
+    AR: "معلومات الطالب",
+  },
+  name: {
+    EN: "Name",
+    AR: "الاسم",
+  },
+
+  phone: {
+    EN: "Phone",
+    AR: "رقم الهاتف",
+  },
+  university: {
+    EN: "University",
+    AR: "الجامعة",
+  },
+  hobbies: {
+    EN: "Hobbies",
+    AR: "الهوايات",
+  },
+  socialLinks: {
+    EN: "Social Links",
+    AR: "روابط التواصل",
+  },
+  facebook: {
+    EN: "Facebook",
+    AR: "فيسبوك",
+  },
+  instagram: {
+    EN: "Instagram",
+    AR: "انستجرام",
+  },
+  linkedin: {
+    EN: "LinkedIn",
+    AR: "لينكدإن",
+  },
+  defaultStudent: {
+    EN: "Default Student",
+    AR: "صورة افتراضية للطالب",
+  },
+  dashboard: {
+    EN: "Dashboard",
+    AR: "لوحة التحكم",
+  },
+  requests: {
+    EN: "Requests",
+    AR: "الطلبات",
+  },
+  usersAccounts: {
+    EN: "Users Accounts",
+    AR: "حسابات المستخدمين",
+  },
+  completeProfile: {
+    EN: "Complete Profile",
+    AR: "إكمال البيانات",
+  },
+  settings: {
+    EN: "Settings",
+    AR: "الإعدادات",
+  },
 };

@@ -1,16 +1,21 @@
-// 📁 components/ApartmentPopup.js
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import { LoginContext } from "../../Context/Login/Login";
+import { t } from "../../translate/requestDetails";
 
 const avatarFallback = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
 
 const ApartmentPopup = ({ show, onClose, apartmentData, apartmentImages }) => {
+  const { language } = useContext(LoginContext);
+
   return (
     <Modal show={show} onHide={onClose} size="lg" centered>
       <Modal.Header closeButton>
-        <Modal.Title>🏢 Apartment Details</Modal.Title>
+        <Modal.Title>
+          🏢 {t.apartmentDetailsTitle?.[language] || "Apartment Details"}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div
@@ -70,7 +75,11 @@ const ApartmentPopup = ({ show, onClose, apartmentData, apartmentImages }) => {
 
         <div className="apartment-info bg-light rounded p-3 shadow-sm">
           <h5 className="text-primary fw-bold mb-2">{apartmentData.title}</h5>
-          <p className="text-muted">{apartmentData.descriptionEn}</p>
+          <p className="text-muted">
+            {language === "AR"
+              ? apartmentData.descriptionAr
+              : apartmentData.descriptionEn}
+          </p>
 
           <div className="row g-3 mt-3">
             {[
@@ -86,9 +95,10 @@ const ApartmentPopup = ({ show, onClose, apartmentData, apartmentImages }) => {
               <div className="col-md-3" key={index}>
                 <div className="info-card p-2 border rounded bg-white h-100">
                   <span className="text-muted small d-block">
-                    {key
-                      .replace(/([A-Z])/g, " $1")
-                      .replace(/^./, (str) => str.toUpperCase())}
+                    {t[key]?.[language] ||
+                      key
+                        .replace(/([A-Z])/g, " $1")
+                        .replace(/^./, (str) => str.toUpperCase())}
                   </span>
                   <span className="fw-semibold">{apartmentData[key]}</span>
                 </div>
@@ -98,7 +108,9 @@ const ApartmentPopup = ({ show, onClose, apartmentData, apartmentImages }) => {
 
           <hr className="my-4" />
 
-          <h6 className="fw-bold">Facilities:</h6>
+          <h6 className="fw-bold">
+            {t.facilities?.[language] || "Facilities"}:
+          </h6>
           <ul className="row list-unstyled ps-3">
             {[
               "tv",
@@ -115,10 +127,7 @@ const ApartmentPopup = ({ show, onClose, apartmentData, apartmentImages }) => {
               .filter((key) => apartmentData[key])
               .map((key, i) => (
                 <li className="col-4 mb-1" key={i}>
-                  ✅{" "}
-                  {key
-                    .replace(/([A-Z])/g, " $1")
-                    .replace(/^./, (str) => str.toUpperCase())}
+                  ✅ {t[key]?.[language] || key}
                 </li>
               ))}
           </ul>
@@ -126,12 +135,13 @@ const ApartmentPopup = ({ show, onClose, apartmentData, apartmentImages }) => {
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onClose}>
-          Close
+          {t.close?.[language] || "Close"}
         </Button>
       </Modal.Footer>
     </Modal>
   );
 };
+
 ApartmentPopup.propTypes = {
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,

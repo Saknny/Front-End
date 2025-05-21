@@ -22,6 +22,7 @@ import "./ReservationRequests.scss";
 import { useNavigate } from "react-router-dom";
 const DEFAULT_AVATAR = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
 import Loading2 from "../../../Components/Loading2/Loading2";
+import { t } from "../../../translate/requestDetails";
 
 const getApartmentImage = async (apartmentId) => {
   if (!apartmentId) return DEFAULT_AVATAR;
@@ -51,8 +52,9 @@ export default function ReservationRequests() {
   const [rowsPerPage, setRowsPerPage] = useState(4);
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { darkMode } = useContext(LoginContext);
+  const { darkMode, language } = useContext(LoginContext);
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchRequests = async () => {
       try {
@@ -121,12 +123,13 @@ export default function ReservationRequests() {
         mb={3}
       >
         <Typography variant="h5" fontWeight="bold">
-          Reservation Requests
+          {t.reservationRequests?.[language] || "Reservation Requests"}
         </Typography>
+
         <Box display="flex" gap={2}>
           <TextField
             size="small"
-            placeholder="Search by title..."
+            placeholder={t.searchPlaceholder?.[language] || "Search..."}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -136,10 +139,16 @@ export default function ReservationRequests() {
             onChange={(e) => setStatusFilter(e.target.value)}
             SelectProps={{ displayEmpty: true }}
           >
-            <MenuItem value="">All</MenuItem>
-            <MenuItem value="APPROVED">Approved</MenuItem>
-            <MenuItem value="PENDING">Pending</MenuItem>
-            <MenuItem value="REJECTED">Rejected</MenuItem>
+            <MenuItem value="">{t.all?.[language] || "All"}</MenuItem>
+            <MenuItem value="APPROVED">
+              {t.APPROVED?.[language] || "Approved"}
+            </MenuItem>
+            <MenuItem value="PENDING">
+              {t.PENDING?.[language] || "Pending"}
+            </MenuItem>
+            <MenuItem value="REJECTED">
+              {t.REJECTED?.[language] || "Rejected"}
+            </MenuItem>
           </TextField>
         </Box>
       </Box>
@@ -159,7 +168,7 @@ export default function ReservationRequests() {
         ) : filteredRequests.length === 0 ? (
           <Box textAlign="center" py={5}>
             <Typography color="textSecondary" fontSize={18}>
-              No requests found.
+              {t.noRequests?.[language] || "No requests found."}
             </Typography>
           </Box>
         ) : (
@@ -167,12 +176,24 @@ export default function ReservationRequests() {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell className="fw-bold">Property</TableCell>
-                  <TableCell className="fw-bold">Student</TableCell>
-                  <TableCell className="fw-bold">Price</TableCell>
-                  <TableCell className="fw-bold">Status</TableCell>
-                  <TableCell className="fw-bold">Created At</TableCell>
-                  <TableCell className="fw-bold">Action</TableCell>
+                  <TableCell className="fw-bold">
+                    {t.property?.[language] || "Property"}
+                  </TableCell>
+                  <TableCell className="fw-bold">
+                    {t.student?.[language] || "Student"}
+                  </TableCell>
+                  <TableCell className="fw-bold">
+                    {t.price?.[language] || "Price"}
+                  </TableCell>
+                  <TableCell className="fw-bold">
+                    {t.status?.[language] || "Status"}
+                  </TableCell>
+                  <TableCell className="fw-bold">
+                    {t.createdAt?.[language] || "Created At"}
+                  </TableCell>
+                  <TableCell className="fw-bold">
+                    {t.action?.[language] || "Action"}
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -198,7 +219,7 @@ export default function ReservationRequests() {
                                 color="textPrimary"
                                 fontSize={14}
                               >
-                                Bed
+                                {t.bed?.[language] || "Bed"}
                               </Typography>
                               <Typography
                                 color="textSecondary"
@@ -216,7 +237,6 @@ export default function ReservationRequests() {
                               src={item.student.image}
                               sx={{ width: 30, height: 30 }}
                             />
-                            {/* <Typography>{item.student.name}</Typography> */}
                           </Box>
                         </TableCell>
                         <TableCell>
@@ -226,7 +246,7 @@ export default function ReservationRequests() {
                         </TableCell>
                         <TableCell>
                           <Chip
-                            label={item.status}
+                            label={t[item.status]?.[language] || item.status}
                             color={
                               item.status === "PENDING"
                                 ? "warning"
@@ -245,7 +265,7 @@ export default function ReservationRequests() {
                             color="primary"
                             onClick={() => navigate(`/requests/${item.id}`)}
                           >
-                            View
+                            {t.view?.[language] || "View"}
                           </Button>
                         </TableCell>
                       </TableRow>

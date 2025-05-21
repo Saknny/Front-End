@@ -1,5 +1,5 @@
 // 📁 pages/ReservationRequestsDetails.jsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../../../utils/axiosInstance";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -10,20 +10,21 @@ import StudentInfoSection from "../../../Components/Provider/StudentInfoSection"
 import ActionButtons from "../../../Components/Provider/ActionButtons";
 import RoomPopup from "../../../Components/Provider/RoomPopup";
 import { LoginContext } from "../../../Context/Login/Login";
-import { useContext } from "react";
 import "./ReservationRequestsDetails.scss";
 import Loading2 from "../../../Components/Loading2/Loading2";
 import { toast } from "react-toastify";
+import { t } from "../../../translate/requestDetails";
+
 const ReservationRequestsDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [showRoomModal, setShowRoomModal] = useState(false);
-  const { darkMode } = useContext(LoginContext);
+  const [showApartmentModal, setShowApartmentModal] = useState(false);
+  const { darkMode, language } = useContext(LoginContext);
   const [requestData, setRequestData] = useState(null);
   const [bedImages, setBedImages] = useState([]);
   const [apartmentImages, setApartmentImages] = useState([]);
   const [roomImages, setRoomImages] = useState([]);
-  const [showApartmentModal, setShowApartmentModal] = useState(false);
 
   useEffect(() => {
     const fetchRequestData = async () => {
@@ -60,10 +61,15 @@ const ReservationRequestsDetails = () => {
         status,
       });
 
-      toast.success(`Request ${status.toUpperCase()} successfully!`);
+      toast.success(
+        `${t.request?.[language] || "Request"} ${
+          t[status]?.[language] || status
+        } ${t.success?.[language] || "successfully!"}`
+      );
     } catch (err) {
       toast.error(
         err?.response?.data?.message ||
+          t.error?.[language] ||
           "Something went wrong, please try again."
       );
       console.error(err);
@@ -73,15 +79,18 @@ const ReservationRequestsDetails = () => {
   if (!requestData) return <Loading2 />;
 
   return (
-    <div className={`container py-4 ${darkMode == "dr" ? "dark-mode" : ""}`}>
+    <div className={`container py-4 ${darkMode === "dr" ? "dark-mode" : ""}`}>
       <button
         className="btn btn-outline-secondary mb-4 w-25"
         onClick={() => navigate(-1)}
       >
-        <ArrowBackIcon className="me-2" /> Back
+        <ArrowBackIcon className="me-2" />
+        {t.back?.[language] || "Back"}
       </button>
 
-      <h3 className="mb-4 text-primary">🏢 Reservation Request Details</h3>
+      <h3 className="mb-4 text-primary">
+        🏢 {t.apartmentDetails?.[language] || "Reservation Request Details"}
+      </h3>
 
       <div className="row g-4 align-items-start">
         <div className="col-md-5">
@@ -96,9 +105,11 @@ const ReservationRequestsDetails = () => {
               style={{ cursor: "pointer" }}
               onClick={() => setShowApartmentModal(true)}
             >
-              <span className="small d-block text-muted">Apartment Info</span>
+              <span className="small d-block text-muted">
+                {t.apartmentDetails?.[language] || "Apartment Info"}
+              </span>
               <span className="fw-semibold text-primary">
-                Click to view details
+                {t.clickToViewDetails?.[language] || "Click to view details"}
               </span>
             </div>
             <div
@@ -106,9 +117,11 @@ const ReservationRequestsDetails = () => {
               style={{ cursor: "pointer" }}
               onClick={() => setShowRoomModal(true)}
             >
-              <span className="small d-block text-muted">Room Info</span>
+              <span className="small d-block text-muted">
+                {t.rooms?.[language] || "Room Info"}
+              </span>
               <span className="fw-semibold text-primary">
-                Click to view details
+                {t.clickToViewDetails?.[language] || "Click to view details"}
               </span>
             </div>
           </div>
