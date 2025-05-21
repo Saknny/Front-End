@@ -5,7 +5,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import "./App.scss";
 import LoginForm from "./Pages/LoginForm/LoginForm";
 import ForgotPassword from "./Components/Forgot-reset-password/ForgotPassword";
@@ -20,7 +20,11 @@ import AdminLayout from "./Layouts/AdminLayout";
 import ProviderLayout from "./Layouts/ProviderLayout";
 
 function App() {
-  const { isAuthenticated, userRole } = useContext(LoginContext);
+  const { isAuthenticated, userRole, language } = useContext(LoginContext);
+
+  // useEffect(() => {
+  //   document.documentElement.dir = language === "AR" ? "rtl" : "ltr";
+  // }, [language]);
 
   if (isAuthenticated === null) {
     return <Loading />;

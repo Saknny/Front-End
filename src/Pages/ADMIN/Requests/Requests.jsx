@@ -55,6 +55,8 @@ function Requests() {
       );
     } catch (error) {
       console.error("Error updating status:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -74,113 +76,127 @@ function Requests() {
         {t.apartmentRequests[language]}
       </Typography>
 
-      <Grid container spacing={4}>
-        {displayedRequests.map((request) => {
-          const apartmentItem = request.items.find(
-            (item) =>
-              item.entityType === "APARTMENT" ||
-              item.entityType === "ROOM" ||
-              item.entityType === "BED"
-          );
+      {loading ? (
+        <Loading2 />
+      ) : requests.length === 0 ? (
+        <Box textAlign="center" py={5}>
+          <Typography color="textSecondary" fontSize={18}>
+            {t.noRequests?.[language] || "No requests found."}
+          </Typography>
+        </Box>
+      ) : (
+        <Grid container spacing={4}>
+          {displayedRequests.map((request) => {
+            const apartmentItem = request.items.find(
+              (item) =>
+                item.entityType === "APARTMENT" ||
+                item.entityType === "ROOM" ||
+                item.entityType === "BED"
+            );
 
-          return (
-            <Grid item xs={12} sm={6} md={4} key={request.id}>
-              <Card className="apartment-card shadow-sm">
-                <Carousel navButtonsAlwaysInvisible>
-                  {(
-                    apartmentItem?.images?.map((img) => img.url) || [
-                      "/placeholder.jpg",
-                    ]
-                  ).map((image, index) => (
-                    <img
-                      key={index}
-                      src={image}
-                      alt={`Apartment ${index + 1}`}
-                      className="carousel-image"
-                      style={{ height: 200, width: "100%", objectFit: "cover" }}
+            return (
+              <Grid item xs={12} sm={6} md={4} key={request.id}>
+                <Card className="apartment-card shadow-sm">
+                  <Carousel navButtonsAlwaysInvisible>
+                    {(
+                      apartmentItem?.images?.map((img) => img.url) || [
+                        "/placeholder.jpg",
+                      ]
+                    ).map((image, index) => (
+                      <img
+                        key={index}
+                        src={image}
+                        alt={`Apartment ${index + 1}`}
+                        className="carousel-image"
+                        style={{
+                          height: 200,
+                          width: "100%",
+                          objectFit: "cover",
+                        }}
+                      />
+                    ))}
+                  </Carousel>
+
+                  <CardContent>
+                    <Typography
+                      variant="h6"
+                      className="apartment-title mb-1 "
+                      onClick={() => navigate(`/requests/${request.id}`)}
+                      sx={{ cursor: "pointer" }}
+                    >
+                      {apartmentItem?.data?.title || "Apartment"}
+                    </Typography>
+
+                    {language === "EN" ? (
+                      <Typography
+                        variant="body2"
+                        color=""
+                        className="apartment-description"
+                      >
+                        {apartmentItem?.data?.descriptionEn ||
+                          t.noDescription[language]}
+                      </Typography>
+                    ) : (
+                      <Typography
+                        variant="body2"
+                        color=""
+                        className="apartment-description"
+                      >
+                        {apartmentItem?.data?.descriptionAr ||
+                          t.noDescription[language]}
+                      </Typography>
+                    )}
+
+                    <Chip
+                      label={
+                        request.status === "PENDING"
+                          ? t.pending[language]
+                          : request.status === "ACCEPTED"
+                          ? t.accepted[language]
+                          : t.rejected[language]
+                      }
+                      color={
+                        request.status === "PENDING"
+                          ? "warning"
+                          : request.status === "ACCEPTED"
+                          ? "success"
+                          : "error"
+                      }
+                      size="small"
+                      className="mb-2 mt-2"
                     />
-                  ))}
-                </Carousel>
 
-                <CardContent>
-                  <Typography
-                    variant="h6"
-                    className="apartment-title mb-1 "
-                    onClick={() => navigate(`/requests/${request.id}`)}
-                    sx={{ cursor: "pointer" }}
-                  >
-                    {apartmentItem?.data?.title || "Apartment"}
-                  </Typography>
-
-                  {language === "EN" ? (
-                    <Typography
-                      variant="body2"
-                      color=""
-                      className="apartment-description"
-                    >
-                      {apartmentItem?.data?.descriptionEn ||
-                        t.noDescription[language]}
-                    </Typography>
-                  ) : (
-                    <Typography
-                      variant="body2"
-                      color=""
-                      className="apartment-description"
-                    >
-                      {apartmentItem?.data?.descriptionAr ||
-                        t.noDescription[language]}
-                    </Typography>
-                  )}
-
-                  <Chip
-                    label={
-                      request.status === "PENDING"
-                        ? t.pending[language]
-                        : request.status === "ACCEPTED"
-                        ? t.accepted[language]
-                        : t.rejected[language]
-                    }
-                    color={
-                      request.status === "PENDING"
-                        ? "warning"
-                        : request.status === "ACCEPTED"
-                        ? "success"
-                        : "error"
-                    }
-                    size="small"
-                    className="mb-2 mt-2"
-                  />
-
-                  {request.status === "PENDING" && (
-                    <Box className="d-flex gap-2 mt-2 ">
-                      <Button
-                        variant="contained"
-                        color="success"
-                        fullWidth
-                        onClick={() =>
-                          handleStatusChange(request.id, "ACCEPTED")
-                        }
-                      >
-                        {t.accept[language]}
-                      </Button>
-                      <Button
-                        variant="contained"
-                        color="error"
-                        fullWidth
-                        onClick={() =>
-                          handleStatusChange(request.id, "REJECTED")
-                        }
-                      >
-                        {t.reject[language]}
-                      </Button>
-                    </Box>
-                  )}
-                </CardContent>
-              </Card>
-            </Grid>
-          );
-        })}
-      </Grid>
+                    {request.status === "PENDING" && (
+                      <Box className="d-flex gap-2 mt-2 ">
+                        <Button
+                          variant="contained"
+                          color="success"
+                          fullWidth
+                          onClick={() =>
+                            handleStatusChange(request.id, "ACCEPTED")
+                          }
+                        >
+                          {t.accept[language]}
+                        </Button>
+                        <Button
+                          variant="contained"
+                          color="error"
+                          fullWidth
+                          onClick={() =>
+                            handleStatusChange(request.id, "REJECTED")
+                          }
+                        >
+                          {t.reject[language]}
+                        </Button>
+                      </Box>
+                    )}
+                  </CardContent>
+                </Card>
+              </Grid>
+            );
+          })}
+        </Grid>
+      )}
 
       <Box className="pagination-container mt-4 d-flex justify-content-center">
         <Pagination
