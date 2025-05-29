@@ -81,7 +81,7 @@ function UsersAccounts() {
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [users]);
 
   const deleteUser = async (id) => {
     try {
