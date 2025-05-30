@@ -1,24 +1,11 @@
-import React, { useContext } from "react";
-import {
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Cell,
-  PieChart,
-  Pie,
-  AreaChart,
-  Area,
-  RadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  Radar,
-} from "recharts";
+// ✅ ProviderDashboard.jsx with Chart Section Lazily Loaded
+import React, { useContext, Suspense, lazy } from "react";
 import "./ProviderDashboard.scss";
 import { LoginContext } from "../../../Context/Login/Login";
+
+const ProviderDashboardCharts = lazy(() =>
+  import("../../../Components/Charts/ProviderDashboardCharts.jsx")
+);
 
 function ProviderDashboard() {
   const { language, darkMode } = useContext(LoginContext);
@@ -102,85 +89,14 @@ function ProviderDashboard() {
         )}
       </div>
 
-      <div className="charts">
-        {/* 📌 Monthly Earnings */}
-        <div className="chart-card">
-          <h4>{language === "EN" ? "Monthly Earnings" : "الأرباح الشهرية"}</h4>
-          <ResponsiveContainer width="100%" height={200}>
-            <BarChart data={monthlyEarnings}>
-              <XAxis dataKey="month" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="income" fill="#00b894" radius={[5, 5, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-
-        {/* 📌 Apartment Types */}
-        <div className="chart-card">
-          <h4>{language === "EN" ? "Apartment Types" : "أنواع الشقق"}</h4>
-          <ResponsiveContainer width="100%" height={200}>
-            <PieChart>
-              <Pie data={apartmentTypes} dataKey="value" outerRadius={80} label>
-                {apartmentTypes.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
-          <div className="legend">
-            {apartmentTypes.map((entry, index) => (
-              <div key={index} className="legend-item">
-                <span style={{ backgroundColor: entry.color }}></span>{" "}
-                {entry.name}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* 📌 Area Chart: Monthly Rented Rooms */}
-        <div className="chart-card">
-          <h4>
-            {language === "EN"
-              ? "Rented Rooms per Month"
-              : "الغرف المؤجرة شهريًا"}
-          </h4>
-          <ResponsiveContainer width="100%" height={200}>
-            <AreaChart data={monthlyEarnings}>
-              <XAxis dataKey="month" />
-              <YAxis />
-              <Tooltip />
-              <Area
-                type="monotone"
-                dataKey="rooms"
-                stroke="#1e90ff"
-                fill="#87cefa"
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
-
-        {/* 📌 Radar Chart: Unit Distribution */}
-        <div className="chart-card">
-          <h4>{language === "EN" ? "Unit Distribution" : "توزيع الوحدات"}</h4>
-          <ResponsiveContainer width="100%" height={250}>
-            <RadarChart outerRadius={80} data={unitRadar}>
-              <PolarGrid />
-              <PolarAngleAxis dataKey="type" />
-              <PolarRadiusAxis />
-              <Radar
-                name="Units"
-                dataKey="count"
-                stroke="#e17055"
-                fill="#fab1a0"
-                fillOpacity={0.6}
-              />
-              <Tooltip />
-            </RadarChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
+      <Suspense fallback={<div>Loading Charts...</div>}>
+        <ProviderDashboardCharts
+          language={language}
+          apartmentTypes={apartmentTypes}
+          monthlyEarnings={monthlyEarnings}
+          unitRadar={unitRadar}
+        />
+      </Suspense>
     </div>
   );
 }
