@@ -173,7 +173,7 @@ const RequestDetails = () => {
           <img
             className="w-100 me-2 "
             loading="lazy"
-            src="/room_icon.png"
+            src="/room_icon.webp"
             alt=""
           />
           {t.rooms[language]}

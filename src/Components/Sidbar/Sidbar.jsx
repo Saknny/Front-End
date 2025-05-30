@@ -11,8 +11,8 @@ function Sidbar() {
     <aside className={`sidebar ${darkMode === "dr" ? "dark" : ""}`}>
       <div className="image">
         <NavLink to="/" className="d-flex justify-content-center">
-          <img className="d-none d-md-block" src="/full-logo.png" alt="logo" />
-          <img className="d-block d-md-none" src="/Logo.png" alt="LOGO" />
+          <img className="d-none d-md-block" src="/full-logo.webp" alt="logo" />
+          <img className="d-block d-md-none" src="/Logo.webp" alt="LOGO" />
         </NavLink>
       </div>
 

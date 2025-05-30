@@ -24,7 +24,7 @@ const RoomSection = ({ rooms, onToggle, onImageToggle }) => {
                   <img
                     className="w-100 me-1 "
                     loading="lazy"
-                    src="/room_icon.png"
+                    src="/room_icon.webp"
                     alt=""
                   />
                 </div>
