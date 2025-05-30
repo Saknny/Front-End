@@ -116,6 +116,7 @@ const CompleteProfileDetails = () => {
                 >
                   <div className="card shadow-sm image-card w-100">
                     <img
+                      loading="lazy"
                       src={img.url}
                       alt={img.type}
                       className="card-img-top profile-image"

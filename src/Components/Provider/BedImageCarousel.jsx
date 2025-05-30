@@ -22,6 +22,7 @@ const BedImageCarousel = ({ images }) => {
             key={img.id}
           >
             <img
+              loading="lazy"
               src={img.imageUrl || avatarFallback}
               className="d-block w-100 rounded"
               alt="Bed"
@@ -65,6 +66,7 @@ const BedImageCarousel = ({ images }) => {
     </div>
   ) : (
     <img
+      loading="lazy"
       src={avatarFallback}
       alt={t.defaultBed?.[language] || "Default Bed"}
       className="d-block w-100 rounded border"

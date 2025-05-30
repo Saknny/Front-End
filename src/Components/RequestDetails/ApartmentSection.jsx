@@ -25,6 +25,7 @@ function ApartmentSection({ apartment, onToggle, onImageToggle }) {
             <div className="CarouselItem" key={i}>
               <img
                 src={img.url || img}
+                loading="lazy"
                 className="carousel-image"
                 alt={`apartment-${i}`}
               />

@@ -99,6 +99,7 @@ function Requests() {
                       ]
                     ).map((image, index) => (
                       <img
+                        loading="lazy"
                         key={index}
                         src={image}
                         alt={`Apartment ${index + 1}`}

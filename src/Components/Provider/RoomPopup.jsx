@@ -32,6 +32,7 @@ const RoomPopup = ({ show, onClose, roomData, roomImages }) => {
                   key={img.id}
                 >
                   <img
+                    loading="lazy"
                     src={img.imageUrl || avatarFallback}
                     className="d-block w-100 rounded border"
                     alt="Room"
@@ -42,6 +43,7 @@ const RoomPopup = ({ show, onClose, roomData, roomImages }) => {
             ) : (
               <div className="carousel-item active">
                 <img
+                  loading="lazy"
                   src={avatarFallback}
                   alt={t.defaultRoom?.[language] || "Default Room"}
                   className="d-block w-100 rounded border"

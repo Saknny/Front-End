@@ -26,6 +26,7 @@ const StudentInfoSection = ({ student }) => {
                   <div className="carousel-item active">
                     <img
                       src={student.image}
+                      loading="lazy"
                       alt="Student"
                       className="d-block w-100 rounded border"
                       style={{ maxHeight: "400px" }}
@@ -39,6 +40,7 @@ const StudentInfoSection = ({ student }) => {
                     }`}
                   >
                     <img
+                      loading="lazy"
                       src={student.idCard}
                       alt="ID Card"
                       className="d-block w-100 rounded border"
@@ -72,6 +74,7 @@ const StudentInfoSection = ({ student }) => {
             </div>
           ) : (
             <img
+              loading="lazy"
               src={avatarFallback}
               alt={t.defaultStudent?.[language] || "Default Student"}
               className="d-block w-100 rounded border"

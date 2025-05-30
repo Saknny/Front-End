@@ -31,6 +31,7 @@ const ApartmentPopup = ({ show, onClose, apartmentData, apartmentImages }) => {
                   key={img.id}
                 >
                   <img
+                    loading="lazy"
                     src={img.imageUrl || avatarFallback}
                     className="d-block w-100 rounded shadow-sm border"
                     alt="Apartment"
@@ -41,6 +42,7 @@ const ApartmentPopup = ({ show, onClose, apartmentData, apartmentImages }) => {
             ) : (
               <div className="carousel-item active">
                 <img
+                  loading="lazy"
                   src={avatarFallback}
                   alt="Default Apartment"
                   className="d-block w-100 rounded border"

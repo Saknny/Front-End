@@ -16,6 +16,7 @@ function ImageGallery({ images = [], onToggle }) {
             }`}
           >
             <img
+              loading="lazy"
               src={img.url}
               className="card-img-top rounded-top"
               alt="preview"

@@ -170,7 +170,12 @@ const RequestDetails = () => {
       <h4 className="mt-4">
         {/* <HotelIcon className="me-1" /> {t.rooms[language]} */}
         <div className="home-icon d-flex align-items-center ">
-          <img className="w-100 me-2 " src="/room_icon.png" alt="" />
+          <img
+            className="w-100 me-2 "
+            loading="lazy"
+            src="/room_icon.png"
+            alt=""
+          />
           {t.rooms[language]}
         </div>
       </h4>
