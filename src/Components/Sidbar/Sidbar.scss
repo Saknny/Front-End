@@ -1,5 +1,13 @@
+// تعريف المتغيرات
+$sidebar-width: 250px;
+$sidebar-width-mobile: 60px;
+$primary-color: #18878a;
+$dark-bg: #000;
+$text-color: #333;
+$hover-bg: #2a7376;
+
 .sidebar {
-    width: 250px;
+    width: $sidebar-width;
     height: auto;
     background: #fff;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
@@ -8,8 +16,8 @@
     align-items: center;
     padding-top: 20px;
 
-    @media (max-width:767px) {
-        width: 60px;
+    @media (max-width: 767px) {
+        width: $sidebar-width-mobile;
     }
 
     .image {
@@ -40,26 +48,33 @@
                 cursor: pointer;
 
                 &:hover {
-                    background-color: #18878a;
+                    background-color: $primary-color;
+                    width: $sidebar-width;
+                    z-index: 2;
+                    position: relative;
+
+                    span {
+                        display: block;
+                    }
                 }
 
                 i {
                     font-size: 20px;
                     margin-right: 10px;
-                    color: #333;
+                    color: $text-color;
                 }
 
                 a {
                     text-decoration: none;
                     font-size: 16px;
-                    color: #333;
+                    color: $text-color;
                     transition: color 0.3s;
                     width: 100%;
                     display: flex;
                     align-items: center;
                     padding: 12px 20px;
 
-                    @media (max-width:767px) {
+                    @media (max-width: 767px) {
                         span {
                             display: none;
                         }
@@ -68,19 +83,15 @@
             }
 
             .active-li {
-                background: #18878a;
+                background: $primary-color;
                 border-radius: 4px;
 
-                a {
-                    color: #fff !important;
-                }
-
+                a,
                 i,
                 span {
                     color: #fff !important;
                 }
             }
-
         }
     }
 
@@ -88,23 +99,17 @@
         background-color: #fff;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 
-
         li {
             padding: 10px;
             cursor: pointer;
 
             .dropdown-item {
-
-
                 &:hover {
-                    background-color: #2a7376;
+                    background-color: $hover-bg;
                     color: #fff;
                     border-radius: 30px;
                 }
-
             }
-
-
         }
     }
 }
@@ -113,33 +118,42 @@
     .dropdown-toggle::after {
         display: none !important;
     }
-
 }
 
 .dark {
-    background-color: black;
+    background-color: $dark-bg;
     position: relative;
 
-    .links ul li i {
-        color: #fff;
-    }
+    .links {
+        ul {
+            li {
 
-    .links ul li span {
-        color: #fff;
+                i,
+                span {
+                    color: #fff;
+                }
+            }
+        }
     }
-
 }
 
-// html[dir="rtl"] .sidebar {
-//     text-align: right;
+html[dir="rtl"] {
+    .sidebar {
+        text-align: right;
 
-//     ul {
-//         padding-right: 0;
-//         padding-left: 1rem;
-//     }
+        span {
+            margin-right: 0.5rem;
+            margin-left: 0;
+        }
 
-//     span {
-//         margin-right: 0.5rem;
-//         margin-left: 0;
-//     }
-// }
+        .links {
+            ul {
+                li {
+                    a {
+                        padding: 13px 10px;
+                    }
+                }
+            }
+        }
+    }
+}

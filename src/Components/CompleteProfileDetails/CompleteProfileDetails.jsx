@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import api from "../../utils/axiosInstance";
+import {
+  fetchRequestById,
+  approveItem,
+  approveRequestStatus,
+} from "../../Api/api";
 import "./CompleteProfileDetails.scss";
 import { toast } from "react-toastify";
 import Loading2 from "../../Components/Loading2/Loading2";
@@ -17,8 +21,7 @@ const CompleteProfileDetails = () => {
   useEffect(() => {
     const fetchRequest = async () => {
       try {
-        const res = await api.get(`/admin/request/${id}`);
-        const fetchedRequest = res.data.data;
+        const fetchedRequest = await fetchRequestById(id);
 
         fetchedRequest.items.forEach((item) => {
           item.shouldApprove = false;
@@ -46,9 +49,10 @@ const CompleteProfileDetails = () => {
         });
 
         setRequestData(fetchedRequest);
-        setLoading(false);
       } catch (error) {
         console.error("Error fetching request:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -60,6 +64,7 @@ const CompleteProfileDetails = () => {
     return <div className="text-center my-5">No Data Found</div>;
 
   const item = requestData.items[0];
+
   const toggleItemApproval = () => {
     item.shouldApprove = !item.shouldApprove;
     setRequestData({ ...requestData });
@@ -68,26 +73,21 @@ const CompleteProfileDetails = () => {
   const approveRequest = async (status) => {
     try {
       if (item.shouldApprove) {
-        await api.patch(`/admin/item-approval`, {
-          id: item.id,
-          status: "APPROVED",
-        });
+        await approveItem(item.id);
       }
 
-      await api.patch(`/admin/request-approval`, {
-        id: requestData.id,
-        status,
-      });
+      await approveRequestStatus(requestData.id, status);
+
       if (status === "APPROVED") {
-        toast.success(" Request approved successfully");
+        toast.success("Request approved successfully");
       } else if (status === "REJECTED") {
-        toast.error(" Request rejected successfully");
+        toast.error("Request rejected successfully");
       }
 
       navigate("/complete-profile/user");
     } catch (error) {
       console.error("Error approving request:", error);
-      toast.error(" Error approving request");
+      toast.error("Error approving request");
     }
   };
 

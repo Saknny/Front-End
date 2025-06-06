@@ -74,3 +74,15 @@
         }
     }
 }
+
+
+@media (max-width: 767px) {
+    .requestHeader {
+        text-align: center;
+        flex-direction: column;
+
+        .css-10egq61 {
+            flex-direction: column;
+        }
+    }
+}

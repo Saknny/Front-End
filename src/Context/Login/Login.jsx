@@ -12,20 +12,34 @@ export const LoginAdmin = ({ children }) => {
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("darkMode") || "wh"
   );
+  const [changingLanguage, setChangingLanguage] = useState(false);
+  const [currentLang, setCurrentLang] = useState(language);
 
   useEffect(() => {
     localStorage.setItem("language", language);
+    document.documentElement.dir = language === "AR" ? "rtl" : "ltr";
+  }, [language]);
+
+  useEffect(() => {
+    if (language !== currentLang) {
+      setChangingLanguage(true);
+      setTimeout(() => {
+        setCurrentLang(language);
+        setChangingLanguage(false);
+      }, 1000);
+    }
   }, [language]);
 
   useEffect(() => {
     localStorage.setItem("darkMode", darkMode);
   }, [darkMode]);
 
+  // Simulate loading delay to show <Loading /> for smoother UX
   useEffect(() => {
     const timer = setTimeout(() => {
       const token = localStorage.getItem("token");
       setIsAuthenticated(!!token);
-    }, 3000);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -38,7 +52,7 @@ export const LoginAdmin = ({ children }) => {
     setDarkMode((prev) => (prev === "dr" ? "wh" : "dr"));
   };
 
-  if (isAuthenticated === null) {
+  if (changingLanguage || isAuthenticated === null) {
     return <Loading />;
   }
 

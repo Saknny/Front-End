@@ -157,3 +157,13 @@
         display: none;
     }
 }
+
+html[dir="rtl"] {
+    .chart-card {
+        direction: ltr;
+    }
+
+    .stats .stat-card {
+        direction: ltr;
+    }
+}

@@ -147,3 +147,16 @@
         }
     }
 }
+
+@media (max-width: 768px) {
+    .ProviderDashboard .charts {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+html[dir="rtl"] {
+    .chart-card {
+        direction: ltr;
+    }
+}

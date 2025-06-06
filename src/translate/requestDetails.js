@@ -211,6 +211,10 @@ export const t = {
     EN: "Approved",
     AR: "تمت الموافقة",
   },
+  ACCEPTED: {
+    EN: "Accepted",
+    AR: "مقبول",
+  },
   REJECTED: {
     EN: "Rejected",
     AR: "مرفوضة",
@@ -399,5 +403,17 @@ export const t = {
   rejected: {
     EN: "Rejected",
     AR: "مرفوض",
+  },
+  reservationRequests: {
+    EN: "Reservation Requests",
+    AR: "طلبات الحجز",
+  },
+  IncompleteProfiles: {
+    EN: "Users with Incomplete Profiles",
+    AR: "المستخدمين ذوي الملفات الشخصية غير المكتملة",
+  },
+  noUsersFound: {
+    EN: "No users found",
+    AR: "لا توجد مستخدمين",
   },
 };

@@ -43,7 +43,7 @@ function AdminDashboardCharts() {
     <div className="charts">
       {/* 📌 Total bookings per month */}
       <div className="chart-card">
-        <h4>Monthly Bookings</h4>
+        <h4>{language === "EN" ? "Monthly Bookings" : "الحجوزات الشهرية"}</h4>
         <ResponsiveContainer width="100%" height={200}>
           <LineChart data={data[language].bookingData}>
             <XAxis dataKey="month" />
@@ -61,7 +61,7 @@ function AdminDashboardCharts() {
 
       {/* 📌 Device usage */}
       <div className="chart-card">
-        <h4>Device Usage</h4>
+        <h4>{language === "EN" ? "Device Usage" : "استخدام الأجهزة"}</h4>
         <ResponsiveContainer width="100%" height={200}>
           <BarChart data={data[language].deviceUsage}>
             <XAxis dataKey="name" />
@@ -86,7 +86,9 @@ function AdminDashboardCharts() {
 
       {/* 📌 Bookings by location */}
       <div className="chart-card">
-        <h4>Bookings by Location</h4>
+        <h4>
+          {language === "EN" ? "Bookings by Location" : "الحجوزات حسب الموقع"}
+        </h4>
         <ResponsiveContainer width="100%" height={200}>
           <PieChart>
             <Tooltip
@@ -123,7 +125,8 @@ function AdminDashboardCharts() {
 
       {/* 📌 Traffic sources */}
       <div className="chart-card">
-        <h4>Traffic Sources</h4>
+        <h4>{language === "EN" ? "Traffic Sources" : "مصادر الزيارات"}</h4>
+
         <ResponsiveContainer width="100%" height={200}>
           <PieChart>
             <Tooltip

@@ -69,7 +69,7 @@ function Navbar() {
           <li>
             <button className="logout-btn" onClick={logOut}>
               Logout
-              <i className="bx bx-log-out bx-rotate-180"></i>
+              <i className="fa-solid fa-right-from-bracket"></i>
             </button>
           </li>
         </ul>

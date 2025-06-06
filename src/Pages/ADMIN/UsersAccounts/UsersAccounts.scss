@@ -69,7 +69,11 @@
     }
 }
 
-
+@media(max-width: 767px) {
+    .css-1ygil4i-MuiToolbar-root {
+        flex-direction: column;
+    }
+}
 
 @media (max-width:1147px) {
     .main-content {

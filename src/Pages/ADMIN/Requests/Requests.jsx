@@ -14,10 +14,9 @@ import { useNavigate } from "react-router-dom";
 import "./Requests.scss";
 import { LoginContext } from "../../../Context/Login/Login";
 import { t } from "../../../translate/requestDetails";
-import api from "../../../utils/axiosInstance";
 import Loading2 from "../../../Components/Loading2/Loading2";
 const ITEMS_PER_PAGE = 6;
-
+import { fetchApartmentRequests, approveRequestStatus } from "../../../Api/api";
 function Requests() {
   const [page, setPage] = useState(1);
   const [requests, setRequests] = useState([]);
@@ -28,27 +27,21 @@ function Requests() {
   useEffect(() => {
     async function fetchRequests() {
       try {
-        const res = await api.get("/admin/pending-requests");
-        const fetchedRequests = res.data.data.filter(
-          (item) =>
-            item.type === "CREATE_APARTMENT" || item.type === "UPDATE_APARTMENT"
-        );
-        setRequests(fetchedRequests);
+        const data = await fetchApartmentRequests();
+        setRequests(data);
       } catch (error) {
         console.error("Error fetching requests:", error);
       } finally {
         setLoading(false);
       }
     }
+
     fetchRequests();
   }, []);
 
   const handleStatusChange = async (requestId, newStatus) => {
     try {
-      await api.patch(`/admin/request-approval`, {
-        requestId,
-        status: newStatus,
-      });
+      await approveRequestStatus(requestId, newStatus);
       setRequests((prev) =>
         prev.map((req) =>
           req.id === requestId ? { ...req, status: newStatus } : req
@@ -75,9 +68,7 @@ function Requests() {
         <Loading2 />
       ) : requests.length === 0 ? (
         <Box textAlign="center" py={5}>
-          <Typography color="textSecondary" fontSize={18}>
-            {t.noRequests?.[language]}
-          </Typography>
+          <Typography fontSize={18}>{t.noRequests?.[language]}</Typography>
         </Box>
       ) : (
         <Grid container spacing={4}>

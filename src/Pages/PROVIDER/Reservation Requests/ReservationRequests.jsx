@@ -23,7 +23,7 @@ import { useNavigate } from "react-router-dom";
 const DEFAULT_AVATAR = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
 import Loading2 from "../../../Components/Loading2/Loading2";
 import { t } from "../../../translate/requestDetails";
-
+import { fetchRentalRequestsForProvider } from "../../../Api/api";
 const getApartmentImage = async (apartmentId) => {
   if (!apartmentId) return DEFAULT_AVATAR;
 
@@ -58,35 +58,8 @@ export default function ReservationRequests() {
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        const res = await api.get("/rental-requests/provider");
-
-        if (!res.data.success) return;
-
-        const requestsData = res.data.data;
-        const formatted = await Promise.all(
-          requestsData.map(async (item) => {
-            const apartmentId = item.bed?.room?.apartment?.id || "";
-            const apartmentImage = await getApartmentImage(apartmentId);
-
-            return {
-              id: item.id,
-              apartmentId,
-              apartmentTitle: item.bed?.room?.apartment?.title || "N/A",
-              apartmentImage,
-              price: Number(item.bed?.price) || 0,
-              status: item.status || "UNKNOWN",
-              createdAt: item.createdAt,
-              student: {
-                name: `${item.student?.firstName || ""} ${
-                  item.student?.lastName || ""
-                }`.trim(),
-                image: item.student?.image || DEFAULT_AVATAR,
-              },
-            };
-          })
-        );
-
-        setRequests(formatted);
+        const data = await fetchRentalRequestsForProvider(getApartmentImage);
+        setRequests(data);
       } catch (error) {
         console.error("Error fetching rental requests:", error);
       } finally {
@@ -121,6 +94,7 @@ export default function ReservationRequests() {
         justifyContent="space-between"
         alignItems="center"
         mb={3}
+        className="requestHeader"
       >
         <Typography variant="h5" fontWeight="bold">
           {t.reservationRequests?.[language] || "Reservation Requests"}
@@ -140,8 +114,8 @@ export default function ReservationRequests() {
             SelectProps={{ displayEmpty: true }}
           >
             <MenuItem value="">{t.all?.[language] || "All"}</MenuItem>
-            <MenuItem value="APPROVED">
-              {t.APPROVED?.[language] || "Approved"}
+            <MenuItem value="ACCEPTED">
+              {t.ACCEPTED?.[language] || "ACCEPTED"}
             </MenuItem>
             <MenuItem value="PENDING">
               {t.PENDING?.[language] || "Pending"}
@@ -167,7 +141,7 @@ export default function ReservationRequests() {
           <Loading2 />
         ) : filteredRequests.length === 0 ? (
           <Box textAlign="center" py={5}>
-            <Typography color="textSecondary" fontSize={18}>
+            <Typography color="" fontSize={18}>
               {t.noRequests?.[language] || "No requests found."}
             </Typography>
           </Box>
@@ -250,7 +224,7 @@ export default function ReservationRequests() {
                             color={
                               item.status === "PENDING"
                                 ? "warning"
-                                : item.status === "APPROVED"
+                                : item.status === "ACCEPTED"
                                 ? "success"
                                 : "default"
                             }

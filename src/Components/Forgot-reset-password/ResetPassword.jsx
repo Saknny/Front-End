@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { verifyOTP, resetPassword } from "../../Api/api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import "./ResetPassword.scss";
-import api from "../../utils/axiosInstance";
 function ResetPassword() {
   const [otp, setOtp] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -25,11 +24,7 @@ function ResetPassword() {
 
     setLoading(true);
     try {
-      const response = await api.post("/otp/verify", {
-        email,
-        otp,
-        useCase: "RESET_PASSWORD",
-      });
+      const response = await verifyOTP(email, otp);
 
       if (response.data?.success && response.data?.data?.id) {
         setUserId(response.data.data.id);
@@ -74,21 +69,16 @@ function ResetPassword() {
 
     setLoading(true);
     try {
-      await api.patch("/auth/reset-password", {
-        userId: userId,
-        password: newPassword,
-        otp,
-      });
+      await resetPassword(userId, newPassword, otp);
 
       toast.success("Password reset successful! Redirecting to login...");
-      setTimeout(() => navigate("/login"), 2000);
+      setTimeout(() => navigate("/login"), 1000);
     } catch (err) {
       toast.error(err.response?.data?.message || "Failed to reset password");
     } finally {
       setLoading(false);
     }
   };
-
   return (
     <div className="reset-password-page">
       <div className="card">

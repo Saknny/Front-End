@@ -64,7 +64,7 @@ function Sidbar() {
                   <span>{t.completeProfile[language]}</span>
                 </NavLink>
               </li>
-              <li>
+              {/* <li>
                 <NavLink
                   to="/settings"
                   className={({ isActive }) =>
@@ -74,7 +74,7 @@ function Sidbar() {
                   <i className="bx bxs-cog"></i>
                   <span>{t.settings[language]}</span>
                 </NavLink>
-              </li>
+              </li> */}
             </>
           )}
 

@@ -21,7 +21,7 @@ import { visuallyHidden } from "@mui/utils";
 import TextField from "@mui/material/TextField";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import api from "../../../utils/axiosInstance";
+import { fetchUsersList, deleteUserById } from "../../../Api/api";
 import { useContext } from "react";
 import { LoginContext } from "../../../Context/Login/Login";
 import Loading2 from "../../../Components/Loading2/Loading2";
@@ -54,42 +54,29 @@ function UsersAccounts() {
   const [searchQuery, setSearchQuery] = React.useState("");
   const { darkMode } = useContext(LoginContext);
   const [loading, setLoading] = React.useState(true);
-  const fetchUsers = async () => {
-    try {
-      const response = await api.get("/users");
-      const usersData = response.data.data
-        .filter((item) => item.role === "STUDENT" || item.role === "PROVIDER")
-        .map((item) => ({
-          id: item.id,
-          name: `${item.student?.firstName || ""} ${
-            item.student?.lastName || ""
-          }`,
-          email: item.email,
-          age: null,
-          city: null,
-          university: item.student?.university || "",
-          faculty: item.student?.major || "",
-          year: item.student?.level || "",
-          gender: item.student?.gender || "",
-        }));
-      setUsers(usersData);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching users:", error);
-    }
-  };
-
   useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const usersData = await fetchUsersList();
+        setUsers(usersData);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchUsers();
   }, [users]);
 
   const deleteUser = async (id) => {
     try {
-      await api.delete(`/users/${id}`);
+      await deleteUserById(id);
       setUsers((prev) => prev.filter((user) => user.id !== id));
       toast.success("User deleted successfully");
     } catch (error) {
       console.error("Failed to delete user", error);
+      toast.error("Failed to delete user");
     }
   };
 
@@ -128,7 +115,7 @@ function UsersAccounts() {
       sx={{ width: "100%" }}
     >
       <Paper sx={{ backgroundColor: alpha("#f5f5f5", 1), padding: 2 }}>
-        <Toolbar>
+        <Toolbar className="toolbar">
           <Typography variant="h4" sx={{ flex: "1 1 100%" }}>
             User Accounts
           </Typography>
@@ -187,43 +174,53 @@ function UsersAccounts() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredUsers.map((user) => (
-                <TableRow key={user.id}>
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      color="primary"
-                      checked={selected.includes(user.id)}
-                      onChange={() => {
-                        setSelected((prev) =>
-                          prev.includes(user.id)
-                            ? prev.filter((id) => id !== user.id)
-                            : [...prev, user.id]
-                        );
-                      }}
-                    />
+              {filteredUsers.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={headCells.length + 1} align="center">
+                    No users found
                   </TableCell>
-                  <TableCell>{user.name}</TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>{user.age}</TableCell>
-                  <TableCell>{user.city}</TableCell>
-                  <TableCell>{user.university}</TableCell>
-                  <TableCell>{user.faculty}</TableCell>
-                  <TableCell>{user.year}</TableCell>
-                  <TableCell>{user.gender}</TableCell>
                 </TableRow>
-              ))}
+              ) : (
+                filteredUsers.map((user) => (
+                  <TableRow key={user.id}>
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        color="primary"
+                        checked={selected.includes(user.id)}
+                        onChange={() => {
+                          setSelected((prev) =>
+                            prev.includes(user.id)
+                              ? prev.filter((id) => id !== user.id)
+                              : [...prev, user.id]
+                          );
+                        }}
+                      />
+                    </TableCell>
+                    <TableCell>{user.name}</TableCell>
+                    <TableCell>{user.email}</TableCell>
+                    <TableCell>{user.age}</TableCell>
+                    <TableCell>{user.city}</TableCell>
+                    <TableCell>{user.university}</TableCell>
+                    <TableCell>{user.faculty}</TableCell>
+                    <TableCell>{user.year}</TableCell>
+                    <TableCell>{user.gender}</TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={rowsPerPageOptions}
-          component="div"
-          count={users.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
+        {filteredUsers.length > 0 && (
+          <TablePagination
+            rowsPerPageOptions={rowsPerPageOptions}
+            component="div"
+            count={users.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        )}
       </Paper>
     </Box>
   );

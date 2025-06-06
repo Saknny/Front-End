@@ -1,15 +1,15 @@
 import { useState } from "react";
-import axios from "axios";
+
 import { FaUser, FaLock } from "react-icons/fa";
 import { motion } from "framer-motion";
 import "./LoginForm.scss";
 import { useContext } from "react";
 import { LoginContext } from "../../Context/Login/Login";
 import React from "react";
+import { login } from "../../Api/api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../Components/Loading/Loading";
-import api from "../../utils/axiosInstance";
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,40 +17,38 @@ function LoginForm() {
   const { setIsAuthenticated, setUserRole } = useContext(LoginContext);
   const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
-
+  const [showPassword, setShowPassword] = useState(false);
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
 
     try {
-      const response = await api.post("/auth/login", {
-        email,
-        password,
-      });
-      console.log(response.data?.data.user?.role);
-      localStorage.setItem("token", response.data.data.token);
-      localStorage.setItem("email", email);
-      localStorage.setItem("role", response.data?.data.user?.role);
-      setUserRole(response.data?.data.user?.role);
+      const response = await login(email, password);
+      const role = response.data?.data.user?.role;
+      const token = response.data?.data.token;
 
+      localStorage.setItem("token", token);
+      localStorage.setItem("email", email);
+      localStorage.setItem("role", role);
+
+      setUserRole(role);
       setLoggedIn(true);
+      setIsAuthenticated(true);
+
       setTimeout(() => {
-        if (
-          response.data?.data.user?.role === "ADMIN" ||
-          response.data?.data.user?.role === "PROVIDER"
-        ) {
+        if (role === "ADMIN" || role === "PROVIDER") {
           toast.success("Login Successful");
           navigate("/");
         } else {
           toast.error("Invalid role");
           navigate("*");
         }
-      }, 2000);
-      setIsAuthenticated(true);
+      }, 1000);
     } catch (err) {
       if (err.response) {
-        setError(err.response.data.message || "Invalid email or password");
-        toast.error("Invalid email or password");
+        const msg = err.response.data.message || "Invalid email or password";
+        setError(msg);
+        toast.error(msg);
       } else {
         setError("Failed to connect to server");
         toast.error("Failed to connect to server");
@@ -75,7 +73,7 @@ function LoginForm() {
           animate={{ x: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <img src="full-logo.png" alt="Saknny Logo" className="logo" />
+          <img src="full-logo.webp" alt="Saknny Logo" className="logo" />
           <h2>Login</h2>
 
           <form onSubmit={handleLogin} className="d-flex flex-column">
@@ -96,11 +94,24 @@ function LoginForm() {
               <div className="input-field d-flex align-items-center">
                 <FaLock className="icon" />
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
+                  style={{ width: "100%", paddingRight: "40px" }}
                 />
+
+                <button
+                  className="show-password-button"
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                >
+                  {showPassword ? (
+                    <i className="fa-solid fa-eye"></i>
+                  ) : (
+                    <i className="fa-solid fa-eye-slash"></i>
+                  )}
+                </button>
               </div>
             </div>
             {error && <p className="error-message">{error}</p>}

@@ -1,20 +1,33 @@
 // 📁 pages/ReservationRequestsDetails.jsx
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, lazy } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import api from "../../../utils/axiosInstance";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import BedImageCarousel from "../../../Components/Provider/BedImageCarousel";
-import RequestStatusCard from "../../../Components/Provider/RequestStatusCard";
-import ApartmentPopup from "../../../Components/Provider/ApartmentPopup";
-import StudentInfoSection from "../../../Components/Provider/StudentInfoSection";
-import ActionButtons from "../../../Components/Provider/ActionButtons";
-import RoomPopup from "../../../Components/Provider/RoomPopup";
+const BedImageCarousel = lazy(() =>
+  import("../../../Components/Provider/BedImageCarousel")
+);
+const RequestStatusCard = lazy(() =>
+  import("../../../Components/Provider/RequestStatusCard")
+);
+const ApartmentPopup = lazy(() =>
+  import("../../../Components/Provider/ApartmentPopup")
+);
+const StudentInfoSection = lazy(() =>
+  import("../../../Components/Provider/StudentInfoSection")
+);
+const ActionButtons = lazy(() =>
+  import("../../../Components/Provider/ActionButtons")
+);
+const RoomPopup = lazy(() => import("../../../Components/Provider/RoomPopup"));
 import { LoginContext } from "../../../Context/Login/Login";
 import "./ReservationRequestsDetails.scss";
 import Loading2 from "../../../Components/Loading2/Loading2";
 import { toast } from "react-toastify";
 import { t } from "../../../translate/requestDetails";
-
+import {
+  fetchRentalRequestDetails,
+  fetchApartmentImagesBundle,
+  setRentalRequestStatus,
+} from "../../../Api/api";
 const ReservationRequestsDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -29,13 +42,11 @@ const ReservationRequestsDetails = () => {
   useEffect(() => {
     const fetchRequestData = async () => {
       try {
-        const res = await api.get(`/rental-requests/provider/${id}`);
-        const data = res.data.data;
+        const data = await fetchRentalRequestDetails(id);
         setRequestData(data);
 
         const apartmentId = data.bed.room.apartment.id;
-        const imgRes = await api.get(`/image/apartments/${apartmentId}/images`);
-        const imagesData = imgRes.data.data;
+        const imagesData = await fetchApartmentImagesBundle(apartmentId);
 
         const apartmentImages = imagesData.apartmentImages || [];
         const allRooms = imagesData.rooms || [];
@@ -56,10 +67,7 @@ const ReservationRequestsDetails = () => {
 
   const handleStatus = async (status) => {
     try {
-      await api.post("/admin/request-approval", {
-        id: requestData.id,
-        status,
-      });
+      await setRentalRequestStatus(requestData.id, status);
 
       toast.success(
         `${t.request?.[language] || "Request"} ${
@@ -144,10 +152,12 @@ const ReservationRequestsDetails = () => {
 
       <StudentInfoSection student={requestData.student} />
 
-      <ActionButtons
-        onApprove={() => handleStatus("APPROVED")}
-        onReject={() => handleStatus("REJECTED")}
-      />
+      {requestData.status === "PENDING" && (
+        <ActionButtons
+          onApprove={() => handleStatus("APPROVED")}
+          onReject={() => handleStatus("REJECTED")}
+        />
+      )}
     </div>
   );
 };

@@ -1,12 +1,10 @@
 // ✅ Finalized RequestDetails.jsx with translation file support
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { toast } from "react-toastify";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
-import BedIcon from "@mui/icons-material/Bed"; // Added import for BedIcon
 import HotelIcon from "@mui/icons-material/Hotel"; // Added import for HotelIcon
 import ApartmentSection from "./ApartmentSection";
 import RoomSection from "./RoomSection";
@@ -15,7 +13,12 @@ import "./RequestDetails.scss";
 import { LoginContext } from "../../Context/Login/Login";
 import Loading2 from "../../Components/Loading2/Loading2";
 import { t } from "../../translate/requestDetails";
-import api from "../../utils/axiosInstance";
+import {
+  fetchRequestById,
+  approveItem,
+  approveImage,
+  approveRequestStatus,
+} from "../../Api/api";
 const RequestDetails = () => {
   const { language, darkMode } = useContext(LoginContext);
   const { id } = useParams();
@@ -23,8 +26,7 @@ const RequestDetails = () => {
   const [request, setRequest] = useState(null);
 
   useEffect(() => {
-    api.get(`/admin/request/${id}`).then((res) => {
-      const data = res.data.data;
+    fetchRequestById(id).then((data) => {
       data.items.forEach((item) => {
         item.shouldApprove = false;
         item.images?.forEach((img) => (img.shouldApprove = false));
@@ -34,7 +36,7 @@ const RequestDetails = () => {
   }, [id]);
 
   const refresh = () => {
-    api.get(`/admin/request/${id}`).then((res) => setRequest(res.data.data));
+    fetchRequestById(id).then(setRequest);
   };
 
   const toggleImageApproval = (image) => {
@@ -54,7 +56,6 @@ const RequestDetails = () => {
   const canApprove = () => {
     let hasApprovedItem = false;
     let hasApprovedImage = false;
-
     let approvedApartment = false;
     let approvedRoom = false;
     let approvedBed = false;
@@ -65,13 +66,9 @@ const RequestDetails = () => {
 
         const hasApprovedImages = item.images?.some((img) => img.shouldApprove);
         if (hasApprovedImages) {
-          if (item.entityType === "APARTMENT") {
-            approvedApartment = true;
-          } else if (item.entityType === "ROOM") {
-            approvedRoom = true;
-          } else if (item.entityType === "BED") {
-            approvedBed = true;
-          }
+          if (item.entityType === "APARTMENT") approvedApartment = true;
+          else if (item.entityType === "ROOM") approvedRoom = true;
+          else if (item.entityType === "BED") approvedBed = true;
         }
       }
 
@@ -80,7 +77,6 @@ const RequestDetails = () => {
       });
     });
 
-    // نختار النوع اللي اتوافق عليه حسب الأولوية
     const hasValidApproval =
       approvedApartment ||
       (!approvedApartment && approvedRoom) ||
@@ -101,32 +97,9 @@ const RequestDetails = () => {
         });
       });
 
-      await Promise.all(
-        approvedImages.map((imgId) =>
-          api.patch(`/admin/${imgId}/image-approval`, {
-            status: "APPROVED",
-          })
-        )
-      );
-
-      await Promise.all(
-        approvedItems.map((itemId) =>
-          api.patch(`/admin/item-approval`, {
-            id: itemId,
-            status: "APPROVED",
-          })
-        )
-      );
-
-      await api.patch(`/admin/request-approval`, {
-        id: request.id,
-        status,
-      });
-      console.log("✅ Approved Images:", approvedImages);
-      console.log("✅ Approved Items:", approvedItems);
-      console.log("✅ Final Request ID:", request.id);
-      console.log("✅ Final Request Status:", status);
-
+      await Promise.all(approvedImages.map((id) => approveImage(id)));
+      await Promise.all(approvedItems.map((id) => approveItem(id)));
+      await approveRequestStatus(request.id, status);
       toast.success(t.success[language]);
       navigate("/requests");
       refresh();
