@@ -1,9 +1,9 @@
 import "./Navbar.scss";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { LoginContext } from "../../Context/Login/Login";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { Sun, Moon } from "lucide-react";
+
 function Navbar() {
   const { setIsAuthenticated, toggleDarkMode, darkMode } =
     useContext(LoginContext);
@@ -28,9 +28,9 @@ function Navbar() {
         className={`theme-toggle ${darkMode == "dr" ? "dr" : ""}`}
         onClick={toggleDarkMode}
       >
-        <Sun className="icon sun-icon" size={16} />
+        <i className="fa-solid fa-sun icon sun-icon" size={16}></i>
         <div className="toggle-circle">
-          <Moon className="icon moon-icon" size={16} />
+          <i className="fa-solid fa-moon icon moon-icon" size={16}></i>
         </div>
       </button>
 

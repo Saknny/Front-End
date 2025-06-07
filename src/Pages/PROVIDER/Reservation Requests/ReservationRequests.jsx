@@ -96,7 +96,7 @@ export default function ReservationRequests() {
         mb={3}
         className="requestHeader"
       >
-        <Typography variant="h5" fontWeight="bold">
+        <Typography variant="h4" fontWeight="bold">
           {t.reservationRequests?.[language] || "Reservation Requests"}
         </Typography>
 

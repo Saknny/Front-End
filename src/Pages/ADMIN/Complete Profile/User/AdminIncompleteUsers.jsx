@@ -44,7 +44,7 @@ const AdminIncompleteUsers = () => {
 
   return (
     <div className={`admin-users container py-4  ${darkMode}`}>
-      <h2 className="mb-4 p-3 fw-medium">{t.IncompleteProfiles[language]}</h2>
+      <h4 className="mb-4 p-3">{t.IncompleteProfiles[language]}</h4>
 
       {currentUsers.length === 0 ? (
         <p className="text-center ">{t.noUsersFound[language]}</p>
