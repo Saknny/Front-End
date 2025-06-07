@@ -1,8 +1,6 @@
 import axiosInstance from "../utils/axiosInstance";
 
-///////////////////////
-// 🔐 AUTH ENDPOINTS //
-///////////////////////
+// 🔐 AUTH ENDPOINTS
 
 // إرسال OTP إلى البريد الإلكتروني
 export const sendOTP = async (email) => {
@@ -27,9 +25,7 @@ export const resetPassword = async (userId, password, otp) => {
   });
 };
 
-//////////////////////////////////////
-// 📥 GENERAL REQUESTS FETCHING     //
-//////////////////////////////////////
+// 📥 GENERAL REQUESTS FETCHING
 
 // جلب كل الطلبات المعلقة (للإعادة الاستخدام)
 export const fetchPendingRequests = async () => {
@@ -66,9 +62,7 @@ export const fetchApartmentRequests = async () => {
   );
 };
 
-////////////////////////////
-// 📄 SINGLE REQUEST DATA //
-////////////////////////////
+// 📄 SINGLE REQUEST DATA
 
 // جلب بيانات طلب محدد
 export const fetchRequestById = async (id) => {
@@ -76,9 +70,7 @@ export const fetchRequestById = async (id) => {
   return res.data.data;
 };
 
-//////////////////////////
-// 📦 ITEMS & IMAGES   //
-//////////////////////////
+// 📦 ITEMS & IMAGES
 
 // الموافقة على عنصر (Apartment, Room, Bed)
 export const approveItem = async (id) => {
@@ -95,10 +87,7 @@ export const approveImage = async (imgId) => {
   });
 };
 
-//////////////////////////
-// 📤 STATUS MANAGEMENT //
-//////////////////////////
-
+// 📤 STATUS MANAGEMENT
 // الموافقة أو الرفض على الطلب بالكامل
 export const approveRequestStatus = async (id, status) => {
   return axiosInstance.patch(`/admin/request-approval`, {

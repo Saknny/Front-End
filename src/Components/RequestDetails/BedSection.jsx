@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import BedIcon from "@mui/icons-material/Bed";
-import HotelIcon from "@mui/icons-material/Hotel"; // Added import for HotelIcon
+import HotelIcon from "@mui/icons-material/Hotel";
 import ImageGallery from "./ImageGallery";
 import { LoginContext } from "../../Context/Login/Login";
 import { t } from "../../translate/requestDetails";

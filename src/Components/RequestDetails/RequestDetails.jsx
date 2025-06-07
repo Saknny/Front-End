@@ -1,11 +1,10 @@
-// ✅ Finalized RequestDetails.jsx with translation file support
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
-import HotelIcon from "@mui/icons-material/Hotel"; // Added import for HotelIcon
+import HotelIcon from "@mui/icons-material/Hotel";
 import ApartmentSection from "./ApartmentSection";
 import RoomSection from "./RoomSection";
 import BedSection from "./BedSection";

@@ -28,7 +28,7 @@ function ProviderDashboardCharts({
 }) {
   return (
     <div className="charts">
-      {/* 📌 Monthly Earnings */}
+      {/* Monthly Earnings */}
       <div className="chart-card">
         <h4>{language === "EN" ? "Monthly Earnings" : "الأرباح الشهرية"}</h4>
         <ResponsiveContainer width="100%" height={200}>
@@ -41,7 +41,7 @@ function ProviderDashboardCharts({
         </ResponsiveContainer>
       </div>
 
-      {/* 📌 Apartment Types */}
+      {/* Apartment Types */}
       <div className="chart-card">
         <h4>{language === "EN" ? "Apartment Types" : "أنواع الشقق"}</h4>
         <ResponsiveContainer width="100%" height={200}>
@@ -64,7 +64,7 @@ function ProviderDashboardCharts({
         </div>
       </div>
 
-      {/* 📌 Area Chart: Monthly Rented Rooms */}
+      {/* Area Chart: Monthly Rented Rooms */}
       <div className="chart-card">
         <h4>
           {language === "EN"
@@ -86,7 +86,7 @@ function ProviderDashboardCharts({
         </ResponsiveContainer>
       </div>
 
-      {/* 📌 Radar Chart: Unit Distribution */}
+      {/* Radar Chart: Unit Distribution */}
       <div className="chart-card">
         <h4>{language === "EN" ? "Unit Distribution" : "توزيع الوحدات"}</h4>
         <ResponsiveContainer width="100%" height={250}>

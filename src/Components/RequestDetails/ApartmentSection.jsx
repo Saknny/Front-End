@@ -1,4 +1,3 @@
-// ✅ ApartmentSection.jsx with full translation support
 import React, { useContext } from "react";
 import Carousel from "react-material-ui-carousel";
 import ImageGallery from "./ImageGallery";

@@ -1,4 +1,3 @@
-// Components/Charts/AdminDashboardCharts.jsx
 import React, { useContext } from "react";
 import {
   LineChart,
@@ -41,7 +40,7 @@ function AdminDashboardCharts() {
   const { language } = useContext(LoginContext);
   return (
     <div className="charts">
-      {/* 📌 Total bookings per month */}
+      {/* Total bookings per month */}
       <div className="chart-card">
         <h4>{language === "EN" ? "Monthly Bookings" : "الحجوزات الشهرية"}</h4>
         <ResponsiveContainer width="100%" height={200}>
@@ -59,7 +58,7 @@ function AdminDashboardCharts() {
         </ResponsiveContainer>
       </div>
 
-      {/* 📌 Device usage */}
+      {/* Device usage */}
       <div className="chart-card">
         <h4>{language === "EN" ? "Device Usage" : "استخدام الأجهزة"}</h4>
         <ResponsiveContainer width="100%" height={200}>
@@ -84,7 +83,7 @@ function AdminDashboardCharts() {
         </div>
       </div>
 
-      {/* 📌 Bookings by location */}
+      {/* Bookings by location */}
       <div className="chart-card">
         <h4>
           {language === "EN" ? "Bookings by Location" : "الحجوزات حسب الموقع"}
@@ -123,7 +122,7 @@ function AdminDashboardCharts() {
         </div>
       </div>
 
-      {/* 📌 Traffic sources */}
+      {/*Traffic sources */}
       <div className="chart-card">
         <h4>{language === "EN" ? "Traffic Sources" : "مصادر الزيارات"}</h4>
 

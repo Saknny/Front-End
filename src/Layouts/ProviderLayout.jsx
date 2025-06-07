@@ -20,8 +20,8 @@ function ProviderLayout() {
   const { darkMode } = useContext(LoginContext);
 
   return (
-    <Suspense fallback={<Loading2 />}>
-      <div className="app-container">
+    <div className="app-container">
+      <Suspense fallback={<Loading2 />}>
         <Sidebar />
         <div className="main-content">
           <Navbar />
@@ -38,8 +38,8 @@ function ProviderLayout() {
             </Routes>
           </div>
         </div>
-      </div>
-    </Suspense>
+      </Suspense>
+    </div>
   );
 }
 

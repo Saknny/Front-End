@@ -2,7 +2,6 @@ import React, { useContext, Suspense, lazy } from "react";
 import "./AdminDashboard.scss";
 import { LoginContext } from "../../../Context/Login/Login";
 import Loading2 from "../../../Components/Loading2/Loading2.jsx";
-// ✅ lazy loading للـ Charts
 const AdminDashboardCharts = lazy(() =>
   import("../../../Components/Charts/AdminDashboardCharts.jsx")
 );

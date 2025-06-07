@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import "./Sidbar.scss";
 import React, { useContext } from "react";
 import { LoginContext } from "../../Context/Login/Login";
-import { t } from "../../translate/requestDetails"; // لو حطيتها في ملف منفصل
+import { t } from "../../translate/requestDetails";
 
 function Sidbar() {
   const { darkMode, userRole, language } = useContext(LoginContext);
