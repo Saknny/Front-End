@@ -9,7 +9,11 @@ function ApartmentSection({ apartment, onToggle, onImageToggle }) {
   const { language } = useContext(LoginContext);
 
   return (
-    <div className="details-grid mb-5  flex-column gap-4">
+    <div
+      className={`details-grid mb-5  flex-column gap-4 ${
+        apartment.shouldApprove ? "border-success" : "border"
+      }`}
+    >
       <div className="carousel-section">
         <Carousel
           navButtonsAlwaysVisible
@@ -71,13 +75,9 @@ function ApartmentSection({ apartment, onToggle, onImageToggle }) {
         </div>
 
         {language === "EN" ? (
-          <p className="text-muted fs-4 pt-2 pb-2">
-            {apartment?.data?.descriptionEn}
-          </p>
+          <p className=" fs-4 pt-2 pb-2">{apartment?.data?.descriptionEn}</p>
         ) : (
-          <p className="text-muted small fst-italic">
-            {apartment?.data?.descriptionAr}
-          </p>
+          <p className="small fst-italic">{apartment?.data?.descriptionAr}</p>
         )}
 
         <ImageGallery images={apartment.images} onToggle={onImageToggle} />

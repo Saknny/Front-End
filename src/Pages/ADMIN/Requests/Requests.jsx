@@ -73,12 +73,10 @@ function Requests() {
       ) : (
         <Grid container spacing={4}>
           {displayedRequests.map((request) => {
-            const apartmentItem = request.items.find(
-              (item) =>
-                item.entityType === "APARTMENT" ||
-                item.entityType === "ROOM" ||
-                item.entityType === "BED"
-            );
+            const apartmentItem =
+              request.items.find((item) => item.entityType === "APARTMENT") ||
+              request.items.find((item) => item.entityType === "ROOM") ||
+              request.items.find((item) => item.entityType === "BED");
 
             return (
               <Grid item xs={12} sm={6} md={4} key={request.id}>

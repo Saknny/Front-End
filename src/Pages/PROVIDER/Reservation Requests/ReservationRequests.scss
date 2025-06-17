@@ -14,7 +14,7 @@
             color: var(--navbar-background-color);
         }
 
-        background-color: #121212;
+        background-color: var(--complete-profile-details-background-color);
 
         .category,
         .table-pagination {
@@ -22,7 +22,7 @@
         }
 
         .MuiPaper-root {
-            background-color: #1e1e1e !important;
+            background-color: var(--complete-profile-details-background-color) !important;
             color: var(--navbar-background-color);
             box-shadow: none;
 

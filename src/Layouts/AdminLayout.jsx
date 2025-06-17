@@ -21,7 +21,7 @@ const AdminIncompleteUsers = lazy(() =>
   import("../Pages/ADMIN/Complete Profile/User/AdminIncompleteUsers")
 );
 const CompleteProfileDetails = lazy(() =>
-  import("../Pages/ADMIN/Complete Profile/User/AdminIncompleteUsers")
+  import("../Components/CompleteProfileDetails/CompleteProfileDetails")
 );
 function AdminLayout() {
   const { darkMode } = useContext(LoginContext);

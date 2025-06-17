@@ -53,35 +53,24 @@ const RequestDetails = () => {
   };
 
   const canApprove = () => {
-    let hasApprovedItem = false;
-    let hasApprovedImage = false;
-    let approvedApartment = false;
-    let approvedRoom = false;
-    let approvedBed = false;
+    const apartment = request.items.find(
+      (item) => item.entityType === "APARTMENT"
+    );
+    const room = request.items.find((item) => item.entityType === "ROOM");
+    const bed = request.items.find((item) => item.entityType === "BED");
 
-    request.items.forEach((item) => {
-      if (item.shouldApprove) {
-        hasApprovedItem = true;
+    const isApprovedWithImage = (item) =>
+      item?.shouldApprove && item.images?.some((img) => img.shouldApprove);
 
-        const hasApprovedImages = item.images?.some((img) => img.shouldApprove);
-        if (hasApprovedImages) {
-          if (item.entityType === "APARTMENT") approvedApartment = true;
-          else if (item.entityType === "ROOM") approvedRoom = true;
-          else if (item.entityType === "BED") approvedBed = true;
-        }
-      }
+    if (apartment) {
+      return isApprovedWithImage(apartment);
+    } else if (room) {
+      return isApprovedWithImage(room);
+    } else if (bed) {
+      return isApprovedWithImage(bed);
+    }
 
-      item.images?.forEach((img) => {
-        if (img.shouldApprove) hasApprovedImage = true;
-      });
-    });
-
-    const hasValidApproval =
-      approvedApartment ||
-      (!approvedApartment && approvedRoom) ||
-      (!approvedApartment && !approvedRoom && approvedBed);
-
-    return hasApprovedItem && hasApprovedImage && hasValidApproval;
+    return false;
   };
 
   const approveRequest = async (status) => {
