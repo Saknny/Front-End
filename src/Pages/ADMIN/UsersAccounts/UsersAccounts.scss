@@ -1,32 +1,32 @@
 .users-accounts {
     // Light mode (default)
     background-color: #c4c0c0;
-    color: #000;
+    color: var(--dark-color);
 
     .MuiPaper-root {
-        background-color: #f8f9fa;
-        color: #000;
+        background-color: var(--bg-light);
+        color: var(--dark-color);
     }
 
     .MuiTypography-root {
-        color: #14737b;
+        color: var(--primary-color2);
         font-weight: 600;
         font-size: 30px
     }
 
     .MuiTableCell-root,
     .MuiInputBase-input {
-        color: #000;
+        color: var(--dark-color);
     }
 
     .MuiInputBase-root {
-        background-color: #fff;
-        color: #000;
+        background-color: var(--navbar-background-color);
+        color: var(--dark-color);
     }
 
     .MuiCheckbox-root,
     .MuiSvgIcon-root {
-        color: #000;
+        color: var(--dark-color);
     }
 
     .MuiTableSortLabel-root.Mui-active {
@@ -36,27 +36,27 @@
     // Dark mode override
     &.dark {
         background-color: #121212;
-        color: #fff;
+        color: var(--navbar-background-color);
 
         .MuiPaper-root {
             background-color: #1e1e1e;
-            color: #fff;
+            color: var(--navbar-background-color);
         }
 
         .MuiTableCell-root,
         .MuiTypography-root,
         .MuiInputBase-input {
-            color: #fff;
+            color: var(--navbar-background-color);
         }
 
         .MuiInputBase-root {
             background-color: #2c2c2c;
-            color: #fff;
+            color: var(--navbar-background-color);
         }
 
         .MuiCheckbox-root,
         .MuiSvgIcon-root {
-            color: #fff;
+            color: var(--navbar-background-color);
         }
 
         .MuiTableSortLabel-root.Mui-active {
@@ -64,7 +64,7 @@
         }
 
         .MuiToolbar-root {
-            color: #fff;
+            color: var(--navbar-background-color);
         }
     }
 }

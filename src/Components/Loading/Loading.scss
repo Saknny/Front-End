@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: white;
+    background-color: var(--white-color);
 }
 
 .loading-balls {
@@ -13,7 +13,7 @@
 
 .loading-balls div {
     border-radius: 50%;
-    background-color: #18878a;
+    background-color: var(--primary-color);
     animation: bounce 1.5s infinite ease-in-out;
 }
 

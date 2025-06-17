@@ -6,16 +6,16 @@
 
     &.dr {
         font-size: 1rem;
-        background-color: #1a1a2e;
-        color: #ffffff;
+        background-color: var(--complete-profile-details-background-color);
+        color: var(--navbar-background-color);
 
         .stats .stat-card {
             background-color: #21213b;
-            border-color: #333;
-            color: #ffffff;
+            border-color: var(--text-color);
+            color: var(--navbar-background-color);
 
             p {
-                color: #ffffff !important;
+                color: var(--navbar-background-color) !important;
 
                 span.increase {
                     background-color: rgba(46, 204, 113, 0.15);
@@ -32,29 +32,29 @@
         .charts {
             .chart-card {
                 background-color: #21213b;
-                border-color: #333;
-                color: #ffffff;
+                border-color: var(--text-color);
+                color: var(--navbar-background-color);
 
                 h4 {
-                    color: #ffffff;
+                    color: var(--navbar-background-color);
                 }
 
                 .legend-item span {
-                    border: 1px solid #ccc;
+                    border: 1px solid var(--disabled-color);
                 }
             }
         }
 
         .legend-item span {
-            border: 1px solid #ccc;
+            border: 1px solid var(--disabled-color);
         }
 
         h4 {
-            color: #ffffff !important;
+            color: var(--navbar-background-color) !important;
         }
 
         .recharts-text {
-            fill: #ffffff !important; // نصوص داخل الشارت
+            fill: var(--navbar-background-color) !important; // نصوص داخل الشارت
         }
 
         .recharts-tooltip-wrapper {
@@ -69,7 +69,7 @@
         margin-bottom: 30px;
 
         .stat-card {
-            background: white;
+            background: var(--white-colorz);
             border: 1px solid #e0e0e0;
             border-radius: 8px;
             padding: 20px;
@@ -113,7 +113,7 @@
         gap: 25px;
 
         .chart-card {
-            background: white;
+            background: var(--white-colorz);
             border: 1px solid #e0e0e0;
             border-radius: 8px;
             padding: 15px;

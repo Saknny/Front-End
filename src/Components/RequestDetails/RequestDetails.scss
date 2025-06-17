@@ -33,20 +33,20 @@
 
         .details-section {
             p {
-                color: #cccccc;
+                color: var(--disabled-color);
             }
 
             button {
-                color: #fff;
+                color: var(--navbar-background-color);
             }
         }
 
         .card {
-            background-color: #2c2c2c;
-            border: 1px solid #444;
+            background-color: var(--profile-card-background-colo-dark);
+            border: 1px solid var(--card-btn-border-color);
 
             &.border-success {
-                border-color: #28a745;
+                border-color: var(--green-color);
             }
 
             img {
@@ -57,24 +57,24 @@
                 color: #eee;
 
                 .btn {
-                    background-color: #444;
-                    color: #fff;
+                    background-color: var(--card-btn-border-color);
+                    color: var(--navbar-background-color);
 
                     &.btn-outline-success {
-                        border-color: #28a745;
-                        color: #28a745;
+                        border-color: var(--green-color);
+                        color: var(--green-color);
 
                         &:hover {
-                            background-color: #28a745;
-                            color: #fff;
+                            background-color: var(--green-color);
+                            color: var(--navbar-background-color);
                         }
                     }
 
                     &.btn-danger {
-                        background-color: #d9534f;
+                        background-color: var(--red-color);
 
                         &:hover {
-                            background-color: #c9302c;
+                            background-color: var(--red-color-hover);
                         }
                     }
                 }
@@ -83,7 +83,7 @@
 
         .MuiButtonBase-root.MuiIconButton-root {
             background-color: rgba(255, 255, 255, 0.1) !important;
-            color: #fff !important;
+            color: var(--navbar-background-color) !important;
 
             &:hover {
                 background-color: rgba(255, 255, 255, 0.2) !important;
@@ -95,7 +95,7 @@
 .details-grid {
     display: flex;
     flex-wrap: wrap;
-    background: #fff;
+    background: var(--navbar-background-color);
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     overflow: hidden;
@@ -131,7 +131,7 @@
     align-items: center;
     justify-content: center;
     background-color: rgba(0, 0, 0, 0.4) !important;
-    color: white !important;
+    color: var(--white-color) !important;
     z-index: 2;
 
     &:hover {
@@ -165,7 +165,7 @@
     transition: 0.3s ease-in-out;
 
     &.border-success {
-        border: 2px solid #28a745;
+        border: 2px solid var(--green-color);
     }
 
     &:hover {

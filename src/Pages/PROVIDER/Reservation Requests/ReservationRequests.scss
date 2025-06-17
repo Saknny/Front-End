@@ -1,5 +1,5 @@
 .dr {
-    background-color: black;
+    background-color: var(--dark-color);
     color: white;
     font-size: 1.5rem;
 }
@@ -11,19 +11,19 @@
 
         .apartmentTitle,
         .Bed {
-            color: #fff;
+            color: var(--navbar-background-color);
         }
 
         background-color: #121212;
 
         .category,
         .table-pagination {
-            color: #fff;
+            color: var(--navbar-background-color);
         }
 
         .MuiPaper-root {
             background-color: #1e1e1e !important;
-            color: #ffffff;
+            color: var(--navbar-background-color);
             box-shadow: none;
 
             .MuiTableCell-root {
@@ -32,7 +32,7 @@
             }
 
             .MuiChip-root {
-                color: #fff;
+                color: var(--navbar-background-color);
 
                 &.MuiChip-colorSuccess {
                     background-color: #2e7d32;
@@ -61,7 +61,7 @@
             input,
             .MuiSelect-select {
                 background-color: #2a2a2a;
-                color: #fff;
+                color: var(--navbar-background-color);
             }
 
             fieldset {

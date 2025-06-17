@@ -1,5 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
 
+:root {
+    --primary-color: #18878b;
+    --primary-color2: #14737b;
+    --secondary-color: #fdcb54;
+    --page-background-color: #f1f5f9;
+    --profile-card-background-colo-dark: #2c2c2c;
+    --card-btn-border-color: #444;
+    --complete-profile-details-background-color: #1a1a1a;
+    --forget-password-box-shadow-color-3: rgba(20, 115, 123, 0.3);
+    --disabled-color: #ccc;
+    --btn-primary-color-hover: #2a7376;
+    --text-color: #333;
+    --white-color: white;
+    --navbar-background-color: #fff;
+    --green-color: #28a745;
+    --red-color: #d9534f;
+    --red-color-hover: #c9302c;
+    --dark-color: #000;
+    --bg-light: #f8f9fa;
+    --bg-dark: #121212;
+    --text-dark: #e0e0e0;
+    --subtext-light: #666;
+    --subtext-dark: #b0b0b0;
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-dark: rgba(255, 255, 255, 0.1);
+    --admin-incomplete-users-color: #eee;
+    --blue-color: #0dcaf0;
+    --blue-color-hover: #0bb8dc;
+
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -16,7 +47,7 @@ a {
 }
 
 .page {
-    background-color: #f1f5f9;
+    background-color: var(--page-background-color);
     min-height: 100vh;
 }
 
@@ -35,15 +66,15 @@ ul {
 }
 
 ::-webkit-scrollbar-track {
-    background-color: #18878a;
+    background-color: var(--primary-color);
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #236b6d;
+    background-color: var(--btn-primary-color-hover);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: #fdcb54;
+    background-color: var(--secondary-color);
 }
 
 

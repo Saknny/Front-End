@@ -3,10 +3,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f8f9fa;
+    background-color: var(--bg-light);
 
     .content {
-        background: white;
+        background: var(--white-color);
         padding: 40px;
         border-radius: 12px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -24,7 +24,7 @@
 
         button {
             background-color: #e74c3c;
-            color: white;
+            color: var(--white-color);
             border: none;
             padding: 10px 20px;
             border-radius: 6px;

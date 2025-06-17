@@ -17,11 +17,11 @@
         background-color: #1c1919;
 
         .page-title {
-            color: #fff;
+            color: var(--navbar-background-color);
         }
 
         .apartment-card {
-            background: #2c2c2c;
+            background: var(--profile-card-background-colo-dark);
             box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.05);
 
             .carousel-image {
@@ -30,11 +30,11 @@
             }
 
             .apartment-title {
-                color: white;
+                color: var(--white-color);
             }
 
             .apartment-description {
-                color: white;
+                color: var(--white-color);
             }
 
             .apartment-price {
@@ -60,7 +60,7 @@
 
             .button-group {
                 button {
-                    color: #eee;
+                    color: var(--admin-incomplete-users-color);
                 }
 
                 .accept-button {
@@ -94,7 +94,7 @@
 .apartment-card {
     border-radius: 10px;
     overflow: hidden;
-    background: #ffffff;
+    background: var(--navbar-background-color);
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.07);
     transition: transform 0.3s ease;
 
@@ -178,7 +178,7 @@
 
         .accept-button {
             background-color: #3e7d54 !important;
-            color: #eee !important;
+            color: var(--admin-incomplete-users-color) !important;
 
             &:hover {
                 background-color: #90d4a2 !important;
@@ -187,7 +187,7 @@
 
         .reject-button {
             background-color: #a94442 !important;
-            color: #eee !important;
+            color: var(--admin-incomplete-users-color) !important;
 
             &:hover {
                 background-color: #f5b6b9 !important;

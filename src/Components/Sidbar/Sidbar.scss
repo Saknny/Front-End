@@ -1,15 +1,11 @@
 // تعريف المتغيرات
 $sidebar-width: 250px;
 $sidebar-width-mobile: 60px;
-$primary-color: #18878a;
-$dark-bg: #000;
-$text-color: #333;
-$hover-bg: #2a7376;
 
 .sidebar {
     width: $sidebar-width;
     height: auto;
-    background: #fff;
+    background: var(--navbar-background-color);
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
@@ -48,7 +44,7 @@ $hover-bg: #2a7376;
                 cursor: pointer;
 
                 &:hover {
-                    background-color: $primary-color;
+                    background-color: var(--primary-color);
                     width: $sidebar-width;
                     z-index: 2;
                     position: relative;
@@ -61,13 +57,13 @@ $hover-bg: #2a7376;
                 i {
                     font-size: 20px;
                     margin-right: 10px;
-                    color: $text-color;
+                    color: var(--text-color);
                 }
 
                 a {
                     text-decoration: none;
                     font-size: 16px;
-                    color: $text-color;
+                    color: var(--text-color);
                     transition: color 0.3s;
                     width: 100%;
                     display: flex;
@@ -83,20 +79,20 @@ $hover-bg: #2a7376;
             }
 
             .active-li {
-                background: $primary-color;
+                background: var(--primary-color);
                 border-radius: 4px;
 
                 a,
                 i,
                 span {
-                    color: #fff !important;
+                    color: var(--navbar-background-color) !important;
                 }
             }
         }
     }
 
     .dropdown-menu {
-        background-color: #fff;
+        background-color: var(--navbar-background-color);
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 
         li {
@@ -105,8 +101,8 @@ $hover-bg: #2a7376;
 
             .dropdown-item {
                 &:hover {
-                    background-color: $hover-bg;
-                    color: #fff;
+                    background-color: var(--btn-primary-color-hover);
+                    color: var(--navbar-background-color);
                     border-radius: 30px;
                 }
             }
@@ -121,7 +117,7 @@ $hover-bg: #2a7376;
 }
 
 .dark {
-    background-color: $dark-bg;
+    background-color: var(--dark-color);
     position: relative;
 
     .links {
@@ -130,7 +126,7 @@ $hover-bg: #2a7376;
 
                 i,
                 span {
-                    color: #fff;
+                    color: var(--navbar-background-color);
                 }
             }
         }

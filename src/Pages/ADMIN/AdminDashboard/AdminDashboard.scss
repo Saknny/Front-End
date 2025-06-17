@@ -1,18 +1,3 @@
-:root {
-    --bg-light: #f8f9fa;
-    --bg-dark: #121212;
-    --card-bg-light: white;
-    --card-bg-dark: #1e1e1e;
-    --text-light: #333;
-    --text-dark: #e0e0e0;
-    --subtext-light: #666;
-    --subtext-dark: #b0b0b0;
-    --shadow-light: rgba(0, 0, 0, 0.1);
-    --shadow-dark: rgba(255, 255, 255, 0.1);
-    --increase-color: #4caf50;
-    --decrease-color: #e53935;
-}
-
 .AdminDashboard.dr {
     font-size: 1rem;
 }
@@ -28,11 +13,11 @@
 
     &.wh {
         background: var(--bg-light);
-        color: var(--text-light);
+        color: var(--text-color);
     }
 
     &.dr {
-        background: #1a1a2e;
+        background: var(--complete-profile-details-background-color);
         color: var(--text-dark);
     }
 
@@ -43,7 +28,7 @@
         flex-direction: row;
 
         .stat-card {
-            background: var(--card-bg-light);
+            background: var(--white-color);
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 10px var(--shadow-light);
@@ -62,12 +47,12 @@
             }
 
             .increase {
-                color: var(--increase-color);
+                color: var(--green-color);
                 font-size: 14px;
             }
 
             .decrease {
-                color: var(--decrease-color);
+                color: var(--red-color);
                 font-size: 14px;
             }
         }
@@ -81,7 +66,7 @@
         flex-grow: 1;
 
         .chart-card {
-            background: var(--card-bg-light);
+            background: var(--white-color);
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 10px var(--shadow-light);
@@ -89,7 +74,7 @@
 
             h4 {
                 font-size: 16px;
-                color: var(--text-light);
+                color: var(--text-color);
                 margin-bottom: 10px;
             }
 
@@ -130,7 +115,7 @@
 
 .dr {
     .stats .stat-card {
-        background: var(--card-bg-dark);
+        background: var(--complete-profile-details-background-color);
         box-shadow: 0 2px 10px var(--shadow-dark);
 
         h4 {
@@ -138,12 +123,12 @@
         }
 
         p {
-            color: #fff;
+            color: var(--navbar-background-color);
         }
     }
 
     .charts .chart-card {
-        background: var(--card-bg-dark);
+        background: var(--complete-profile-details-background-color);
         box-shadow: 0 2px 10px var(--shadow-dark);
 
         h4 {
