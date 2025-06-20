@@ -424,4 +424,12 @@ export const t = {
     EN: "Blocked Apartments Details",
     AR: " تفاصيل الشقه المحظورة",
   },
+  ViewRoomDetails: {
+    EN: "View Room Details",
+    AR: " رؤيه تفاصيل الغرفه ",
+  },
+  View_Bed_Details: {
+    EN: "View Bed Details",
+    AR: " رؤيه تفاصيل السرير ",
+  },
 };

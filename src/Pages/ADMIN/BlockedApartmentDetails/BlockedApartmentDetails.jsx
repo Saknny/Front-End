@@ -2,7 +2,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import "./BlockedApartmentDetails.scss";
 import React from "react";
-import ApartmentPopup from "../../../Components/Provider/ApartmentPopup";
 import RoomPopup from "../../../Components/Provider/RoomPopup";
 import BedPopup from "../../../Components/Provider/BedPopup";
 import axiosInstance from "../../../utils/axiosInstance";
@@ -13,42 +12,49 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { t } from "../../../translate/requestDetails";
 import { LoginContext } from "../../../Context/Login/Login";
 import { toast } from "react-toastify";
+import BlockApartmentSection from "../../../Components/BlockApartmentSection/BlockApartmentSection";
+
 function BlockedApartmentDetails() {
   const { id } = useParams();
-
-  const [apartmentData, setApartmentData] = useState(null);
-  const [roomData, setRoomData] = useState(null);
-  const [bedData, setBedData] = useState(null);
-
-  const [apartmentImages, setApartmentImages] = useState([]);
-  const [roomImages, setRoomImages] = useState([]);
-  const [bedImages, setBedImages] = useState([]);
-  const [roomImagesList, setRoomImagesList] = useState([]);
-
-  const [showApartmentModal, setShowApartmentModal] = useState(false);
-  const [showRoomModal, setShowRoomModal] = useState(false);
-  const [showBedModal, setShowBedModal] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-
   const navigate = useNavigate();
   const { darkMode, language } = useContext(LoginContext);
 
+  const [apartment, setApartment] = useState(null);
+  const [roomImagesList, setRoomImagesList] = useState([]);
+
+  const [roomData, setRoomData] = useState(null);
+  const [bedData, setBedData] = useState(null);
+  const [roomImages, setRoomImages] = useState([]);
+  const [bedImages, setBedImages] = useState([]);
+
+  const [showRoomModal, setShowRoomModal] = useState(false);
+  const [showBedModal, setShowBedModal] = useState(false);
+
+  const [reviews, setReviews] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
   const reviewsPerPage = 3;
+
+  const paginatedReviews = reviews.slice(
+    (currentPage - 1) * reviewsPerPage,
+    currentPage * reviewsPerPage
+  );
+  const totalPages = Math.ceil(reviews.length / reviewsPerPage);
 
   useEffect(() => {
     const fetchAll = async () => {
       try {
         const res = await axiosInstance.get(`/apartment/${id}`);
-
-        const apartment = res.data.data.apartment;
-        setApartmentData(apartment);
+        const apartmentData = res.data.data.apartment;
 
         const imagesData = await fetchApartmentImagesBundle(id);
-        setApartmentImages(imagesData.apartmentImages || []);
-        setRoomImagesList(imagesData.rooms || []);
 
-        const ress = await axiosInstance.get(`/report/apartmentReports/${id}`);
-        console.log(ress);
+        setApartment({
+          id,
+          images: imagesData.apartmentImages || [],
+          data: apartmentData,
+        });
+
+        setRoomImagesList(imagesData.rooms || []);
       } catch (err) {
         console.error("Error fetching data:", err);
       }
@@ -79,42 +85,31 @@ function BlockedApartmentDetails() {
     }
   };
 
-  if (!apartmentData) return <div className="text-center">Loading...</div>;
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const res = await axiosInstance.get("/review/apartmentReviews", {
+          params: {
+            apartmentId: id,
+          },
+        });
 
-  const reviews = [
-    {
-      name: "Floyd Miles",
-      rating: 4,
-      image: "https://randomuser.me/api/portraits/women/44.jpg",
-      message:
-        "The apartment was clean and well-maintained. Very quiet area, I liked it!",
-    },
-    {
-      name: "Ronald Richards",
-      rating: 5,
-      image: "https://randomuser.me/api/portraits/men/32.jpg",
-      message:
-        "Spacious and had everything I needed. I’d definitely book it againnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn.",
-    },
-    {
-      name: "Savannah Nguyen",
-      rating: 4,
-      image: "https://randomuser.me/api/portraits/women/68.jpg",
-      message: "Great location and friendly host. AC could be better.",
-    },
-    {
-      name: "Ali Ahmed",
-      rating: 3,
-      image: "https://randomuser.me/api/portraits/men/45.jpg",
-      message: "Nice place, but had some noise from the street at night.",
-    },
-  ];
+        const fetchedReviews = res.data.data.reviews.map((review) => ({
+          name: review.student.fullName,
+          rating: review.rating,
+          date: review.createdAt,
+          image: review.student.photo,
+          message: review.comment,
+        }));
 
-  const paginatedReviews = reviews.slice(
-    (currentPage - 1) * reviewsPerPage,
-    currentPage * reviewsPerPage
-  );
-  const totalPages = Math.ceil(reviews.length / reviewsPerPage);
+        setReviews(fetchedReviews);
+      } catch (err) {
+        console.error("❌ Failed to load apartment reviews:", err);
+      }
+    };
+
+    if (id) fetchReviews();
+  }, [id]);
 
   return (
     <div
@@ -135,27 +130,11 @@ function BlockedApartmentDetails() {
         {t.BlockedApartmentsDetails?.[language] ||
           "Reservation Request Details"}
       </h3>
-      {/* Apartment Overview Button */}
-      <div className="row g-3 mb-4">
-        <div className="col-md-4">
-          <div
-            className="p-3 border rounded bg-light"
-            style={{ cursor: "pointer" }}
-            onClick={() => setShowApartmentModal(true)}
-          >
-            <small className="view-details-btn">
-              Apartment Request Details
-            </small>
-            <div className="fw-bold text-primary mt-1">
-              Click to view details
-            </div>
-          </div>
-        </div>
-      </div>
 
-      {/* Rooms and Beds - Accordion */}
+      {apartment && <BlockApartmentSection apartment={apartment} />}
+
       <Accordion defaultActiveKey="0" className="mb-4">
-        {apartmentData.rooms?.map((room, index) => {
+        {apartment?.data?.rooms?.map((room, index) => {
           const matchedRoom =
             roomImagesList.find((r) => r.roomId === room.id) || {};
           const matchedRoomImages = matchedRoom.roomImages || [];
@@ -163,7 +142,8 @@ function BlockedApartmentDetails() {
           return (
             <Accordion.Item eventKey={index.toString()} key={room.id}>
               <Accordion.Header>
-                🛏️ Room {index + 1}: {room.descriptionEn}
+                🛏️ {language == "EN" ? "room" : "غرفه"} {index + 1}:{" "}
+                {language == "EN" ? room.descriptionEn : room.descriptionAr}
               </Accordion.Header>
               <Accordion.Body>
                 <div className="d-flex justify-content-end mb-3">
@@ -175,7 +155,7 @@ function BlockedApartmentDetails() {
                       setShowRoomModal(true);
                     }}
                   >
-                    View Room Details
+                    {t.ViewRoomDetails[language]}
                   </button>
                 </div>
 
@@ -188,9 +168,17 @@ function BlockedApartmentDetails() {
                     return (
                       <div className="col-md-4" key={bed.id}>
                         <div className="p-3 border rounded bg-light h-100 card-like-box">
-                          <h6>{bed.descriptionEn}</h6>
-                          <p className="Status">Status: {bed.status}</p>
-                          <p className="Price">Price: {bed.price}</p>
+                          <h6>
+                            {language == "EN"
+                              ? bed.descriptionEn
+                              : bed.descriptionAr}
+                          </h6>
+                          <p className="Status">
+                            {t.status[language]}: {bed.status}
+                          </p>
+                          <p className="Price">
+                            {t.price[language]}: {bed.price}
+                          </p>
                           <button
                             className="btn btn-outline-secondary btn-sm"
                             onClick={() => {
@@ -199,7 +187,7 @@ function BlockedApartmentDetails() {
                               setShowBedModal(true);
                             }}
                           >
-                            View Bed Details
+                            {t.View_Bed_Details[language]}
                           </button>
                         </div>
                       </div>
@@ -212,13 +200,6 @@ function BlockedApartmentDetails() {
         })}
       </Accordion>
 
-      {/* Popups */}
-      <ApartmentPopup
-        show={showApartmentModal}
-        onClose={() => setShowApartmentModal(false)}
-        apartmentData={apartmentData}
-        apartmentImages={apartmentImages}
-      />
       {roomData && (
         <RoomPopup
           show={showRoomModal}
