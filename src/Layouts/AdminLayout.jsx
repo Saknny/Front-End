@@ -23,6 +23,12 @@ const AdminIncompleteUsers = lazy(() =>
 const CompleteProfileDetails = lazy(() =>
   import("../Components/CompleteProfileDetails/CompleteProfileDetails")
 );
+const BlockedApartments = lazy(() =>
+  import("../Pages/ADMIN/BlockedApartments/BlockedApartments")
+);
+const BlockedApartmentDetails = lazy(() =>
+  import("../Pages/ADMIN/BlockedApartmentDetails/BlockedApartmentDetails")
+);
 function AdminLayout() {
   const { darkMode } = useContext(LoginContext);
 
@@ -46,6 +52,14 @@ function AdminLayout() {
               <Route
                 path="/complete-profile/user/:id"
                 element={<CompleteProfileDetails />}
+              />
+              <Route
+                path="/blocked-apartments"
+                element={<BlockedApartments />}
+              />
+              <Route
+                path="/blocked-apartments/:id"
+                element={<BlockedApartmentDetails />}
               />
             </Routes>
           </div>

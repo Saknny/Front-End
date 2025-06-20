@@ -135,8 +135,7 @@ const CompleteProfileDetails = () => {
               <div className="col-12 col-md-6 col-lg-4">
                 <div className="p-3 border rounded h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
-                    <strong>First Name:</strong>{" "}
-                    {item.data.firstName || "no name"}
+                    <strong>First Name:</strong> {item.data.firstName || "-"}
                   </span>
                 </div>
               </div>
@@ -144,8 +143,7 @@ const CompleteProfileDetails = () => {
               <div className="col-12 col-md-6 col-lg-4  ">
                 <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
-                    <strong>Last Name:</strong>{" "}
-                    {item.data.lastName || "no name"}
+                    <strong>Last Name:</strong> {item.data.lastName || "-"}
                   </span>
                 </div>
               </div>
@@ -159,7 +157,7 @@ const CompleteProfileDetails = () => {
                       target="_blank"
                       rel="noreferrer"
                     >
-                      {item.data.facebook || "No Facebook"}
+                      {item.data.facebook || "-"}
                     </a>
                   </span>
                 </div>
@@ -168,7 +166,7 @@ const CompleteProfileDetails = () => {
               <div className="col-12 col-md-6 col-lg-4">
                 <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
-                    <strong>Phone:</strong> {item.data.phone || "No Phone"}
+                    <strong>Phone:</strong> {item.data.phone || "-"}
                   </span>
                 </div>
               </div>
@@ -176,7 +174,7 @@ const CompleteProfileDetails = () => {
               <div className="col-12 col-md-6 col-lg-4">
                 <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
-                    <strong>Major:</strong> {item.data.major || "No Major"}
+                    <strong>Major:</strong> {item.data.major || "-"}
                   </span>
                 </div>
               </div>
@@ -207,7 +205,7 @@ const CompleteProfileDetails = () => {
                       target="_blank"
                       rel="noreferrer"
                     >
-                      {item.data.linkedin || "No LinkedIn"}
+                      {item.data.linkedin || "-"}
                     </a>
                   </span>
                 </div>
@@ -222,7 +220,7 @@ const CompleteProfileDetails = () => {
                       target="_blank"
                       rel="noreferrer"
                     >
-                      {item.data.instagram || "No Instagram"}
+                      {item.data.instagram || "-"}
                     </a>
                   </span>
                 </div>
@@ -231,8 +229,7 @@ const CompleteProfileDetails = () => {
               <div className="col-12 col-md-6 col-lg-4">
                 <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
-                    <strong>University:</strong>{" "}
-                    {item.data.university || "No University"}
+                    <strong>University:</strong> {item.data.university || "-"}
                   </span>
                 </div>
               </div>
@@ -240,7 +237,7 @@ const CompleteProfileDetails = () => {
               <div className="col-12 col-md-6 col-lg-4">
                 <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
-                    <strong>Level:</strong> {item.data.level || "No Level"}
+                    <strong>Level:</strong> {item.data.level || "-"}
                   </span>
                 </div>
               </div>
@@ -273,16 +270,16 @@ const CompleteProfileDetails = () => {
             </button>
 
             {requestData.status === "PENDING" && (
-              <div className="d-flex gap-3 justify-content-center mt-4">
+              <div className="d-flex gap-3 justify-content-center mt-4 w-100">
                 <button
-                  className="btn btn-success px-4"
+                  className="btn btn-success px-4 w-50"
                   onClick={() => approveRequest("APPROVED")}
                   disabled={!item.shouldApprove}
                 >
                   ✅ Approve Request
                 </button>
                 <button
-                  className="btn btn-danger px-4"
+                  className="btn btn-danger px-4 w-50"
                   onClick={() => approveRequest("REJECTED")}
                 >
                   ❌ Reject Request

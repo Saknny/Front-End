@@ -416,4 +416,12 @@ export const t = {
     EN: "No users found",
     AR: "لا توجد مستخدمين",
   },
+  BlockedApartments: {
+    EN: "Blocked Apartments",
+    AR: "الشقق المحظورة",
+  },
+  BlockedApartmentsDetails: {
+    EN: "Blocked Apartments Details",
+    AR: " تفاصيل الشقه المحظورة",
+  },
 };

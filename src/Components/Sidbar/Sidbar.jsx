@@ -64,6 +64,17 @@ function Sidbar() {
                   <span>{t.completeProfile[language]}</span>
                 </NavLink>
               </li>
+              <li>
+                <NavLink
+                  to="/blocked-apartments"
+                  className={({ isActive }) =>
+                    isActive ? "active-li" : "inactive-li"
+                  }
+                >
+                  <i className="fa-solid fa-shield"></i>
+                  <span>{t.BlockedApartments[language]}</span>
+                </NavLink>
+              </li>
               {/* <li>
                 <NavLink
                   to="/settings"

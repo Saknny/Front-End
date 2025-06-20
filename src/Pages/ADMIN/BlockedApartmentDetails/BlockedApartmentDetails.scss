@@ -1,0 +1,68 @@
+.blocked-details {
+
+
+
+    &.dark-mode {
+        background-color: #121212;
+        color: #f1f1f1;
+
+        .accordion-body,
+        .card-body {
+            background-color: #1d1c1c;
+        }
+
+        .bg-light {
+            background-color: #1e1e1e !important;
+        }
+
+        .view-details-btn,
+        .Price,
+        .Status,
+        .message,
+        .rate,
+        .name {
+            color: rgb(222 224 226 / 75%);
+        }
+
+
+        .accordion-button {
+            background-color: #1e1e1e;
+            color: #f1f1f1;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: #2a2a2a;
+        }
+
+        .border {
+            border-color: #333 !important;
+        }
+
+        .card-like-box {
+            background-color: #1e1e1e;
+            color: #f1f1f1;
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.06);
+        }
+
+        .btn {
+            background-color: #2a2a2a;
+            color: #fff;
+            border: 1px solid #444;
+
+            &:hover {
+                background-color: #3a3a3a;
+            }
+        }
+
+        .btn-outline-secondary {
+            color: #ccc;
+            border-color: #666;
+
+            &:hover {
+                background-color: #3a3a3a;
+                color: #fff;
+                border-color: #888;
+            }
+        }
+    }
+}

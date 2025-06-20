@@ -10,7 +10,7 @@ const StudentInfoSection = ({ student }) => {
 
   return (
     <div className="section mt-5">
-      <h4 className="mb-4">
+      <h4 className="mb-4 title">
         👤 {t.studentInfoTitle?.[language] || "Student Information"}
       </h4>
       <div className="row g-4 align-items-start">
@@ -25,11 +25,11 @@ const StudentInfoSection = ({ student }) => {
                 {student.image && (
                   <div className="carousel-item active">
                     <img
-                      src={student.image}
+                      src={`http://45.88.223.182:4000${student.image}`}
                       loading="lazy"
                       alt="Student"
                       className="d-block w-100 rounded border"
-                      style={{ maxHeight: "400px" }}
+                      style={{ height: "400px" }}
                     />
                   </div>
                 )}
@@ -41,10 +41,10 @@ const StudentInfoSection = ({ student }) => {
                   >
                     <img
                       loading="lazy"
-                      src={student.idCard}
+                      src={`data:image/jpeg;base64,${student.idCard}`}
                       alt="ID Card"
                       className="d-block w-100 rounded border"
-                      style={{ maxHeight: "400px", filter: "blur(3px)" }}
+                      style={{ height: "400px" }}
                     />
                   </div>
                 )}
@@ -113,7 +113,9 @@ const StudentInfoSection = ({ student }) => {
               },
               {
                 label: t.hobbies?.[language] || "Hobbies",
-                value: student.hobbies.join(", "),
+                value: Array.isArray(student.hobbies)
+                  ? student.hobbies.join(", ")
+                  : "—",
               },
             ].map((item, index) => (
               <div className="col-md-6" key={index}>

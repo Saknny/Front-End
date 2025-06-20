@@ -7,11 +7,11 @@ const ActionButtons = ({ onApprove, onReject }) => {
   const { language } = useContext(LoginContext);
 
   return (
-    <div className="section text-center pt-4 mt-4 d-flex justify-content-center">
-      <button className="btn btn-success mx-2" onClick={onApprove}>
+    <div className="section text-center pt-4 mt-4 d-flex justify-content-center w-100">
+      <button className="btn btn-success mx-2 w-50" onClick={onApprove}>
         ✅ {t.accept?.[language] || "Accept"}
       </button>
-      <button className="btn btn-danger mx-2" onClick={onReject}>
+      <button className="btn btn-danger mx-2 w-50" onClick={onReject}>
         ❌ {t.reject?.[language] || "Reject"}
       </button>
     </div>

@@ -23,27 +23,10 @@ import { useNavigate } from "react-router-dom";
 const DEFAULT_AVATAR = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
 import Loading2 from "../../../Components/Loading2/Loading2";
 import { t } from "../../../translate/requestDetails";
-import { fetchRentalRequestsForProvider } from "../../../Api/api";
-const getApartmentImage = async (apartmentId) => {
-  if (!apartmentId) return DEFAULT_AVATAR;
-
-  try {
-    const res = await api.get(`/image/apartments/${apartmentId}/images`);
-    const rooms = res?.data?.data?.rooms || [];
-
-    if (
-      rooms.length > 0 &&
-      rooms[0].beds?.length > 0 &&
-      rooms[0].beds[0].bedImages?.length > 0
-    ) {
-      return rooms[0].beds[0].bedImages[0].imageUrl;
-    }
-  } catch (err) {
-    console.error("Error fetching apartment image:", err);
-  }
-
-  return DEFAULT_AVATAR;
-};
+import {
+  fetchRentalRequestsForProvider,
+  getApartmentImage,
+} from "../../../Api/api";
 
 export default function ReservationRequests() {
   const [searchTerm, setSearchTerm] = useState("");

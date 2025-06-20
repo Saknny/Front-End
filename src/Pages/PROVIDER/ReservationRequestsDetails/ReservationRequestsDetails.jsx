@@ -154,8 +154,8 @@ const ReservationRequestsDetails = () => {
 
       {requestData.status === "PENDING" && (
         <ActionButtons
-          onApprove={() => handleStatus("APPROVED")}
-          onReject={() => handleStatus("REJECTED")}
+          onApprove={() => handleStatus("approve")}
+          onReject={() => handleStatus("reject")}
         />
       )}
     </div>

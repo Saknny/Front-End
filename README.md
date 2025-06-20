@@ -1,7 +1,7 @@
 # 🌍 Saknny
 
 <p align="center">
-  <img src="public/full-logo.png" alt="Saknny Logo" width="180" />
+  <img src="public/full-logo.webp" alt="Saknny Logo" width="180" />
 </p>
 
 Welcome to **Saknny**, a modern and responsive web platform for **apartment and bed management**, featuring a landing page and dedicated dashboards for providers and admins.
@@ -79,9 +79,8 @@ src/
 
 ## 📸 Screenshots
 
-> _(Optional: You can add screenshots here)_  
 > Example:  
-> ![Dashboard Preview](./public/screenshots/dashboard.png)
+> ![Dashboard Preview](./public/Admin%20Dashboard%20-1.png)
 
 ---
 

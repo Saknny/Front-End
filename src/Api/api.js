@@ -96,14 +96,6 @@ export const approveRequestStatus = async (id, status) => {
   });
 };
 
-// تحديث حالة الطلب – تستخدم في صفحات الإدارة
-export const updateRequestStatus = async (id, status) => {
-  return axiosInstance.patch("/admin/request-approval", {
-    id,
-    status,
-  });
-};
-
 ////////////////////////////
 // 👤 USERS ENDPOINTS    //
 ////////////////////////////
@@ -188,8 +180,43 @@ export const fetchApartmentImagesBundle = async (apartmentId) => {
 
 // تغيير حالة الطلب (موافقة أو رفض)
 export const setRentalRequestStatus = async (id, status) => {
-  return axiosInstance.post("/admin/request-approval", {
-    id,
-    status,
-  });
+  return axiosInstance.patch(`/rental-requests/${id}/${status}`);
+};
+
+export const fetchBlockedApartments = async () => {
+  const response = await axiosInstance.get("/apartment/blocked-Apartments");
+  return response.data.data || [];
+};
+
+// ---------------------------------------------
+const DEFAULT_AVATAR = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+
+export const getApartmentImage = async (apartmentId) => {
+  if (!apartmentId) return DEFAULT_AVATAR;
+
+  try {
+    const res = await axiosInstance.get(
+      `/image/apartments/${apartmentId}/images`
+    );
+    const rooms = res?.data?.data?.rooms || [];
+
+    if (
+      rooms.length > 0 &&
+      rooms[0].beds?.length > 0 &&
+      rooms[0].beds[0].bedImages?.length > 0
+    ) {
+      return rooms[0].beds[0].bedImages[0].imageUrl;
+    }
+  } catch (err) {
+    console.error("Error fetching apartment image:", err);
+  }
+
+  return DEFAULT_AVATAR;
+};
+
+// ==============
+
+export const fetchApartmentData = async (id) => {
+  const res = await axiosInstance.get(`/apartment/${id}`);
+  return res.data.data.apartment;
 };

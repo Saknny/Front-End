@@ -11,7 +11,7 @@ const AdminIncompleteUsers = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setloading] = useState(true);
   const { darkMode, language } = useContext(LoginContext);
-  const usersPerPage = 9;
+  const usersPerPage = 7;
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -45,23 +45,22 @@ const AdminIncompleteUsers = () => {
   return (
     <div className={`admin-users container py-4  ${darkMode}`}>
       <h4 className="mb-4 p-3">{t.IncompleteProfiles[language]}</h4>
-
+      <div className="mb-3">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Search by name..."
+          value={searchTerm}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+            setCurrentPage(1);
+          }}
+        />
+      </div>
       {currentUsers.length === 0 ? (
         <p className="text-center ">{t.noUsersFound[language]}</p>
       ) : (
         <>
-          <div className="mb-3">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Search by name..."
-              value={searchTerm}
-              onChange={(e) => {
-                setSearchTerm(e.target.value);
-                setCurrentPage(1);
-              }}
-            />
-          </div>
           <div className="list-group">
             {currentUsers.map((user) => (
               <Link
