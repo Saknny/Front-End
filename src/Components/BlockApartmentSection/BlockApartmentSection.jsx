@@ -6,11 +6,10 @@ import PropTypes from "prop-types";
 
 function BlockApartmentSection({ apartment }) {
   const { language } = useContext(LoginContext);
-  console.log(apartment);
+
   const images = apartment?.images?.length
     ? apartment.images
     : ["/placeholder.jpg"];
-  console.log(images);
 
   return (
     <div

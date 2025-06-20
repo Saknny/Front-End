@@ -6,9 +6,7 @@ function Settings() {
   useEffect(() => {
     api
       .get("/admin/pending-requests")
-      .then((res) => {
-        console.log(res);
-      })
+      .then((res) => {})
       .catch((err) => console.error("Error fetching product:", err));
   }, []);
   return (

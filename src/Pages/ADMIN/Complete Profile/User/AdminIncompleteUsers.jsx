@@ -18,7 +18,6 @@ const AdminIncompleteUsers = () => {
       try {
         const extractedUsers = await fetchPendingUsers();
         setUsers(extractedUsers);
-        console.log(extractedUsers);
       } catch (error) {
         console.error("Error fetching requests:", error);
       } finally {
