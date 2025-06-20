@@ -29,9 +29,7 @@ const AdminIncompleteUsers = () => {
   }, []);
 
   const filteredUsers = users.filter((user) =>
-    `${user.firstName} ${user.lastName}`
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase())
+    user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   if (loading) {

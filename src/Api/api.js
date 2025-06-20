@@ -221,3 +221,15 @@ export const fetchApartmentData = async (id) => {
   const res = await axiosInstance.get(`/apartment/${id}`);
   return res.data.data.apartment;
 };
+
+// src/Api/api.js
+
+export const fetchAdminDashboardData = async () => {
+  try {
+    const response = await axiosInstance.get("/admin/dashboard");
+    return response.data.data;
+  } catch (error) {
+    console.error("Error fetching admin dashboard data:", error);
+    throw error;
+  }
+};

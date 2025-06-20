@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   LineChart,
   Line,
@@ -13,7 +13,8 @@ import {
   Cell,
 } from "recharts";
 import { LoginContext } from "../../Context/Login/Login";
-import data from "../../Data/Dashboard";
+import { fetchAdminDashboardData } from "../../Api/api";
+import Loading2 from "../Loading2/Loading2";
 
 function CustomTooltip({ active, payload, total }) {
   if (active && payload && payload.length) {
@@ -38,13 +39,54 @@ function CustomTooltip({ active, payload, total }) {
 
 function AdminDashboardCharts() {
   const { language } = useContext(LoginContext);
+  const [dashboardData, setDashboardData] = useState(null);
+
+  useEffect(() => {
+    const getData = async () => {
+      const res = await fetchAdminDashboardData();
+      setDashboardData(res);
+    };
+    getData();
+  }, []);
+
+  if (!dashboardData) return <Loading2 />;
+
+  const barColors = ["#8884d8", "#82ca9d", "#ffc658"];
+  const pieColors = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#AF19FF"];
+  const ratingColors = ["#FFBB28", "#00C49F", "#0088FE", "#FF8042", "#AF19FF"];
+
+  const requestStatus = Object.entries(dashboardData.requestDistribution).map(
+    ([key, value], i) => ({
+      name: key,
+      value,
+      color: barColors[i % barColors.length],
+    })
+  );
+
+  const locationBookings = dashboardData.bookingsByLocation.map((entry, i) => ({
+    name: entry.locationEnum,
+    value: parseInt(entry.count),
+    color: pieColors[i % pieColors.length],
+  }));
+
+  const bookingData = dashboardData.monthlyBookings.map((m) => ({
+    month: m.month,
+    bookings: parseInt(m.count),
+  }));
+
+  const ratingBreakdown = dashboardData.ratingBreakdown.map((r, i) => ({
+    name: `${r.stars} Stars`,
+    value: parseInt(r.count),
+    color: ratingColors[i % ratingColors.length],
+  }));
+
   return (
     <div className="charts">
-      {/* Total bookings per month */}
+      {/* Monthly Bookings */}
       <div className="chart-card">
         <h4>{language === "EN" ? "Monthly Bookings" : "الحجوزات الشهرية"}</h4>
         <ResponsiveContainer width="100%" height={200}>
-          <LineChart data={data[language].bookingData}>
+          <LineChart data={bookingData}>
             <XAxis dataKey="month" />
             <YAxis />
             <Tooltip />
@@ -58,24 +100,28 @@ function AdminDashboardCharts() {
         </ResponsiveContainer>
       </div>
 
-      {/* Device usage */}
+      {/* Requests Status Distribution */}
       <div className="chart-card">
-        <h4>{language === "EN" ? "Device Usage" : "استخدام الأجهزة"}</h4>
+        <h4>
+          {language === "EN"
+            ? "Requests Status Distribution"
+            : "توزيع حالة الطلبات"}
+        </h4>
         <ResponsiveContainer width="100%" height={200}>
-          <BarChart data={data[language].deviceUsage}>
+          <BarChart data={requestStatus}>
             <XAxis dataKey="name" />
             <YAxis />
             <Tooltip />
             <Bar dataKey="value">
-              {data[language].deviceUsage.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={entry.color} />
+              {requestStatus.map((entry, index) => (
+                <Cell key={index} fill={entry.color} />
               ))}
             </Bar>
           </BarChart>
         </ResponsiveContainer>
         <div className="legend">
-          {data[language].deviceUsage.map((entry, index) => (
-            <div key={index} className="legend-item">
+          {requestStatus.map((entry, i) => (
+            <div key={i} className="legend-item">
               <span style={{ backgroundColor: entry.color }}></span>{" "}
               {entry.name}
             </div>
@@ -83,7 +129,7 @@ function AdminDashboardCharts() {
         </div>
       </div>
 
-      {/* Bookings by location */}
+      {/* Bookings by Location */}
       <div className="chart-card">
         <h4>
           {language === "EN" ? "Bookings by Location" : "الحجوزات حسب الموقع"}
@@ -93,27 +139,19 @@ function AdminDashboardCharts() {
             <Tooltip
               content={
                 <CustomTooltip
-                  total={data[language].locationBookings.reduce(
-                    (sum, entry) => sum + entry.value,
-                    0
-                  )}
+                  total={locationBookings.reduce((sum, e) => sum + e.value, 0)}
                 />
               }
             />
-            <Pie
-              data={data[language].locationBookings}
-              dataKey="value"
-              outerRadius={80}
-            >
-              {data[language].locationBookings.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={entry.color} />
+            <Pie data={locationBookings} dataKey="value" outerRadius={80}>
+              {locationBookings.map((entry, index) => (
+                <Cell key={index} fill={entry.color} />
               ))}
             </Pie>
           </PieChart>
         </ResponsiveContainer>
-
         <div className="legend">
-          {data[language].locationBookings.map((entry, index) => (
+          {locationBookings.map((entry, index) => (
             <div key={index} className="legend-item">
               <span style={{ backgroundColor: entry.color }}></span>{" "}
               {entry.name}
@@ -122,36 +160,27 @@ function AdminDashboardCharts() {
         </div>
       </div>
 
-      {/*Traffic sources */}
+      {/* Rating Breakdown */}
       <div className="chart-card">
-        <h4>{language === "EN" ? "Traffic Sources" : "مصادر الزيارات"}</h4>
-
-        <ResponsiveContainer width="100%" height={200}>
-          <PieChart>
-            <Tooltip
-              content={
-                <CustomTooltip
-                  total={data[language].trafficSources.reduce(
-                    (sum, entry) => sum + entry.value,
-                    0
-                  )}
-                />
-              }
-            />
-            <Pie
-              data={data[language].trafficSources}
-              dataKey="value"
-              outerRadius={80}
-            >
-              {data[language].trafficSources.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={entry.color} />
+        <h4>{language === "EN" ? "Rating Breakdown" : "توزيع التقييمات"}</h4>
+        <ResponsiveContainer width="100%" height={250}>
+          <BarChart
+            layout="vertical"
+            data={ratingBreakdown}
+            margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+          >
+            <XAxis type="number" />
+            <YAxis dataKey="name" type="category" />
+            <Tooltip />
+            <Bar dataKey="value" barSize={20}>
+              {ratingBreakdown.map((entry, index) => (
+                <Cell key={index} fill={entry.color} />
               ))}
-            </Pie>
-          </PieChart>
+            </Bar>
+          </BarChart>
         </ResponsiveContainer>
-
         <div className="legend">
-          {data[language].trafficSources.map((entry, index) => (
+          {ratingBreakdown.map((entry, index) => (
             <div key={index} className="legend-item">
               <span style={{ backgroundColor: entry.color }}></span>{" "}
               {entry.name}
