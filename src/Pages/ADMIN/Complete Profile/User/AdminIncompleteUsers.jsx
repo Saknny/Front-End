@@ -18,6 +18,7 @@ const AdminIncompleteUsers = () => {
       try {
         const extractedUsers = await fetchPendingUsers();
         setUsers(extractedUsers);
+        console.log(extractedUsers);
       } catch (error) {
         console.error("Error fetching requests:", error);
       } finally {
@@ -69,9 +70,7 @@ const AdminIncompleteUsers = () => {
                 key={`${user.id}`}
               >
                 <div>
-                  <span className="user-name">
-                    {user.firstName} {user.lastName}
-                  </span>
+                  <span className="user-name">{user.email}</span>
                   <div className="request-type">{user.request_type}</div>
                 </div>
                 <i className="bx bx-chevron-right"></i>

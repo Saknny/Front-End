@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   fetchRequestById,
@@ -9,10 +9,12 @@ import "./CompleteProfileDetails.scss";
 import { toast } from "react-toastify";
 import Loading2 from "../../Components/Loading2/Loading2";
 import { LoginContext } from "../../Context/Login/Login";
-import { useContext } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
 const CompleteProfileDetails = () => {
   const [requestData, setRequestData] = useState(null);
+  const [fullProfile, setFullProfile] = useState(null);
+  const [isUpdate, setIsUpdate] = useState(false);
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -21,9 +23,29 @@ const CompleteProfileDetails = () => {
   useEffect(() => {
     const fetchRequest = async () => {
       try {
-        const fetchedRequest = await fetchRequestById(id);
+        const response = await fetchRequestById(id);
+        const resData = response.data || response;
 
-        fetchedRequest.items.forEach((item) => {
+        if (!resData) {
+          setRequestData(null);
+          return;
+        }
+
+        const isUpdateRequest = resData.type === "PROFILE_UPDATE";
+        setIsUpdate(isUpdateRequest);
+
+        if (isUpdateRequest) {
+          setFullProfile(resData.fullProfile || null);
+        }
+
+        const normalizedRequest = resData;
+
+        if (!normalizedRequest || !normalizedRequest.items) {
+          setRequestData(null);
+          return;
+        }
+
+        normalizedRequest.items.forEach((item) => {
           item.shouldApprove = false;
           item.imagesData = [
             {
@@ -48,9 +70,10 @@ const CompleteProfileDetails = () => {
           ];
         });
 
-        setRequestData(fetchedRequest);
+        setRequestData(normalizedRequest);
       } catch (error) {
         console.error("Error fetching request:", error);
+        setRequestData(null);
       } finally {
         setLoading(false);
       }
@@ -65,6 +88,31 @@ const CompleteProfileDetails = () => {
 
   const item = requestData.items[0];
 
+  const getField = (key) => {
+    return item.data[key] !== undefined && item.data[key] !== null
+      ? item.data[key]
+      : fullProfile?.[key] ?? "-";
+  };
+
+  const getBooleanField = (key) => {
+    const val =
+      item.data[key] !== undefined ? item.data[key] : fullProfile?.[key];
+    return val ? "Yes" : "No";
+  };
+
+  const getHobbies = () => {
+    const hobbies = item.data.hobbies || fullProfile?.hobbies || [];
+    return hobbies.length > 0 ? (
+      hobbies.map((hobby, index) => (
+        <span key={index} className="badge bg-secondary me-2">
+          {hobby}
+        </span>
+      ))
+    ) : (
+      <span>No Hobbies</span>
+    );
+  };
+
   const toggleItemApproval = () => {
     item.shouldApprove = !item.shouldApprove;
     setRequestData({ ...requestData });
@@ -75,14 +123,13 @@ const CompleteProfileDetails = () => {
       if (item.shouldApprove) {
         await approveItem(item.id);
       }
-
       await approveRequestStatus(requestData.id, status);
 
-      if (status === "APPROVED") {
-        toast.success("Request approved successfully");
-      } else if (status === "REJECTED") {
-        toast.error("Request rejected successfully");
-      }
+      toast[status === "APPROVED" ? "success" : "error"](
+        `Request ${
+          status === "APPROVED" ? "approved" : "rejected"
+        } successfully`
+      );
 
       navigate("/complete-profile/user");
     } catch (error) {
@@ -110,10 +157,7 @@ const CompleteProfileDetails = () => {
                 key={img.id}
                 className="col-sm-6 col-12 col-md-6 col-lg-4  mb-4"
               >
-                <div
-                  key={img.id}
-                  className="col-md-6  w-100 mb-4 d-flex flex-column align-items-center"
-                >
+                <div className="col-md-6  w-100 mb-4 d-flex flex-column align-items-center">
                   <div className="card shadow-sm image-card w-100">
                     <img
                       loading="lazy"
@@ -132,129 +176,47 @@ const CompleteProfileDetails = () => {
           <div className="card shadow-sm p-3 profile-data-card">
             <h5 className="text-primary mb-3">User Information</h5>
             <div className="row g-3">
-              <div className="col-12 col-md-6 col-lg-4">
-                <div className="p-3 border rounded h-100 d-flex flex-column align-items-start">
-                  <span className="fw-semibold">
-                    <strong>First Name:</strong> {item.data.firstName || "-"}
-                  </span>
+              {[
+                ["First Name", "firstName"],
+                ["Last Name", "lastName"],
+                ["Facebook", "facebook"],
+                ["Phone", "phone"],
+                ["Major", "major"],
+                ["Smoking", "smoking"],
+                ["Social Person", "socialPerson"],
+                ["LinkedIn", "linkedin"],
+                ["Instagram", "instagram"],
+                ["University", "university"],
+                ["Level", "level"],
+              ].map(([label, key]) => (
+                <div className="col-12 col-md-6 col-lg-4" key={key}>
+                  <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
+                    <span className="fw-semibold">
+                      <strong>{label}:</strong>{" "}
+                      {key === "smoking" || key === "socialPerson" ? (
+                        getBooleanField(key)
+                      ) : key === "facebook" ||
+                        key === "linkedin" ||
+                        key === "instagram" ? (
+                        <a
+                          href={getField(key)}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {getField(key)}
+                        </a>
+                      ) : (
+                        getField(key)
+                      )}
+                    </span>
+                  </div>
                 </div>
-              </div>
-
-              <div className="col-12 col-md-6 col-lg-4  ">
-                <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
-                  <span className="fw-semibold">
-                    <strong>Last Name:</strong> {item.data.lastName || "-"}
-                  </span>
-                </div>
-              </div>
-
-              <div className="col-12 col-md-6 col-lg-4">
-                <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
-                  <span className="fw-semibold">
-                    <strong>Facebook:</strong>{" "}
-                    <a
-                      href={item.data.facebook}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      {item.data.facebook || "-"}
-                    </a>
-                  </span>
-                </div>
-              </div>
-
-              <div className="col-12 col-md-6 col-lg-4">
-                <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
-                  <span className="fw-semibold">
-                    <strong>Phone:</strong> {item.data.phone || "-"}
-                  </span>
-                </div>
-              </div>
+              ))}
 
               <div className="col-12 col-md-6 col-lg-4">
                 <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
-                    <strong>Major:</strong> {item.data.major || "-"}
-                  </span>
-                </div>
-              </div>
-
-              <div className="col-12 col-md-6 col-lg-4">
-                <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
-                  <span className="fw-semibold">
-                    <strong>Smoking:</strong> {item.data.smoking ? "Yes" : "No"}
-                  </span>
-                </div>
-              </div>
-
-              <div className="col-12 col-md-6 col-lg-4">
-                <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
-                  <span className="fw-semibold">
-                    <strong>Social Person:</strong>{" "}
-                    {item.data.socialPerson ? "Yes" : "No"}
-                  </span>
-                </div>
-              </div>
-
-              <div className="col-12 col-md-6 col-lg-4">
-                <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
-                  <span className="fw-semibold">
-                    <strong>LinkedIn:</strong>{" "}
-                    <a
-                      href={item.data.linkedin}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      {item.data.linkedin || "-"}
-                    </a>
-                  </span>
-                </div>
-              </div>
-
-              <div className="col-12 col-md-6 col-lg-4">
-                <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
-                  <span className="fw-semibold">
-                    <strong>Instagram:</strong>{" "}
-                    <a
-                      href={item.data.instagram}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      {item.data.instagram || "-"}
-                    </a>
-                  </span>
-                </div>
-              </div>
-
-              <div className="col-12 col-md-6 col-lg-4">
-                <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
-                  <span className="fw-semibold">
-                    <strong>University:</strong> {item.data.university || "-"}
-                  </span>
-                </div>
-              </div>
-
-              <div className="col-12 col-md-6 col-lg-4">
-                <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
-                  <span className="fw-semibold">
-                    <strong>Level:</strong> {item.data.level || "-"}
-                  </span>
-                </div>
-              </div>
-
-              <div className="col-12 col-md-6 col-lg-4">
-                <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
-                  <span className="fw-semibold">
-                    <strong>Hobbies:</strong>{" "}
-                    {item.data.hobbies && item.data.hobbies.length > 0 ? (
-                      item.data.hobbies.map((hobby, index) => (
-                        <span key={index} className="badge bg-secondary me-2">
-                          {hobby}
-                        </span>
-                      ))
-                    ) : (
-                      <span>No Hobbies</span>
-                    )}
+                    <strong>Hobbies:</strong> {getHobbies()}
                   </span>
                 </div>
               </div>

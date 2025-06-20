@@ -48,6 +48,7 @@ export const fetchPendingUsers = async () => {
         firstName: data.firstName || "no name",
         lastName: data.lastName || "no name",
         request_type: request.type,
+        email: request.user?.email || "no email",
       };
     })
   );
