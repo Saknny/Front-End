@@ -432,4 +432,12 @@ export const t = {
     EN: "View Bed Details",
     AR: " رؤيه تفاصيل السرير ",
   },
+  room_request: {
+    EN: "Room Requests",
+    AR: "طلبات الغرف",
+  },
+  Bed_request: {
+    EN: "Bed Requests",
+    AR: "طلبات السراير",
+  },
 };

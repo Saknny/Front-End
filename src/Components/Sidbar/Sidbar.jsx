@@ -110,7 +110,18 @@ function Sidbar() {
                   }
                 >
                   <i className="bx bx-git-pull-request"></i>
-                  <span>{t.requests[language]}</span>
+                  <span>{t.Bed_request[language]}</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/room_requests"
+                  className={({ isActive }) =>
+                    isActive ? "active-li" : "inactive-li"
+                  }
+                >
+                  <i className="bx bx-shape-square"></i>
+                  <span>{t.room_request[language]}</span>
                 </NavLink>
               </li>
             </>

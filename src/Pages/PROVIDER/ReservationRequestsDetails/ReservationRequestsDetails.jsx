@@ -68,7 +68,7 @@ const ReservationRequestsDetails = () => {
   const handleStatus = async (status) => {
     try {
       await setRentalRequestStatus(requestData.id, status);
-
+      navigate(-1);
       toast.success(
         `${t.request?.[language] || "Request"} ${
           t[status]?.[language] || status

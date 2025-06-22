@@ -17,17 +17,15 @@ import {
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import { LoginContext } from "../../../Context/Login/Login";
-import "./ReservationRequests.scss";
 import { useNavigate } from "react-router-dom";
-const DEFAULT_AVATAR = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
 import Loading2 from "../../../Components/Loading2/Loading2";
 import { t } from "../../../translate/requestDetails";
 import {
-  fetchRentalRequestsForProvider,
+  fetchRoomRequestsForProvider,
   getApartmentImage,
 } from "../../../Api/api";
 
-export default function ReservationRequests() {
+export default function RoomReservationRequests() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [page, setPage] = useState(0);
@@ -40,26 +38,24 @@ export default function ReservationRequests() {
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        const data = await fetchRentalRequestsForProvider(getApartmentImage);
+        const data = await fetchRoomRequestsForProvider(getApartmentImage); // adjust this
         setRequests(data);
       } catch (error) {
-        console.error("Error fetching rental requests:", error);
+        console.error("Error fetching room requests:", error);
       } finally {
         setLoading(false);
       }
     };
-
     fetchRequests();
   }, []);
 
   const filteredRequests = requests.filter(
     (item) =>
-      item.apartmentTitle.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      item.apartment?.title?.toLowerCase().includes(searchTerm.toLowerCase()) &&
       (statusFilter === "" || item.status === statusFilter)
   );
 
   const handleChangePage = (event, newPage) => setPage(newPage);
-
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
@@ -76,12 +72,10 @@ export default function ReservationRequests() {
         justifyContent="space-between"
         alignItems="center"
         mb={3}
-        className="requestHeader"
       >
         <Typography variant="h4" fontWeight="bold">
-          {t.reservationRequests?.[language] || "Reservation Requests"}
+          {t.roomReservationRequests?.[language] || "Room Booking Requests"}
         </Typography>
-
         <Box display="flex" gap={2}>
           <TextField
             size="small"
@@ -97,7 +91,7 @@ export default function ReservationRequests() {
           >
             <MenuItem value="">{t.all?.[language] || "All"}</MenuItem>
             <MenuItem value="ACCEPTED">
-              {t.ACCEPTED?.[language] || "ACCEPTED"}
+              {t.ACCEPTED?.[language] || "Accepted"}
             </MenuItem>
             <MenuItem value="PENDING">
               {t.PENDING?.[language] || "Pending"}
@@ -123,7 +117,7 @@ export default function ReservationRequests() {
           <Loading2 />
         ) : filteredRequests.length === 0 ? (
           <Box textAlign="center" py={5}>
-            <Typography color="" fontSize={18}>
+            <Typography fontSize={18}>
               {t.noRequests?.[language] || "No requests found."}
             </Typography>
           </Box>
@@ -157,8 +151,10 @@ export default function ReservationRequests() {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((item, id) => {
                     const createdTime = new Date(
-                      item.createdAt
+                      item.createdAt || item.apartment?.createdAt
                     ).toLocaleString();
+                    const room = item.apartment?.room || {};
+                    const price = room.beds?.[0]?.price || "0";
 
                     return (
                       <TableRow key={id}>
@@ -169,21 +165,11 @@ export default function ReservationRequests() {
                               variant="rounded"
                             />
                             <Box display="flex" flexDirection="column">
-                              <Typography
-                                className="Bed"
-                                fontWeight="bold"
-                                color="textPrimary"
-                                fontSize={14}
-                              >
-                                {t.bed?.[language] || "Bed"}
+                              <Typography fontWeight="bold" fontSize={14}>
+                                {t.room?.[language] || "Room"}
                               </Typography>
-                              <Typography
-                                color="textSecondary"
-                                fontSize={13}
-                                className="apartmentTitle"
-                              >
-                                {console.log(item)}
-                                {item.apartmentTitle}
+                              <Typography fontSize={13}>
+                                {item.apartment?.title || "N/A"}
                               </Typography>
                             </Box>
                           </Box>
@@ -191,23 +177,19 @@ export default function ReservationRequests() {
                         <TableCell>
                           <Box display="flex" alignItems="center" gap={1}>
                             <Avatar
-                              src={
-                                item.student?.image
-                                  ? `http://45.88.223.182:4000${item.student.image}`
-                                  : DEFAULT_AVATAR
-                              }
+                              src={`http://45.88.223.182:4000${
+                                item.student?.image || ""
+                              }`}
                               sx={{ width: 30, height: 30 }}
                             />
-                            <Typography fontSize={13}>
-                              {item.student
-                                ? `${item.student.name || ""}`.trim()
-                                : "No Name"}
-                            </Typography>
+                            <Typography
+                              fontSize={13}
+                            >{`${item.student?.firstName} ${item.student?.lastName}`}</Typography>
                           </Box>
                         </TableCell>
                         <TableCell>
                           <Typography>
-                            ${parseFloat(item.price || 0).toFixed(2)}
+                            ${parseFloat(price).toFixed(2)}
                           </Typography>
                         </TableCell>
                         <TableCell>
@@ -229,7 +211,9 @@ export default function ReservationRequests() {
                             variant="contained"
                             size="small"
                             color="primary"
-                            onClick={() => navigate(`/requests/${item.id}`)}
+                            onClick={() =>
+                              navigate(`/room_requests/${item.id}`)
+                            }
                           >
                             {t.view?.[language] || "View"}
                           </Button>

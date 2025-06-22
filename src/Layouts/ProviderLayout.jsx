@@ -16,6 +16,15 @@ const ReservationRequestsDetails = lazy(() =>
 import Navbar from "../Components/Navbar/Navbar";
 import Sidebar from "../Components/Sidbar/Sidbar";
 const Loading2 = lazy(() => import("../Components/Loading2/Loading2"));
+const RoomReservationRequests = lazy(() =>
+  import("../Pages/PROVIDER/Reservation Requests/RoomReservationRequests")
+);
+const RoomReservationRequestDetails = lazy(() =>
+  import(
+    "../Pages/PROVIDER/ReservationRequestsDetails/RoomReservationRequestDetails"
+  )
+);
+
 function ProviderLayout() {
   const { darkMode } = useContext(LoginContext);
 
@@ -32,6 +41,14 @@ function ProviderLayout() {
               <Route
                 path="/requests/:id"
                 element={<ReservationRequestsDetails />}
+              />
+              <Route
+                path="/room_requests"
+                element={<RoomReservationRequests />}
+              />
+              <Route
+                path="/room_requests/:id"
+                element={<RoomReservationRequestDetails />}
               />
 
               {/* Add more provider-specific routes here */}

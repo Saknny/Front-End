@@ -153,12 +153,18 @@ export const fetchRentalRequestsForProvider = async (getApartmentImageFn) => {
         price: Number(item.bed?.price) || 0,
         status: item.status || "UNKNOWN",
         createdAt: item.createdAt,
-        student: {
-          name: `${item.student?.firstName || ""} ${
-            item.student?.lastName || ""
-          }`.trim(),
-          image: item.student?.image || "/default-avatar.png",
-        },
+        student: item.student
+          ? {
+              name:
+                `${item.student.firstName || ""} ${
+                  item.student.lastName || ""
+                }`.trim() || "N/A",
+              image: item.student.image || "/default-avatar.png",
+            }
+          : {
+              name: "N/A",
+              image: "/default-avatar.png",
+            },
       };
     })
   );
@@ -245,4 +251,52 @@ export const fetchProviderDashboardData = async () => {
     console.error("Error fetching dashboard data", error);
     return null;
   }
+};
+
+export const fetchRoomRequestsForProvider = async (getApartmentImage) => {
+  try {
+    const res = await axiosInstance.get("/room-requests");
+
+    if (!res.data.success) return [];
+
+    const requestsData = res.data.data;
+
+    const formatted = await Promise.all(
+      requestsData.map(async (item) => {
+        const apartmentId = item.apartment?.id || "";
+        const apartmentImage = await getApartmentImage(apartmentId);
+
+        return {
+          id: item.id,
+          status: item.status || "UNKNOWN",
+          createdAt: item.createdAt || item.apartment?.createdAt,
+          student: {
+            firstName: item.student?.firstName || "No Name",
+            lastName: item.student?.lastName || "",
+            image: item.student?.image || "/default-avatar.png",
+          },
+          apartment: {
+            id: apartmentId,
+            title: item.apartment?.title || "N/A",
+            room: item.apartment?.room || {},
+          },
+          apartmentImage,
+        };
+      })
+    );
+
+    return formatted;
+  } catch (error) {
+    console.error("Failed to fetch room requests:", error);
+    return [];
+  }
+};
+
+export const fetchRoomRequestDetails = async (id) => {
+  const res = await axiosInstance.get(`/room-requests/${id}`);
+  return res.data.data; // ← مصفوفة
+};
+
+export const setRoomRequestStatus = async (id, status) => {
+  return axiosInstance.patch(`/room-requests/${id}/${status}`);
 };

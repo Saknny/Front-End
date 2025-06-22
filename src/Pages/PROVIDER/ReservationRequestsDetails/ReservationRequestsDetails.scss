@@ -4,6 +4,15 @@
     font-size: 1rem;
     line-height: 1.5;
 
+    .accordion-body {
+        background-color: black;
+    }
+
+    .accordion-item:first-of-type>.accordion-header .accordion-button {
+        background-color: #0d1117;
+        color: #eee;
+    }
+
     .card,
     .border,
     .rounded,
