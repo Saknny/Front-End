@@ -2,7 +2,7 @@ import React, { useContext, Suspense, lazy, useEffect, useState } from "react";
 import "./ProviderDashboard.scss";
 import { LoginContext } from "../../../Context/Login/Login";
 import { fetchProviderDashboardData } from "../../../Api/api";
-
+import Loading2 from "../../../Components/Loading2/Loading2.jsx";
 const ProviderDashboardCharts = lazy(() =>
   import("../../../Components/Charts/ProviderDashboardCharts.jsx")
 );
@@ -15,12 +15,12 @@ function ProviderDashboard() {
     fetchProviderDashboardData().then(setData);
   }, []);
 
-  if (!data) return <div>Loading...</div>;
+  if (!data) return <Loading2 />;
 
   const stats = {
     rentedApartments: { value: data.rentedApartments || 0, change: 0 },
     rentedBeds: { value: data.rentedBeds || 0, change: 0 },
-    totalRooms: { value: data.totalRooms || 0, change: 0 },
+    totalRooms: { value: data.totalRooms || 0, change: 1 },
     averageRating: { value: data.averageRating || 0, change: 0 },
   };
 
