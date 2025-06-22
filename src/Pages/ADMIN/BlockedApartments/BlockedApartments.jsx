@@ -106,7 +106,7 @@ function BlockedApartments() {
                   </td>
                   <td>
                     <button
-                      className="btn btn-sm btn-primary d-flex align-items-center gap-1"
+                      className="btn btn-sm primary-btn d-flex align-items-center gap-1"
                       onClick={() => navigate(`/blocked-apartments/${apt.id}`)}
                     >
                       <FaEye /> View

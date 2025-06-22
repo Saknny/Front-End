@@ -211,7 +211,8 @@ export default function RoomReservationRequests() {
                           <Button
                             variant="contained"
                             size="small"
-                            color="primary"
+                            color=""
+                            className="primary-btn"
                             onClick={() =>
                               navigate(`/room_requests/${item.id}`)
                             }

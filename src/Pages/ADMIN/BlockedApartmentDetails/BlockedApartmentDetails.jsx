@@ -93,6 +93,7 @@ function BlockedApartmentDetails() {
             apartmentId: id,
           },
         });
+        console.log(res);
 
         const fetchedReviews = res.data.data.reviews.map((review) => ({
           name: review.student.fullName,
@@ -125,7 +126,7 @@ function BlockedApartmentDetails() {
         {t.back?.[language] || "Back"}
       </button>
 
-      <h3 className="mb-4 text-primary">
+      <h3 className="mb-4 title">
         🏢{" "}
         {t.BlockedApartmentsDetails?.[language] ||
           "Reservation Request Details"}

@@ -1,6 +1,8 @@
 .blocked-details {
 
-
+    .title {
+        color: var(--primary-color);
+    }
 
     &.dark-mode {
         background-color: #121212;

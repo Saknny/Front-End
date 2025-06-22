@@ -228,7 +228,8 @@ export default function ReservationRequests() {
                           <Button
                             variant="contained"
                             size="small"
-                            color="primary"
+                            color=""
+                            className="primary-btn"
                             onClick={() => navigate(`/requests/${item.id}`)}
                           >
                             {t.view?.[language] || "View"}

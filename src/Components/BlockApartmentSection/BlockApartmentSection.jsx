@@ -27,23 +27,20 @@ function BlockApartmentSection({ apartment }) {
         >
           {images.map((img, i) => (
             <div className="CarouselItem" key={i}>
-              {images.map((img, i) => (
-                <div className="CarouselItem" key={i}>
-                  <img
-                    src={img.imageUrl || "/placeholder.jpg"}
-                    alt={`apartment-${i}`}
-                    loading="lazy"
-                    className="carousel-image"
-                    style={{
-                      width: "100%",
-                      height: "700px",
-                      objectPosition: "center",
-                      borderRadius: "10px",
-                      backgroundColor: "#f8f9fa", // لون خلفية فاتح في حالة الصورة صغيرة
-                    }}
-                  />
-                </div>
-              ))}
+              <img
+                src={img.imageUrl || "/placeholder.jpg"}
+                alt={`apartment-${i}`}
+                loading="lazy"
+                className="carousel-image"
+                style={{
+                  width: "100%",
+                  height: "700px",
+                  objectFit: "cover",
+                  objectPosition: "center",
+                  borderRadius: "10px",
+                  backgroundColor: "#f8f9fa",
+                }}
+              />
             </div>
           ))}
         </Carousel>
