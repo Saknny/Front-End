@@ -233,3 +233,16 @@ export const fetchAdminDashboardData = async () => {
     throw error;
   }
 };
+
+export const fetchProviderDashboardData = async () => {
+  try {
+    const res = await axiosInstance.get("/provider/dashboard");
+    if (res.data.success) {
+      return res.data.data;
+    }
+    return null;
+  } catch (error) {
+    console.error("Error fetching dashboard data", error);
+    return null;
+  }
+};

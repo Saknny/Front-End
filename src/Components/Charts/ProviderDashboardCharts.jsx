@@ -1,4 +1,4 @@
-// Components/Charts/ProviderCharts.jsx
+// ✅ ProviderDashboardCharts.jsx (updated with Monthly Booking Requests instead of Earnings)
 import React from "react";
 import PropTypes from "prop-types";
 import {
@@ -22,42 +22,62 @@ import {
 
 function ProviderDashboardCharts({
   language,
-  apartmentTypes,
-  monthlyEarnings,
+  monthlyBookings,
+  monthlyRooms,
   unitRadar,
+  topRatedApartments, // ✅ add this line
 }) {
   return (
     <div className="charts">
-      {/* Monthly Earnings */}
+      {/* Monthly Booking Requests */}
       <div className="chart-card">
-        <h4>{language === "EN" ? "Monthly Earnings" : "الأرباح الشهرية"}</h4>
+        <h4>
+          {language === "EN"
+            ? "Monthly Booking Requests"
+            : "طلبات الحجز الشهرية"}
+        </h4>
         <ResponsiveContainer width="100%" height={200}>
-          <BarChart data={monthlyEarnings}>
+          <BarChart data={monthlyBookings}>
             <XAxis dataKey="month" />
             <YAxis />
             <Tooltip />
-            <Bar dataKey="income" fill="#00b894" radius={[5, 5, 0, 0]} />
+            <Bar dataKey="requests" fill="#00b894" radius={[5, 5, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </div>
 
-      {/* Apartment Types */}
+      {/* Top Rated Apartments */}
       <div className="chart-card">
-        <h4>{language === "EN" ? "Apartment Types" : "أنواع الشقق"}</h4>
-        <ResponsiveContainer width="100%" height={200}>
+        <h4>
+          {language === "EN" ? "Top Rated Apartments" : "الشقق الأعلى تقييماً"}
+        </h4>
+        <ResponsiveContainer width="100%" height={250}>
           <PieChart>
-            <Pie data={apartmentTypes} dataKey="value" outerRadius={80} label>
-              {apartmentTypes.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={entry.color} />
+            <Pie
+              data={topRatedApartments}
+              dataKey="rating"
+              nameKey="name"
+              cx="50%"
+              cy="50%"
+              innerRadius={60}
+              outerRadius={90}
+              label={({ name, percent }) =>
+                `${name} (${(percent * 100).toFixed(0)}%)`
+              }
+            >
+              {topRatedApartments.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.color || "#8884d8"} />
               ))}
             </Pie>
-            <Tooltip />
+            <Tooltip formatter={(value) => `${value} ★`} />
           </PieChart>
         </ResponsiveContainer>
         <div className="legend">
-          {apartmentTypes.map((entry, index) => (
+          {topRatedApartments.map((entry, index) => (
             <div key={index} className="legend-item">
-              <span style={{ backgroundColor: entry.color }}></span>{" "}
+              <span
+                style={{ backgroundColor: entry.color || "#8884d8" }}
+              ></span>{" "}
               {entry.name}
             </div>
           ))}
@@ -72,7 +92,7 @@ function ProviderDashboardCharts({
             : "الغرف المؤجرة شهريًا"}
         </h4>
         <ResponsiveContainer width="100%" height={200}>
-          <AreaChart data={monthlyEarnings}>
+          <AreaChart data={monthlyRooms}>
             <XAxis dataKey="month" />
             <YAxis />
             <Tooltip />
@@ -108,6 +128,7 @@ function ProviderDashboardCharts({
     </div>
   );
 }
+
 ProviderDashboardCharts.propTypes = {
   language: PropTypes.string.isRequired,
   apartmentTypes: PropTypes.arrayOf(
@@ -117,17 +138,29 @@ ProviderDashboardCharts.propTypes = {
       name: PropTypes.string.isRequired,
     })
   ).isRequired,
-  monthlyEarnings: PropTypes.arrayOf(
+  monthlyBookings: PropTypes.arrayOf(
     PropTypes.shape({
       month: PropTypes.string.isRequired,
-      income: PropTypes.number,
-      rooms: PropTypes.number,
+      requests: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+  monthlyRooms: PropTypes.arrayOf(
+    PropTypes.shape({
+      month: PropTypes.string.isRequired,
+      rooms: PropTypes.number.isRequired,
     })
   ).isRequired,
   unitRadar: PropTypes.arrayOf(
     PropTypes.shape({
       type: PropTypes.string.isRequired,
       count: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+  topRatedApartments: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
+      color: PropTypes.string,
     })
   ).isRequired,
 };
