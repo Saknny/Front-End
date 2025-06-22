@@ -440,4 +440,85 @@ export const t = {
     EN: "Bed Requests",
     AR: "طلبات السراير",
   },
+  roomReservationRequests: {
+    EN: "Room Reservation Requests",
+    AR: "طلبات حجز الغرف",
+  },
+  requestDetails: {
+    EN: "Request Details",
+    AR: "تفاصيل الطلب",
+  },
+  profileImage: {
+    EN: "Profile Image",
+    AR: "الصورة الشخصية",
+  },
+  idCard: {
+    EN: "ID Card",
+    AR: "بطاقة الهوية",
+  },
+  noData: {
+    EN: "No Data Found",
+    AR: "لا توجد بيانات",
+  },
+  yes: {
+    EN: "Yes",
+    AR: "نعم",
+  },
+  no: {
+    EN: "No",
+    AR: "لا",
+  },
+  noHobbies: {
+    EN: "No Hobbies",
+    AR: "لا توجد هوايات",
+  },
+  userInfo: {
+    EN: "User Information",
+    AR: "معلومات المستخدم",
+  },
+  firstName: {
+    EN: "First Name",
+    AR: "الاسم الأول",
+  },
+  lastName: {
+    EN: "Last Name",
+    AR: "اسم العائلة",
+  },
+
+  major: {
+    EN: "Major",
+    AR: "التخصص",
+  },
+  smoking: {
+    EN: "Smoking",
+    AR: "مدخن؟",
+  },
+  socialPerson: {
+    EN: "Social Person",
+    AR: "شخص اجتماعي؟",
+  },
+
+  level: {
+    EN: "Level",
+    AR: "المستوى",
+  },
+
+  unselectItem: {
+    EN: "Unselect Item",
+    AR: "إلغاء اختيار العنصر",
+  },
+  approveItem: {
+    EN: "Approve Item",
+    AR: "اعتماد العنصر",
+  },
+
+  approved: {
+    EN: "approved",
+    AR: "تم الاعتماد",
+  },
+
+  errorApproving: {
+    EN: "Error approving request",
+    AR: "حدث خطأ أثناء اعتماد الطلب",
+  },
 };

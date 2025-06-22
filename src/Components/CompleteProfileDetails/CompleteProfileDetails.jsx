@@ -1,3 +1,4 @@
+// ✅ ملف: CompleteProfileDetails.jsx
 import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
@@ -10,6 +11,7 @@ import { toast } from "react-toastify";
 import Loading2 from "../../Components/Loading2/Loading2";
 import { LoginContext } from "../../Context/Login/Login";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { t } from "../../translate/requestDetails";
 
 const CompleteProfileDetails = () => {
   const [requestData, setRequestData] = useState(null);
@@ -18,7 +20,7 @@ const CompleteProfileDetails = () => {
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const navigate = useNavigate();
-  const { darkMode } = useContext(LoginContext);
+  const { darkMode, language } = useContext(LoginContext);
 
   useEffect(() => {
     const fetchRequest = async () => {
@@ -54,7 +56,7 @@ const CompleteProfileDetails = () => {
                 ? `http://45.88.223.182:4000${item.data.image}`
                 : null,
               shouldApprove: false,
-              type: "Profile Image",
+              type: t.profileImage[language],
             },
             {
               id: "idCardImage",
@@ -65,7 +67,7 @@ const CompleteProfileDetails = () => {
                   : item.data.idCard
                 : null,
               shouldApprove: false,
-              type: "ID Card",
+              type: t.idCard[language],
             },
           ];
         });
@@ -84,7 +86,7 @@ const CompleteProfileDetails = () => {
 
   if (loading) return <Loading2 />;
   if (!requestData)
-    return <div className="text-center my-5">No Data Found</div>;
+    return <div className="text-center my-5">{t.noData[language]}</div>;
 
   const item = requestData.items[0];
 
@@ -97,7 +99,7 @@ const CompleteProfileDetails = () => {
   const getBooleanField = (key) => {
     const val =
       item.data[key] !== undefined ? item.data[key] : fullProfile?.[key];
-    return val ? "Yes" : "No";
+    return val ? t.yes[language] : t.no[language];
   };
 
   const getHobbies = () => {
@@ -109,7 +111,7 @@ const CompleteProfileDetails = () => {
         </span>
       ))
     ) : (
-      <span>No Hobbies</span>
+      <span>{t.noHobbies[language]}</span>
     );
   };
 
@@ -127,14 +129,14 @@ const CompleteProfileDetails = () => {
 
       toast[status === "APPROVED" ? "success" : "error"](
         `Request ${
-          status === "APPROVED" ? "approved" : "rejected"
+          status === "APPROVED" ? t.approved[language] : t.rejected[language]
         } successfully`
       );
 
       navigate("/complete-profile/user");
     } catch (error) {
       console.error("Error approving request:", error);
-      toast.error("Error approving request");
+      toast.error(t.errorApproving[language]);
     }
   };
 
@@ -144,10 +146,10 @@ const CompleteProfileDetails = () => {
         className="btn btn-outline-secondary mb-4 w-25"
         onClick={() => navigate(-1)}
       >
-        <ArrowBackIcon className="me-2" /> Back
+        <ArrowBackIcon className="me-2" /> {t.back[language]}
       </button>
 
-      <h3 className="mb-4 text-primary">🏢 Request Details</h3>
+      <h3 className="mb-4 title">🏢 {t.requestDetails[language]}</h3>
 
       <div className="row">
         {item.imagesData.map(
@@ -174,20 +176,20 @@ const CompleteProfileDetails = () => {
 
         <div className="col-12">
           <div className="card shadow-sm p-3 profile-data-card">
-            <h5 className="text-primary mb-3">User Information</h5>
+            <h5 className="title mb-3">{t.userInfo[language]}</h5>
             <div className="row g-3">
               {[
-                ["First Name", "firstName"],
-                ["Last Name", "lastName"],
-                ["Facebook", "facebook"],
-                ["Phone", "phone"],
-                ["Major", "major"],
-                ["Smoking", "smoking"],
-                ["Social Person", "socialPerson"],
-                ["LinkedIn", "linkedin"],
-                ["Instagram", "instagram"],
-                ["University", "university"],
-                ["Level", "level"],
+                [t.firstName[language], "firstName"],
+                [t.lastName[language], "lastName"],
+                [t.facebook[language], "facebook"],
+                [t.phone[language], "phone"],
+                [t.major[language], "major"],
+                [t.smoking[language], "smoking"],
+                [t.socialPerson[language], "socialPerson"],
+                [t.linkedin[language], "linkedin"],
+                [t.instagram[language], "instagram"],
+                [t.university[language], "university"],
+                [t.level[language], "level"],
               ].map(([label, key]) => (
                 <div className="col-12 col-md-6 col-lg-4" key={key}>
                   <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
@@ -216,7 +218,7 @@ const CompleteProfileDetails = () => {
               <div className="col-12 col-md-6 col-lg-4">
                 <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
                   <span className="fw-semibold">
-                    <strong>Hobbies:</strong> {getHobbies()}
+                    <strong>{t.hobbies[language]}:</strong> {getHobbies()}
                   </span>
                 </div>
               </div>
@@ -228,7 +230,9 @@ const CompleteProfileDetails = () => {
               }`}
               onClick={toggleItemApproval}
             >
-              {item.shouldApprove ? "Unselect Item" : "Approve Item"}
+              {item.shouldApprove
+                ? t.unselectItem[language]
+                : t.approveItem[language]}
             </button>
 
             {requestData.status === "PENDING" && (
@@ -238,13 +242,13 @@ const CompleteProfileDetails = () => {
                   onClick={() => approveRequest("APPROVED")}
                   disabled={!item.shouldApprove}
                 >
-                  ✅ Approve Request
+                  ✅ {t.approveRequest[language]}
                 </button>
                 <button
                   className="btn btn-danger px-4 w-50"
                   onClick={() => approveRequest("REJECTED")}
                 >
-                  ❌ Reject Request
+                  ❌ {t.rejectRequest[language]}
                 </button>
               </div>
             )}

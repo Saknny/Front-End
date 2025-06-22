@@ -218,7 +218,7 @@ export default function ReservationRequests() {
                                 ? "warning"
                                 : item.status === "ACCEPTED"
                                 ? "success"
-                                : "default"
+                                : "error"
                             }
                             size="small"
                           />

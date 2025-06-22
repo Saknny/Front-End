@@ -96,7 +96,7 @@ const ReservationRequestsDetails = () => {
         {t.back?.[language] || "Back"}
       </button>
 
-      <h3 className="mb-4 text-primary">
+      <h3 className="mb-4 title">
         🏢 {t.apartmentDetails?.[language] || "Reservation Request Details"}
       </h3>
 
@@ -113,10 +113,10 @@ const ReservationRequestsDetails = () => {
               style={{ cursor: "pointer" }}
               onClick={() => setShowApartmentModal(true)}
             >
-              <span className="small d-block text-muted">
+              <span className="small d-block title">
                 {t.apartmentDetails?.[language] || "Apartment Info"}
               </span>
-              <span className="fw-semibold text-primary">
+              <span className="fw-semibold title">
                 {t.clickToViewDetails?.[language] || "Click to view details"}
               </span>
             </div>
@@ -125,10 +125,10 @@ const ReservationRequestsDetails = () => {
               style={{ cursor: "pointer" }}
               onClick={() => setShowRoomModal(true)}
             >
-              <span className="small d-block text-muted">
+              <span className="small d-block  title">
                 {t.rooms?.[language] || "Room Info"}
               </span>
-              <span className="fw-semibold text-primary">
+              <span className="fw-semibold title">
                 {t.clickToViewDetails?.[language] || "Click to view details"}
               </span>
             </div>

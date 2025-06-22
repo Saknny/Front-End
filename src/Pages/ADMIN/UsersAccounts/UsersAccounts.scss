@@ -9,7 +9,7 @@
     }
 
     .MuiTypography-root {
-        color: var(--primary-color2);
+        color: var(--primary-color);
         font-weight: 600;
         font-size: 30px
     }
@@ -44,7 +44,7 @@
         }
 
         .MuiTableCell-root,
-        .MuiTypography-root,
+
         .MuiInputBase-input {
             color: var(--navbar-background-color);
         }

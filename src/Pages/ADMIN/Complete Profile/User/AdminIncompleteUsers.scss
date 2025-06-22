@@ -1,11 +1,20 @@
 .admin-users {
+    .PROFILE_UPDATE {
+        color: #18878a;
+    }
+
+    .PROFILE_COMPLETE {
+        color: #b33f44;
+    }
+
+    h4 {
+        color: var(--primary-color);
+    }
 
     &.dr {
         font-size: 1rem;
 
-        h4 {
-            color: var(--admin-incomplete-users-color); // لون مبهج في الدارك مود
-        }
+
 
         .form-control {
             background-color: var(--complete-profile-details-background-color);

@@ -127,7 +127,7 @@ function AdminDashboardCharts() {
             <Line
               type="monotone"
               dataKey="bookings"
-              stroke="#000"
+              stroke="#fdcb54"
               strokeWidth={2}
             />
           </LineChart>

@@ -1,4 +1,9 @@
 .complete-profile-details {
+
+    .title {
+        color: var(--primary-color);
+    }
+
     &.dr {
 
         background-color: var(--complete-profile-details-background-color);

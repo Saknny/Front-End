@@ -24,6 +24,7 @@ import {
   fetchRoomRequestsForProvider,
   getApartmentImage,
 } from "../../../Api/api";
+import "./ReservationRequests.scss";
 
 export default function RoomReservationRequests() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -73,7 +74,7 @@ export default function RoomReservationRequests() {
         alignItems="center"
         mb={3}
       >
-        <Typography variant="h4" fontWeight="bold">
+        <Typography variant="h4" className="title" fontWeight="bold">
           {t.roomReservationRequests?.[language] || "Room Booking Requests"}
         </Typography>
         <Box display="flex" gap={2}>
@@ -200,7 +201,7 @@ export default function RoomReservationRequests() {
                                 ? "warning"
                                 : item.status === "ACCEPTED"
                                 ? "success"
-                                : "default"
+                                : "error"
                             }
                             size="small"
                           />

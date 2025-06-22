@@ -1,5 +1,10 @@
 .request-details-container {
 
+    h3,
+    h4 {
+        color: var(--primary-color);
+    }
+
     width: 100%;
     min-height: 100vh;
     padding: 20px;
@@ -21,10 +26,7 @@
         }
 
 
-        h3,
-        h4 {
-            color: #f1f1f1;
-        }
+
 
         .details-grid {
             background: #2c2c2c;

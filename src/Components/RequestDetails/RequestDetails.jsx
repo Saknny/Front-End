@@ -117,7 +117,7 @@ const RequestDetails = () => {
         <ArrowBackIcon className="me-2" /> {t.back[language]}
       </button>
 
-      <h3 className="mb-4 text-primary">🏢 {t.apartmentDetails[language]}</h3>
+      <h3 className="mb-4 title">🏢 {t.apartmentDetails[language]}</h3>
       {apartment && (
         <ApartmentSection
           apartment={apartment}
@@ -129,8 +129,8 @@ const RequestDetails = () => {
       )}
 
       <h4 className="mt-4">
-        {/* <HotelIcon className="me-1" /> {t.rooms[language]} */}
-        <div className="home-icon d-flex align-items-center ">
+        <HotelIcon className="me-1" /> {t.rooms[language]}
+        {/* <div className="home-icon d-flex align-items-center ">
           <img
             className="w-100 me-2 "
             loading="lazy"
@@ -138,7 +138,7 @@ const RequestDetails = () => {
             alt=""
           />
           {t.rooms[language]}
-        </div>
+        </div> */}
       </h4>
       {rooms && (
         <RoomSection

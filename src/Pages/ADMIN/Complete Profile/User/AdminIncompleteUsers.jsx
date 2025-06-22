@@ -42,7 +42,7 @@ const AdminIncompleteUsers = () => {
 
   return (
     <div className={`admin-users container py-4  ${darkMode}`}>
-      <h4 className="mb-4 p-3">{t.IncompleteProfiles[language]}</h4>
+      <h4 className="mb-4 p-3 title">{t.IncompleteProfiles[language]}</h4>
       <div className="mb-3">
         <input
           type="text"
@@ -68,7 +68,7 @@ const AdminIncompleteUsers = () => {
               >
                 <div>
                   <span className="user-name">{user.email}</span>
-                  <div className="request-type">{user.request_type}</div>
+                  <div className={user.request_type}>{user.request_type}</div>
                 </div>
                 <i className="bx bx-chevron-right"></i>
               </Link>

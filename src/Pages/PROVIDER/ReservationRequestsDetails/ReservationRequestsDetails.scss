@@ -24,11 +24,8 @@
         color: #c9d1d9;
     }
 
-    h4 {
-        color: #eee;
-    }
 }
 
-.section h4 {
-    color: black;
+.title {
+    color: var(--primary-color);
 }
