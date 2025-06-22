@@ -81,6 +81,15 @@ function ApartmentSection({ apartment, onToggle, onImageToggle }) {
         )}
 
         <ImageGallery images={apartment.images} onToggle={onImageToggle} />
+        <div className="document d-flex justify-content-center">
+          <a
+            href={`data:application/pdf;base64,${apartment.document}`}
+            download="document.pdf"
+            className="btn btn-outline-secondary  mt-3"
+          >
+            ⬇️ Download Document PDF
+          </a>
+        </div>
 
         <button
           className={`btn mt-2 w-100 ${
