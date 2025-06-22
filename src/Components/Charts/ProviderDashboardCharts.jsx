@@ -1,6 +1,4 @@
-// ✅ ProviderDashboardCharts.jsx (updated with Monthly Booking Requests instead of Earnings)
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
 import {
   ResponsiveContainer,
   BarChart,
@@ -19,14 +17,67 @@ import {
   PolarRadiusAxis,
   Radar,
 } from "recharts";
+import { fetchProviderDashboardData } from "../../Api/api";
+import Loading2 from "../Loading2/Loading2";
+function ProviderDashboardCharts({ language }) {
+  const [data, setData] = useState(null);
 
-function ProviderDashboardCharts({
-  language,
-  monthlyBookings,
-  monthlyRooms,
-  unitRadar,
-  topRatedApartments, // ✅ add this line
-}) {
+  useEffect(() => {
+    fetchProviderDashboardData().then(setData);
+  }, []);
+
+  if (!data) return <Loading2 />;
+
+  const colors = ["#FF8042", "#0088FE", "#00C49F", "#FFBB28"];
+
+  const topRatedApartments =
+    Array.isArray(data.topRatedApartments) && data.topRatedApartments.length > 0
+      ? data.topRatedApartments.map((apt, idx) => ({
+          name: apt.title,
+          rating: apt.averageRating,
+          color: colors[idx % colors.length],
+        }))
+      : [
+          {
+            name: language === "EN" ? "No Data" : "لا يوجد",
+            rating: 0,
+            color: "#ccc",
+          },
+        ];
+
+  const monthlyBookings =
+    Array.isArray(data.monthlyBookingRequests) &&
+    data.monthlyBookingRequests.length > 0
+      ? data.monthlyBookingRequests.map((item) => ({
+          month: item.month,
+          requests: Number(item.count),
+        }))
+      : [{ month: language === "EN" ? "No Data" : "لا يوجد", requests: 0 }];
+
+  const monthlyRooms =
+    Array.isArray(data.rentedRoomsPerMonth) &&
+    data.rentedRoomsPerMonth.length > 0
+      ? data.rentedRoomsPerMonth.map((item) => ({
+          month: item.month,
+          rooms: Number(item.count),
+        }))
+      : [{ month: language === "EN" ? "No Data" : "لا يوجد", rooms: 0 }];
+
+  const unitRadar =
+    data.requestDistribution && Object.keys(data.requestDistribution).length > 0
+      ? Object.entries(data.requestDistribution).map(([key, val]) => ({
+          type:
+            language === "EN"
+              ? key.charAt(0).toUpperCase() + key.slice(1)
+              : key === "pending"
+              ? "قيد الانتظار"
+              : key === "approved"
+              ? "مقبول"
+              : "مرفوض",
+          count: val,
+        }))
+      : [{ type: language === "EN" ? "No Data" : "لا يوجد", count: 0 }];
+
   return (
     <div className="charts">
       {/* Monthly Booking Requests */}
@@ -128,41 +179,5 @@ function ProviderDashboardCharts({
     </div>
   );
 }
-
-ProviderDashboardCharts.propTypes = {
-  language: PropTypes.string.isRequired,
-  apartmentTypes: PropTypes.arrayOf(
-    PropTypes.shape({
-      value: PropTypes.number.isRequired,
-      color: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  monthlyBookings: PropTypes.arrayOf(
-    PropTypes.shape({
-      month: PropTypes.string.isRequired,
-      requests: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-  monthlyRooms: PropTypes.arrayOf(
-    PropTypes.shape({
-      month: PropTypes.string.isRequired,
-      rooms: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-  unitRadar: PropTypes.arrayOf(
-    PropTypes.shape({
-      type: PropTypes.string.isRequired,
-      count: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-  topRatedApartments: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      rating: PropTypes.number.isRequired,
-      color: PropTypes.string,
-    })
-  ).isRequired,
-};
 
 export default ProviderDashboardCharts;
