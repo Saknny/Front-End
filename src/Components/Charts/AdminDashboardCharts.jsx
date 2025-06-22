@@ -55,30 +55,64 @@ function AdminDashboardCharts() {
   const pieColors = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#AF19FF"];
   const ratingColors = ["#FFBB28", "#00C49F", "#0088FE", "#FF8042", "#AF19FF"];
 
-  const requestStatus = Object.entries(dashboardData.requestDistribution).map(
-    ([key, value], i) => ({
-      name: key,
-      value,
-      color: barColors[i % barColors.length],
-    })
-  );
+  const requestStatus =
+    dashboardData.requestDistribution &&
+    Object.keys(dashboardData.requestDistribution).length > 0
+      ? Object.entries(dashboardData.requestDistribution).map(
+          ([key, value], i) => ({
+            name: key,
+            value,
+            color: barColors[i % barColors.length],
+          })
+        )
+      : [
+          {
+            name: language === "EN" ? "No Data" : "لا يوجد",
+            value: 0,
+            color: "#ccc",
+          },
+        ];
 
-  const locationBookings = dashboardData.bookingsByLocation.map((entry, i) => ({
-    name: entry.locationEnum,
-    value: parseInt(entry.count),
-    color: pieColors[i % pieColors.length],
-  }));
+  const locationBookings =
+    Array.isArray(dashboardData.bookingsByLocation) &&
+    dashboardData.bookingsByLocation.length > 0
+      ? dashboardData.bookingsByLocation.map((entry, i) => ({
+          name: entry.locationEnum,
+          value: parseInt(entry.count),
+          color: pieColors[i % pieColors.length],
+        }))
+      : [
+          {
+            name: language === "EN" ? "No Data" : "لا يوجد",
+            value: 0,
+            color: "#ccc",
+          },
+        ];
 
-  const bookingData = dashboardData.monthlyBookings.map((m) => ({
-    month: m.month,
-    bookings: parseInt(m.count),
-  }));
+  const bookingData =
+    Array.isArray(dashboardData.monthlyBookings) &&
+    dashboardData.monthlyBookings.length > 0
+      ? dashboardData.monthlyBookings.map((m) => ({
+          month: m.month,
+          bookings: parseInt(m.count),
+        }))
+      : [{ month: language === "EN" ? "No Data" : "لا يوجد", bookings: 0 }];
 
-  const ratingBreakdown = dashboardData.ratingBreakdown.map((r, i) => ({
-    name: `${r.stars} Stars`,
-    value: parseInt(r.count),
-    color: ratingColors[i % ratingColors.length],
-  }));
+  const ratingBreakdown =
+    Array.isArray(dashboardData.ratingBreakdown) &&
+    dashboardData.ratingBreakdown.length > 0
+      ? dashboardData.ratingBreakdown.map((r, i) => ({
+          name: `${r.stars} Stars`,
+          value: parseInt(r.count),
+          color: ratingColors[i % ratingColors.length],
+        }))
+      : [
+          {
+            name: language === "EN" ? "No Data" : "لا يوجد",
+            value: 0,
+            color: "#ccc",
+          },
+        ];
 
   return (
     <div className="charts">

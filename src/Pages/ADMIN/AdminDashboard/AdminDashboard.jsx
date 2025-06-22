@@ -28,31 +28,31 @@ function AdminDashboard() {
         <div className="stat-card">
           <h4>{language === "EN" ? "Total Bookings" : "إجمالي الحجوزات"}</h4>
           <p>
-            {data.totalBookings} <span className="increase">+12.5%</span>
+            {data.totalBookings || 0} <span className="increase">+12.5%</span>
           </p>
         </div>
         <div className="stat-card">
           <h4>{language === "EN" ? "Active Students" : "الطلاب النشطون"}</h4>
           <p>
-            {data.activeStudents} <span className="increase">+8.3%</span>
+            {data.activeStudents || 0} <span className="increase">+8.3%</span>
           </p>
         </div>
         <div className="stat-card">
           <h4>{language === "EN" ? "Available Rooms" : "الغرف المتاحة"}</h4>
           <p>
-            {data.availableRooms} <span className="decrease">-5.2%</span>
+            {data.availableRooms || 0} <span className="decrease">-5.2%</span>
           </p>
         </div>
         <div className="stat-card">
           <h4>{language === "EN" ? "Total Providers" : "عدد المزوّدين"}</h4>
           <p>
-            {data.totalProviders} <span className="increase">+4.7%</span>
+            {data.totalProviders || 0} <span className="increase">+4.7%</span>
           </p>
         </div>
         <div className="stat-card">
           <h4>{language === "EN" ? "New Listings" : "الإدراجات الجديدة"}</h4>
           <p>
-            {data.newListings} <span className="increase">+1</span>
+            {data.newListings || 0} <span className="increase">+1</span>
           </p>
         </div>
       </div>

@@ -3,6 +3,7 @@ import "./ProviderDashboard.scss";
 import { LoginContext } from "../../../Context/Login/Login";
 import { fetchProviderDashboardData } from "../../../Api/api";
 import Loading2 from "../../../Components/Loading2/Loading2.jsx";
+
 const ProviderDashboardCharts = lazy(() =>
   import("../../../Components/Charts/ProviderDashboardCharts.jsx")
 );
@@ -26,40 +27,59 @@ function ProviderDashboard() {
 
   // Format topRatedApartments with colors
   const colors = ["#FF8042", "#0088FE", "#00C49F", "#FFBB28"];
-  const topRatedApartments = (data.topRatedApartments || []).map(
-    (apt, idx) => ({
-      name: apt.title,
-      rating: apt.averageRating,
-      color: colors[idx % colors.length],
-    })
-  );
 
-  // Format monthlyBookingRequests to match chart format
-  const monthlyBookings = (data.monthlyBookingRequests || []).map((item) => ({
-    month: item.month,
-    requests: Number(item.count),
-  }));
+  const topRatedApartments =
+    Array.isArray(data.topRatedApartments) && data.topRatedApartments.length > 0
+      ? data.topRatedApartments.map((apt, idx) => ({
+          name: apt.title,
+          rating: apt.averageRating,
+          color: colors[idx % colors.length],
+        }))
+      : [
+          {
+            name: language === "EN" ? "No Data" : "لا يوجد",
+            rating: 0,
+            color: "#ccc",
+          },
+        ];
 
-  // Format rentedRoomsPerMonth
-  const monthlyRooms = (data.rentedRoomsPerMonth || []).map((item) => ({
-    month: item.month,
-    rooms: Number(item.count),
-  }));
+  const monthlyBookings =
+    Array.isArray(data.monthlyBookingRequests) &&
+    data.monthlyBookingRequests.length > 0
+      ? data.monthlyBookingRequests.map((item) => ({
+          month: item.month,
+          requests: Number(item.count),
+        }))
+      : [{ month: language === "EN" ? "No Data" : "لا يوجد", requests: 0 }];
 
-  // Format unitRadar from requestDistribution
-  const unitRadar = Object.entries(data.requestDistribution || {}).map(
-    ([key, val]) => ({
-      type:
-        language === "EN"
-          ? key.charAt(0).toUpperCase() + key.slice(1)
-          : key === "pending"
-          ? "قيد الانتظار"
-          : key === "approved"
-          ? "مقبول"
-          : "مرفوض",
-      count: val,
-    })
-  );
+  const monthlyRooms =
+    Array.isArray(data.rentedRoomsPerMonth) &&
+    data.rentedRoomsPerMonth.length > 0
+      ? data.rentedRoomsPerMonth.map((item) => ({
+          month: item.month,
+          rooms: Number(item.count),
+        }))
+      : [{ month: language === "EN" ? "No Data" : "لا يوجد", rooms: 0 }];
+
+  const unitRadar =
+    data.requestDistribution && Object.keys(data.requestDistribution).length > 0
+      ? Object.entries(data.requestDistribution).map(([key, val]) => ({
+          type:
+            language === "EN"
+              ? key.charAt(0).toUpperCase() + key.slice(1)
+              : key === "pending"
+              ? "قيد الانتظار"
+              : key === "approved"
+              ? "مقبول"
+              : "مرفوض",
+          count: val,
+        }))
+      : [
+          {
+            type: language === "EN" ? "No Data" : "لا يوجد",
+            count: 0,
+          },
+        ];
 
   const renderStatCard = (labelEn, labelAr, stat) => (
     <div className="stat-card">
