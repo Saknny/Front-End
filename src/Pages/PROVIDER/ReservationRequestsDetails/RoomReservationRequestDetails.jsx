@@ -54,7 +54,6 @@ export default function RoomReservationRequestDetails() {
         const roomId = request?.apartment?.room?.id;
 
         const imagesBundle = await fetchApartmentImagesBundle(apartmentId);
-        console.log(imagesBundle);
 
         // دمج الصور مع كل bed حسب id
         const matchedRoom = imagesBundle.rooms?.find(

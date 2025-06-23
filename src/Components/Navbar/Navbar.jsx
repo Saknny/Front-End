@@ -11,6 +11,7 @@ function Navbar() {
     darkMode,
     language,
     toggleLanguage,
+    userRole,
   } = useContext(LoginContext);
   const [data, setData] = useState(null);
   const userEmail = localStorage.getItem("email");
@@ -23,9 +24,10 @@ function Navbar() {
     toast.success("Logged out successfully");
   }
   useEffect(() => {
-    fetchProviderProfile().then(setData);
-  }, []);
-  console.log("Navbar data:", data);
+    if (userRole === "PROVIDER") {
+      fetchProviderProfile().then(setData);
+    }
+  }, [userRole]);
 
   return (
     <nav

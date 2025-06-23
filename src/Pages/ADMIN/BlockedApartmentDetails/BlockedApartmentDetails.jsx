@@ -93,7 +93,6 @@ function BlockedApartmentDetails() {
             apartmentId: id,
           },
         });
-        console.log(res);
 
         const fetchedReviews = res.data.data.reviews.map((review) => ({
           name: review.student.fullName,
@@ -260,7 +259,11 @@ function BlockedApartmentDetails() {
         </button>
       </div>
       <div className="section text-center pt-4 mt-4 d-flex justify-content-center w-100">
-        <button className="btn btn-success mx-2 w-100" onClick={handleUnblock}>
+        <button
+          className="btn btn-success mx-2 w-100"
+          style={{ backgroundColor: "#18878a" }}
+          onClick={handleUnblock}
+        >
           🔓 {t.unblock?.[language] || "Unblock"}
         </button>
       </div>

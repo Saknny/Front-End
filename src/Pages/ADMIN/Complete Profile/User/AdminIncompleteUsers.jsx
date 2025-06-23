@@ -68,7 +68,9 @@ const AdminIncompleteUsers = () => {
               >
                 <div>
                   <span className="user-name">{user.email}</span>
-                  <div className={user.request_type}>{user.request_type}</div>
+                  <div className={user.request_type}>
+                    {user.request_type.replace(/_/g, " ").toLowerCase()}
+                  </div>
                 </div>
                 <i className="bx bx-chevron-right"></i>
               </Link>

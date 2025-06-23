@@ -26,6 +26,7 @@ const CompleteProfileDetails = () => {
     const fetchRequest = async () => {
       try {
         const response = await fetchRequestById(id);
+
         const resData = response.data || response;
 
         if (!resData) {
@@ -49,11 +50,14 @@ const CompleteProfileDetails = () => {
 
         normalizedRequest.items.forEach((item) => {
           item.shouldApprove = false;
+
+          const userData = resData.fullProfile || {};
+
           item.imagesData = [
             {
               id: "profileImage",
-              url: item.data.image
-                ? `http://45.88.223.182:4000${item.data.image}`
+              url: item?.data?.image
+                ? `http://45.88.223.182:4000${item?.data?.image}`
                 : null,
               shouldApprove: false,
               type: t.profileImage[language],
@@ -61,15 +65,26 @@ const CompleteProfileDetails = () => {
             {
               id: "idCardImage",
               url: item.data.idCard
-                ? item.data.idCard.startsWith("/") ||
-                  item.data.idCard.startsWith("/9j")
-                  ? `data:image/jpeg;base64,${item.data.idCard}`
-                  : item.data.idCard
-                : null,
+                ? `data:image/jpeg;base64,${item.data.idCard}`
+                : item.data.idCard,
+
               shouldApprove: false,
               type: t.idCard[language],
             },
           ];
+
+          item.firstName = userData.firstName || "N/A";
+          item.lastName = userData.lastName || "N/A";
+          item.email = userData.email || "N/A";
+          item.facebook = userData.facebook || "";
+          item.phone = userData.phone || "";
+          item.major = userData.major || "";
+          item.smoking = userData.smoking || false;
+          item.socialPerson = userData.socialPerson || false;
+          item.linkedin = userData.linkedin || "";
+          item.instagram = userData.instagram || "";
+          item.university = userData.university || "";
+          item.level = userData.level || "";
         });
 
         setRequestData(normalizedRequest);
@@ -91,28 +106,12 @@ const CompleteProfileDetails = () => {
   const item = requestData.items[0];
 
   const getField = (key) => {
-    return item.data[key] !== undefined && item.data[key] !== null
-      ? item.data[key]
-      : fullProfile?.[key] ?? "-";
+    return item[key] !== undefined && item[key] !== null ? item[key] : "-";
   };
 
   const getBooleanField = (key) => {
-    const val =
-      item.data[key] !== undefined ? item.data[key] : fullProfile?.[key];
+    const val = item[key];
     return val ? t.yes[language] : t.no[language];
-  };
-
-  const getHobbies = () => {
-    const hobbies = item.data.hobbies || fullProfile?.hobbies || [];
-    return hobbies.length > 0 ? (
-      hobbies.map((hobby, index) => (
-        <span key={index} className="badge bg-secondary me-2">
-          {hobby}
-        </span>
-      ))
-    ) : (
-      <span>{t.noHobbies[language]}</span>
-    );
   };
 
   const toggleItemApproval = () => {
@@ -214,14 +213,6 @@ const CompleteProfileDetails = () => {
                   </div>
                 </div>
               ))}
-
-              <div className="col-12 col-md-6 col-lg-4">
-                <div className="p-3 border rounded overflow-hidden h-100 d-flex flex-column align-items-start">
-                  <span className="fw-semibold">
-                    <strong>{t.hobbies[language]}:</strong> {getHobbies()}
-                  </span>
-                </div>
-              </div>
             </div>
 
             <button

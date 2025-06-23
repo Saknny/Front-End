@@ -182,7 +182,6 @@ export default function ReservationRequests() {
                                 fontSize={13}
                                 className="apartmentTitle"
                               >
-                                {console.log(item)}
                                 {item.apartmentTitle}
                               </Typography>
                             </Box>

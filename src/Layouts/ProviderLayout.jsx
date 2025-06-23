@@ -30,10 +30,11 @@ function ProviderLayout() {
 
   return (
     <div className="app-container">
-      <Suspense fallback={<Loading2 />}>
-        <Sidebar />
-        <div className="main-content">
-          <Navbar />
+      {" "}
+      <Sidebar />
+      <div className="main-content">
+        <Navbar />
+        <Suspense fallback={<Loading2 />}>
           <div className={`content ${darkMode === "dr" ? "dr" : ""}`}>
             <Routes>
               <Route path="/" element={<ProviderDashboard />} />
@@ -54,8 +55,8 @@ function ProviderLayout() {
               {/* Add more provider-specific routes here */}
             </Routes>
           </div>
-        </div>
-      </Suspense>
+        </Suspense>
+      </div>
     </div>
   );
 }
