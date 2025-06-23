@@ -1,13 +1,10 @@
 import axiosInstance from "../utils/axiosInstance";
 
 // 🔐 AUTH ENDPOINTS
-
-// إرسال OTP إلى البريد الإلكتروني
 export const sendOTP = async (email) => {
   return axiosInstance.post("/auth/forget-password", { email });
 };
 
-// التحقق من OTP
 export const verifyOTP = async (email, otp) => {
   return axiosInstance.post("/otp/verify", {
     email,
@@ -25,9 +22,6 @@ export const resetPassword = async (userId, password, otp) => {
   });
 };
 
-// 📥 GENERAL REQUESTS FETCHING
-
-// جلب كل الطلبات المعلقة (للإعادة الاستخدام)
 export const fetchPendingRequests = async () => {
   const res = await axiosInstance.get("/admin/pending-requests");
   return res.data.data;
@@ -54,7 +48,6 @@ export const fetchPendingUsers = async () => {
   );
 };
 
-// جلب طلبات إنشاء أو تعديل شقق
 export const fetchApartmentRequests = async () => {
   const requests = await fetchPendingRequests();
   return requests.filter(
@@ -63,15 +56,11 @@ export const fetchApartmentRequests = async () => {
   );
 };
 
-// 📄 SINGLE REQUEST DATA
-
 // جلب بيانات طلب محدد
 export const fetchRequestById = async (id) => {
   const res = await axiosInstance.get(`/admin/request/${id}`);
   return res.data.data;
 };
-
-// 📦 ITEMS & IMAGES
 
 // الموافقة على عنصر (Apartment, Room, Bed)
 export const approveItem = async (id) => {
@@ -88,8 +77,6 @@ export const approveImage = async (imgId) => {
   });
 };
 
-// 📤 STATUS MANAGEMENT
-// الموافقة أو الرفض على الطلب بالكامل
 export const approveRequestStatus = async (id, status) => {
   return axiosInstance.patch(`/admin/request-approval`, {
     id,
@@ -98,7 +85,7 @@ export const approveRequestStatus = async (id, status) => {
 };
 
 ////////////////////////////
-// 👤 USERS ENDPOINTS    //
+// USERS ENDPOINTS    //
 ////////////////////////////
 
 // جلب المستخدمين وتصفية الطلاب والمزودين فقط
@@ -123,10 +110,6 @@ export const fetchUsersList = async () => {
 export const deleteUserById = async (id) => {
   return axiosInstance.delete(`/users/${id}`);
 };
-
-///////////////////////
-// 🔐 AUTH ENDPOINTS //
-///////////////////////
 
 // تسجيل الدخول
 export const login = async (email, password) => {
@@ -228,8 +211,6 @@ export const fetchApartmentData = async (id) => {
   return res.data.data.apartment;
 };
 
-// src/Api/api.js
-
 export const fetchAdminDashboardData = async () => {
   try {
     const response = await axiosInstance.get("/admin/dashboard");
@@ -294,7 +275,7 @@ export const fetchRoomRequestsForProvider = async (getApartmentImage) => {
 
 export const fetchRoomRequestDetails = async (id) => {
   const res = await axiosInstance.get(`/room-requests/${id}`);
-  return res.data.data; // ← مصفوفة
+  return res.data.data;
 };
 
 export const setRoomRequestStatus = async (id, status) => {
