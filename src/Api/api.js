@@ -300,3 +300,8 @@ export const fetchRoomRequestDetails = async (id) => {
 export const setRoomRequestStatus = async (id, status) => {
   return axiosInstance.patch(`/room-requests/${id}/${status}`);
 };
+
+export const fetchProviderProfile = async () => {
+  const res = await axiosInstance.get(`/provider/profile`);
+  return res.data.data;
+};

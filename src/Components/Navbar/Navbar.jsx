@@ -1,12 +1,18 @@
 import "./Navbar.scss";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { LoginContext } from "../../Context/Login/Login";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-
+import { fetchProviderProfile } from "../../Api/api";
 function Navbar() {
-  const { setIsAuthenticated, toggleDarkMode, darkMode } =
-    useContext(LoginContext);
+  const {
+    setIsAuthenticated,
+    toggleDarkMode,
+    darkMode,
+    language,
+    toggleLanguage,
+  } = useContext(LoginContext);
+  const [data, setData] = useState(null);
   const userEmail = localStorage.getItem("email");
   const navigate = useNavigate();
   function logOut() {
@@ -16,7 +22,10 @@ function Navbar() {
     setIsAuthenticated(false);
     toast.success("Logged out successfully");
   }
-  const { language, toggleLanguage } = useContext(LoginContext);
+  useEffect(() => {
+    fetchProviderProfile().then(setData);
+  }, []);
+  console.log("Navbar data:", data);
 
   return (
     <nav
@@ -43,7 +52,10 @@ function Navbar() {
 
       <div className="right dropdown">
         <img
-          src="https://randomuser.me/api/portraits/men/1.jpg"
+          src={
+            data?.image ||
+            "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+          }
           alt="User"
           className="profile dropdown-toggle"
           id="userDropdown"
@@ -55,6 +67,11 @@ function Navbar() {
           className="dropdown-menu dropdown-menu-end"
           aria-labelledby="userDropdown"
         >
+          <li>
+            <p className="dropdown-item text-muted">
+              {data?.firstName} {data?.lastName}
+            </p>
+          </li>
           <li>
             <p className="dropdown-item text-muted">{userEmail}</p>
           </li>
