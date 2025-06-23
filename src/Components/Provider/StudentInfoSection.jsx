@@ -111,12 +111,6 @@ const StudentInfoSection = ({ student }) => {
                 label: t.updatedAt?.[language] || "Updated At",
                 value: new Date(student.updatedAt).toLocaleString(),
               },
-              {
-                label: t.hobbies?.[language] || "Hobbies",
-                value: Array.isArray(student.hobbies)
-                  ? student.hobbies.join(", ")
-                  : "—",
-              },
             ].map((item, index) => (
               <div className="col-md-6" key={index}>
                 <div className="p-2 border rounded h-100">
@@ -170,7 +164,6 @@ StudentInfoSection.propTypes = {
       PropTypes.string,
       PropTypes.instanceOf(Date),
     ]),
-    hobbies: PropTypes.arrayOf(PropTypes.string),
     facebook: PropTypes.string,
     instagram: PropTypes.string,
     linkedin: PropTypes.string,
